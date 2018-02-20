@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+       
+	    this.tmrPaint = new System.Windows.Forms.Timer(this.components);          
             this.SuspendLayout();
             // 
             // frmMain
