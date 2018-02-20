@@ -16,8 +16,7 @@ namespace WFLostNFurious
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-            //TEST
+            Application.Run(new frmMain());
         }
     }
 }
