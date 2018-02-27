@@ -92,6 +92,71 @@ namespace WFLostNFurious
                 creationMur(x, y);
             }
 
+            for (int y = 190, x = 370; y <= 280; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 400, y = 190; x <= 460; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 70, x = 490; y <= 400; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 460, x = 490; y <= 490; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 310, y = 490; x <= 460; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 430, x = 280; y <= 490; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 280, x = 430; y <= 340; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 310, x = 310; y <= 340; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 340, y = 340; x <= 400; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 280, y = 370; x <= 370; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 400, x = 340; y <= 430; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int y = 400, x = 370; y <= 460; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 430, y = 400; x <= 460; x += 30)
+            {
+                creationMur(x, y);
+            }
+
             creationMur(280, 70);
             creationMur(460, 70);
 
@@ -99,13 +164,14 @@ namespace WFLostNFurious
             {
                 creationMur(x, y);
             }
-
-            creationMur(40, 450);
+			
             creationMur(40, 460);
+			
             for (int x = 40, y = 490; x < 220; x += 30)
             {
                 creationMur(x, y);
             }
+            creationMur(430, 430);
             #endregion
         }
 
