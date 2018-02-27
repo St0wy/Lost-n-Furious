@@ -20,6 +20,8 @@ namespace WFLostNFurious
 
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
+            Personnage p = new Personnage(new PointF(100, 100), "avancer", "bas");
+            this.Paint += p.Paint;
             CreationLabyrithe();
             DoubleBuffered = true;
         }

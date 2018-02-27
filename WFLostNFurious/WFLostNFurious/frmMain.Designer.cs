@@ -6,7 +6,7 @@
         /// Variable nécessaire au concepteur.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        private System.Windows.Forms.Timer tmrPaint;
         /// <summary>
         /// Nettoyage des ressources utilisées.
         /// </summary>
@@ -28,16 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-       
-	    this.tmrPaint = new System.Windows.Forms.Timer(this.components);          
+             
             this.SuspendLayout();
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            // 
-            this.tmrPaint.Enabled = true;
-            this.tmrPaint.Tick += new System.EventHandler(this.tmrPaint_Tick);
             // 
             // Form1
             // 
@@ -56,7 +52,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer tmrPaint;
+ 
     }
 }
 
