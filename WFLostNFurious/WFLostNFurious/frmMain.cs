@@ -99,6 +99,12 @@ namespace WFLostNFurious
             }
 
             creationMur(40, 450);
+            creationMur(40, 460);
+
+            for (int x = 40, y = 490; x < 220; x += 30)
+            {
+                creationMur(x, y);
+            }
 
             #endregion
 
