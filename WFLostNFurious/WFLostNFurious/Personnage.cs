@@ -14,8 +14,7 @@ namespace WFLostNFurious
         PointF position;
         string orientation;
 
-        public PointF Position { get => position; }
-
+        public PointF Position { get => position;}
 
         public Personnage(PointF pos , string orient)
         {
@@ -87,7 +86,6 @@ namespace WFLostNFurious
 
         public void Avancer()
         {
-            
             switch (orientation)
             {
                 case "gauche":

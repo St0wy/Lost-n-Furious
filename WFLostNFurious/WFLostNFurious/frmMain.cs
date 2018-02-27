@@ -30,34 +30,43 @@ namespace WFLostNFurious
         {
             #region Creation Bordure
             //Creation Bordure
+            int x = 10, y = 10;
 
-            for (int x = 10, y = 10; x < 520; x += 30)
+            for (int i = 0; i < 17; i++)
             {
                 creationBordure(x, y);
+                x += 30;
             }
 
             for (int y = 10, x = 520; y < 520; y += 30)
+
+            for (int i = 0; i < 17; i++)
             {
                 creationBordure(x, y);
+                y += 30;
             }
 
             for (int x = 520, y = 520; x >= 10; x -= 30)
             {
                 creationBordure(x, y);
+                x -= 30;
             }
 
             for (int y = 520, x = 10; y >= 10; y -= 30)
             {
                 creationBordure(x, y);
+                y -= 30;
             }
             #endregion
 
+            //Creation Arr<ivee
 
             //Creation Arrivee
             creationArrivee(250, 40);
             creationArrivee(40, 430);
             creationArrivee(490, 430);
 
+            creationMur(40, 40);
 
             #region Creation Mur
             for (int x = 280, y = 40; x <= 490; x += 30)
@@ -100,14 +109,9 @@ namespace WFLostNFurious
 
             creationMur(40, 450);
             creationMur(40, 460);
-
             for (int x = 40, y = 490; x < 220; x += 30)
             {
                 creationMur(x, y);
-            }
-
-            #endregion
-
 
         }
 
@@ -144,14 +148,26 @@ namespace WFLostNFurious
             p.PivoterGauche();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
         private void btnAvancer_Click(object sender, EventArgs e)
         {
             p.Avancer();
+
+            foreach (Bloc b in labyrinthe)
+            {
+                if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                {
+                    this.Text = "Collision!!!!";
+                }
+                else
+                {
+                    this.Text = "non!!!!";
+                }
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Invalidate();
         }
     }
 }
