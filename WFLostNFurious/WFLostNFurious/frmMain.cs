@@ -30,51 +30,45 @@ namespace WFLostNFurious
         {
             #region Creation Bordure
             //Creation Bordure
-            int x = 10, y = 10;
 
-            for (int i = 0; i < 17; i++)
+            for (int x = 10, y = 10; x < 520; x += 30)
             {
                 creationBordure(x, y);
-                x += 30;
             }
 
-
-
-            for (int i = 0; i < 17; i++)
+            for (int y = 10, x = 520; y < 490; y += 30)
             {
                 creationBordure(x, y);
-                y += 30;
             }
 
-            for (int i = 0; i < 17; i++)
+            for (int x = 520, y = 460; x >= 10; x -= 30)
             {
                 creationBordure(x, y);
-                x -= 30;
             }
 
-            for (int i = 0; i < 17; i++)
+            for (int y = 430, x = 10; y >= 10; y -= 30)
             {
                 creationBordure(x, y);
-                y -= 30;
             }
             #endregion
 
-            //Creation Arr<ivee
+
+            //Creation Arrivee
             creationArrivee(250, 40);
             creationArrivee(40, 430);
             creationArrivee(490, 430);
 
-            creationMur(40, 40);
+
+            #region Creation Mur
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    creationMur(x, y);
+            //    x += 30;
+            //} 
+            #endregion
+
 
             Invalidate();
-            //Bloc mur = new Bloc(10, 50);
-            //mur.Paint(sender, e);
-            //
-            //Bloc mur2 = new Bloc(10, 30);
-            //mur2.Paint(sender, e);
-            //
-            //Arrivee arrivee1 = new Arrivee(70, 70);
-            //arrivee1.Paint(sender, e);
         }
 
         public void creationBordure(int x, int y)
