@@ -27,6 +27,14 @@ namespace WFLostNFurious
         {
             e.Graphics.FillRectangle(Brushes.Black, x, y, 30, 30);
         }
+
+        public PointF Position
+        {
+            get
+            {
+                return new PointF((float)x, (float)y);
+            }
+        }
     }
 
     class Bordure : Bloc

@@ -60,11 +60,14 @@ namespace WFLostNFurious
 
 
             #region Creation Mur
-            //for (int i = 0; i < 7; i++)
-            //{
-            //    creationMur(x, y);
-            //    x += 30;
-            //} 
+            for (int x = 40, y = 40; x <= 240; x += 30)
+            {
+                creationMur(x, y);
+            }
+            for (int x = 40, y = 70; y < 40; y++)
+            {
+
+            }
             #endregion
 
 
