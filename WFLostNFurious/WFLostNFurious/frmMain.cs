@@ -20,7 +20,7 @@ namespace WFLostNFurious
 
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
-            Personnage p = new Personnage(new PointF(100, 100), "avancer", "bas");
+            Personnage p = new Personnage(new PointF(200, 100), "avancer", "bas");
             this.Paint += p.Paint;
             CreationLabyrithe();
             DoubleBuffered = true;
@@ -64,6 +64,8 @@ namespace WFLostNFurious
             creationArrivee(40, 430);
             creationArrivee(490, 430);
 
+            creationMur(40, 40);
+
             Invalidate();
             //Bloc mur = new Bloc(10, 50);
             //mur.Paint(sender, e);
@@ -87,6 +89,13 @@ namespace WFLostNFurious
             var arrivee = new Arrivee(x, y);
             labyrinthe.Add(arrivee);
             this.Paint += arrivee.Paint;
+        }
+
+        public void creationMur(int x, int y)
+        {
+            var bloc = new Bloc(x, y);
+            labyrinthe.Add(bloc);
+            this.Paint += bloc.Paint;
         }
     }
 }
