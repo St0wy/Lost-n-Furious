@@ -11,63 +11,98 @@ namespace WFLostNFurious
 {
     class Personnage
     {
-        PointF depart;
-        string mouv;
+        PointF position;
+        string orientation;
 
-        public PointF Depart { get => depart; }
+        public PointF Position { get => position; }
 
 
-        public Personnage(PointF depart, string mouvement, string orient)
+        public Personnage(PointF pos , string orient)
         {
             // Initialisation des variables d'instances
-            this.depart = depart;
-            this.mouv = orient;
+            this.position = pos;
+            this.orientation = orient;
 
-            if (mouvement == "avancer")
-            {
-                switch (orient)
-                {
-                    case "gauche":
-                        this.depart = new PointF(depart.X - 30, depart.Y);
-                        break;
-                    case "droite":
-                        this.depart = new PointF(depart.X + 30, depart.Y);
-                        break;
-                    case "bas":
-                        this.depart = new PointF(depart.X, depart.Y + 30);
-                        break;
-                    case "haut":
-                        this.depart = new PointF(depart.X, depart.Y - 30);
-                        break;
-                }
-            }
-            else
-            {
-                this.depart = new PointF(depart.X, depart.Y);
-            }
-
+            this.position = new PointF(pos.X, pos.Y);
         }
 
         public void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(Pens.Black, depart.X, depart.Y, 20, 20);
+            e.Graphics.DrawEllipse(Pens.Black, position.X, position.Y, 20, 20);
 
-            switch (mouv)
+            switch (orientation)
             {
                 case "gauche":
-                    e.Graphics.DrawLine(Pens.Black, depart.X + 10, depart.Y + 10, depart.X - 5, depart.Y + 10);
+                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X - 5, position.Y + 10);
                     break;
                 case "droite":
-                    e.Graphics.DrawLine(Pens.Black, depart.X + 10, depart.Y + 10, depart.X + 25, depart.Y + 10);
+                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 25, position.Y + 10);
                     break;
                 case "bas":
-                    e.Graphics.DrawLine(Pens.Black, depart.X + 10, depart.Y + 10, depart.X + 10, depart.Y + 25);
+                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y + 25);
                     break;
                 case "haut":
-                    e.Graphics.DrawLine(Pens.Black, depart.X + 10, depart.Y + 10, depart.X + 10, depart.Y - 5);
+                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y - 5);
                     break;
             }
 
+        }
+
+        public void PivoterDroite()
+        {
+            switch (orientation)
+            {
+                case "gauche":
+                    orientation = "haut";
+                    break;
+                case "droite":
+                    orientation = "bas";
+                    break;
+                case "bas":
+                    orientation = "gauche";
+                    break;
+                case "haut":
+                    orientation = "droite";
+                    break;
+            }
+        }
+        public void PivoterGauche()
+        {
+            switch (orientation)
+            {
+                case "gauche":
+                    orientation = "bas";
+                    break;
+                case "droite":
+                    orientation = "haut";
+                    break;
+                case "bas":
+                    orientation = "droite";
+                    break;
+                case "haut":
+                    orientation = "gauche";
+                    break;
+            }
+        }
+
+        public void Avancer()
+        {
+            
+            switch (orientation)
+            {
+                case "gauche":
+                    this.position = new PointF(position.X - 30, position.Y);
+                    break;
+                case "droite":
+                    this.position = new PointF(position.X + 30, position.Y);
+                    break;
+                case "bas":
+                    this.position = new PointF(position.X, position.Y + 30);
+                    break;
+                case "haut":
+                    this.position = new PointF(position.X, position.Y - 30);
+                    break;
+            }
         }
 
     }

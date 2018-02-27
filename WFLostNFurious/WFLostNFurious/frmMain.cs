@@ -12,18 +12,18 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
+        Personnage p = new Personnage(new PointF(255, 45), "haut");
         List<Bloc> labyrinthe = new List<Bloc>();
+
         public frmMain()
         {
             InitializeComponent();
+            DoubleBuffered = true;
         }
 
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
-            Personnage p = new Personnage(new PointF(200, 100), "avancer", "bas");
-            this.Paint += p.Paint;
             CreationLabyrithe();
-            DoubleBuffered = true;
         }
 
         public void CreationLabyrithe()
@@ -71,7 +71,6 @@ namespace WFLostNFurious
             #endregion
 
 
-            Invalidate();
         }
 
         public void creationBordure(int x, int y)
@@ -85,6 +84,7 @@ namespace WFLostNFurious
         {
             var arrivee = new Arrivee(x, y);
             labyrinthe.Add(arrivee);
+            this.Paint += p.Paint;
             this.Paint += arrivee.Paint;
         }
 
@@ -93,6 +93,27 @@ namespace WFLostNFurious
             var bloc = new Bloc(x, y);
             labyrinthe.Add(bloc);
             this.Paint += bloc.Paint;
+        }
+
+
+        private void btnDroite_Click(object sender, EventArgs e)
+        {
+            p.PivoterDroite();
+        }
+
+        private void btnGauche_Click(object sender, EventArgs e)
+        {
+            p.PivoterGauche();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void btnAvancer_Click(object sender, EventArgs e)
+        {
+            p.Avancer();
         }
     }
 }
