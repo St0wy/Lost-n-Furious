@@ -30,32 +30,25 @@ namespace WFLostNFurious
         {
             #region Creation Bordure
             //Creation Bordure
-            int x = 10, y = 10;
 
-            for (int i = 0; i < 17; i++)
+            for (int x = 10, y = 10; x <= 520; x += 30)
             {
                 creationBordure(x, y);
-                x += 30;
             }
 
-            for (int y = 10, x = 520; y < 520; y += 30)
-
-            for (int i = 0; i < 17; i++)
+            for (int x = 520, y = 10; y <= 520; y += 30)
             {
                 creationBordure(x, y);
-                y += 30;
             }
 
             for (int x = 520, y = 520; x >= 10; x -= 30)
             {
                 creationBordure(x, y);
-                x -= 30;
             }
 
             for (int y = 520, x = 10; y >= 10; y -= 30)
             {
                 creationBordure(x, y);
-                y -= 30;
             }
             #endregion
 
@@ -94,7 +87,7 @@ namespace WFLostNFurious
                 creationMur(x, y);
             }
 
-            for (int y = 190, x = 310; y <= 250; x += 30)
+            for (int y = 190, x = 310; y <= 250; y += 30)
             {
                 creationMur(x, y);
             }
@@ -112,7 +105,8 @@ namespace WFLostNFurious
             for (int x = 40, y = 490; x < 220; x += 30)
             {
                 creationMur(x, y);
-
+            }
+            #endregion
         }
 
         public void creationBordure(int x, int y)
