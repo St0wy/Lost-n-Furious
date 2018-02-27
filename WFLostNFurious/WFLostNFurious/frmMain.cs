@@ -59,9 +59,11 @@ namespace WFLostNFurious
             }
             #endregion
 
-            //Creation Arrivee
+            //Creation Arr<ivee
             creationArrivee(250, 40);
             creationArrivee(40, 430);
+            creationArrivee(490, 430);
+
             Invalidate();
             //Bloc mur = new Bloc(10, 50);
             //mur.Paint(sender, e);
