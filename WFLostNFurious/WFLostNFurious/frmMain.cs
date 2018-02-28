@@ -15,6 +15,7 @@ namespace WFLostNFurious
         Personnage p = new Personnage(new PointF(255, 495), "haut");
         
         List<Bloc> labyrinthe = new List<Bloc>();
+        List<int> instruction = new List<int>();
 
         
 
@@ -54,8 +55,6 @@ namespace WFLostNFurious
                 creationBordure(x, y);
             }
             #endregion
-
-            //Creation Arr<ivee
 
             //Creation Arrivee
             creationArrivee(250, 40);
@@ -156,6 +155,11 @@ namespace WFLostNFurious
             }
 
             for (int x = 430, y = 400; x <= 460; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 400, y = 220; x <= 430; x += 30)
             {
                 creationMur(x, y);
             }
@@ -297,11 +301,19 @@ namespace WFLostNFurious
         private void btnDroite_Click(object sender, EventArgs e)
         {
             p.PivoterDroite();
+             
+            lbxInstruction.Items.Add("Tourner à droite");
+
+            instruction.Add(3);
         }
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
             p.PivoterGauche();
+
+            lbxInstruction.Items.Add("Touner à gauche");
+
+            instruction.Add(2);
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
@@ -335,7 +347,9 @@ namespace WFLostNFurious
                 this.Text = "Non";
             }
 
+            lbxInstruction.Items.Add("Avancer");
 
+            instruction.Add(1);
         }
 
         private void timer1_Tick(object sender, EventArgs e)

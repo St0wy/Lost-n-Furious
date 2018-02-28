@@ -33,6 +33,7 @@
             this.btnGauche = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnAvancer = new System.Windows.Forms.Button();
+            this.lbxInstruction = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // btnDroite
@@ -70,11 +71,21 @@
             this.btnAvancer.UseVisualStyleBackColor = true;
             this.btnAvancer.Click += new System.EventHandler(this.btnAvancer_Click);
             // 
+            // lbxInstruction
+            // 
+            this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbxInstruction.FormattingEnabled = true;
+            this.lbxInstruction.Location = new System.Drawing.Point(644, 210);
+            this.lbxInstruction.Name = "lbxInstruction";
+            this.lbxInstruction.Size = new System.Drawing.Size(114, 329);
+            this.lbxInstruction.TabIndex = 1;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.lbxInstruction);
             this.Controls.Add(this.btnAvancer);
             this.Controls.Add(this.btnGauche);
             this.Controls.Add(this.btnDroite);
@@ -96,6 +107,7 @@
         private System.Windows.Forms.Button btnGauche;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnAvancer;
+        private System.Windows.Forms.ListBox lbxInstruction;
     }
 }
 
