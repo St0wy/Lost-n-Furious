@@ -213,14 +213,64 @@ namespace WFLostNFurious
 
             creationMur(130, 280);
 
+            for (int x = 70, y = 220; y <= 250; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 100, y = 160; y <= 220; y += 30)
+            {
+                creationMur(x, y);
+            }
+
+            creationMur(130, 220);
+
+            for (int x = 190, y = 250; x <= 250; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 190, y = 190; x <= 280; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 160, y = 160; x <= 190; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 190, y = 130; x <= 250; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            creationMur(220, 100);
+
+            for (int x = 100, y = 70; x <= 160; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 70, y = 40; x <= 220; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 100, y = 100; x <= 130; x += 30)
+            {
+                creationMur(x, y);
+            }
+
             #endregion
         }
-        PaintEventHandler image;
+        PaintEventHandler image;    //Variable d'affichage du labyrinthe
 
         public void creationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
             labyrinthe.Add(bordure);
+            //Ajoute l'affichage de l'objet dans une variable d'image
             image += bordure.Paint;
             //this.Paint += bordure.Paint;
         }
@@ -229,6 +279,7 @@ namespace WFLostNFurious
         {
             var arrivee = new Arrivee(x, y);
             labyrinthe.Add(arrivee);
+            //Ajoute l'affichage de l'objet dans une variable d'image
             image += arrivee.Paint;
             //this.Paint += arrivee.Paint;
         }
@@ -237,6 +288,7 @@ namespace WFLostNFurious
         {
             var bloc = new Bloc(x, y);
             labyrinthe.Add(bloc);
+            //Ajoute l'affichage de l'objet dans une variable d'image
             image += bloc.Paint;
             //this.Paint += bloc.Paint;
         }
@@ -293,6 +345,7 @@ namespace WFLostNFurious
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            //Affiche le personnage et le labyrinthe
             this.Paint += p.Paint;
             CreationLabyrithe();
             this.Paint += image;
