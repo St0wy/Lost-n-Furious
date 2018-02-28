@@ -5,9 +5,16 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+//TO DO:
+//collision arrivée à traiter
+//créer bouton pour enlever la dernière instruction
+//vérifier la gestion de l'activation et la desactivation des boutons
+//highlighter instruction en cours
 namespace WFLostNFurious
 {
     public partial class frmMain : Form
@@ -16,8 +23,7 @@ namespace WFLostNFurious
         
         List<Bloc> labyrinthe = new List<Bloc>();
         List<int> instruction = new List<int>();
-
-        
+        int compteur = 0;
 
         public frmMain()
         {
@@ -300,7 +306,6 @@ namespace WFLostNFurious
 
         private void btnDroite_Click(object sender, EventArgs e)
         {
-            p.PivoterDroite();
              
             lbxInstruction.Items.Add("Tourner à droite");
 
@@ -309,44 +314,14 @@ namespace WFLostNFurious
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
-            p.PivoterGauche();
 
-            lbxInstruction.Items.Add("Touner à gauche");
+            lbxInstruction.Items.Add("Tourner à gauche");
 
             instruction.Add(2);
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
         {
-            p.Avancer();
-
-            bool collision = false;
-
-            //Analise tous les blocs
-            foreach (Bloc b in labyrinthe)
-            {
-                //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
-                if (!collision)
-                {
-                    if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
-                    {
-                        collision = true;
-                    }
-                    else
-                    {
-                        collision = false;
-                    }
-                }
-            }
-            if (collision)
-            {
-                this.Text = "Collision";
-            }
-            else
-            {
-                this.Text = "Non";
-            }
-
             lbxInstruction.Items.Add("Avancer");
 
             instruction.Add(1);
@@ -363,6 +338,115 @@ namespace WFLostNFurious
             this.Paint += p.Paint;
             CreationLabyrithe();
             this.Paint += image;
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            tmrAvancer.Enabled = true;
+            btnDroite.Enabled = false;
+            btnGauche.Enabled = false;
+            btnAvancer.Enabled = false;
+            btnPlay.Enabled = false;
+        }
+
+        private void tmrAvancer_Tick(object sender, EventArgs e)
+        {
+            string instrucAcruelle = lbxInstruction.Items[compteur].ToString();
+            bool collision = false;
+
+            
+            if (instrucAcruelle == "Avancer")
+            {
+                p.Avancer();
+
+                foreach (Bloc b in labyrinthe)
+                {
+                    //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
+                    if (!collision)
+                    {
+                        if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                        {
+                            collision = true;
+                        }
+                        else
+                        {
+                            collision = false;
+                        }
+                    }
+                }
+                if (collision)
+                {
+                   
+                    switch (p.Orientation)
+                    {
+                        case "gauche":
+                            p.Orientation = "droite";
+                            p.Avancer();
+                            p.Orientation = "gauche";
+                            break;
+                        case "droite":
+                            p.Orientation = "gauche";
+                            p.Avancer();
+                            p.Orientation = "droite";
+                            break;
+                        case "bas":
+                            p.Orientation = "haut";
+                            p.Avancer();
+                            p.Orientation = "bas";
+                            break;
+                        case "haut":
+                            p.Orientation = "bas";
+                            p.Avancer();
+                            p.Orientation = "haut";
+                            break;
+                    }
+                    tmrAvancer.Enabled = false;
+
+                    DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
+                    
+                    if (dr == DialogResult.Yes)
+                    {
+                        btnReset_Click(sender, e);
+                    }
+                    else
+                    {
+                        this.Close();
+                        
+                    }
+                }
+            }
+            else
+            {
+                if (instrucAcruelle == "Tourner à droite")
+                {
+                    p.PivoterDroite();
+
+                }
+                else
+                {
+                    if (instrucAcruelle == "Tourner à gauche")
+                    {
+                        p.PivoterGauche();
+                    }
+                }
+            }
+            if (compteur == lbxInstruction.Items.Count-1)
+            {
+                tmrAvancer.Enabled = false;
+            }
+            compteur++;
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            lbxInstruction.Items.Clear();
+            btnDroite.Enabled = true;
+            btnGauche.Enabled = true;
+            btnAvancer.Enabled = true;
+            btnPlay.Enabled = true;
+            p.Position = new PointF(255, 495);
+            p.Orientation = "haut";
+            compteur = 0;
         }
     }
 }

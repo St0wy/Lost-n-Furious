@@ -31,43 +31,49 @@
             this.components = new System.ComponentModel.Container();
             this.btnDroite = new System.Windows.Forms.Button();
             this.btnGauche = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tmrInvalidate = new System.Windows.Forms.Timer(this.components);
             this.btnAvancer = new System.Windows.Forms.Button();
             this.lbxInstruction = new System.Windows.Forms.ListBox();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.tmrAvancer = new System.Windows.Forms.Timer(this.components);
+            this.btnReset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnDroite
             // 
-            this.btnDroite.Location = new System.Drawing.Point(644, 158);
+            this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDroite.Location = new System.Drawing.Point(675, 165);
             this.btnDroite.Name = "btnDroite";
-            this.btnDroite.Size = new System.Drawing.Size(114, 23);
+            this.btnDroite.Size = new System.Drawing.Size(83, 39);
             this.btnDroite.TabIndex = 0;
-            this.btnDroite.Text = "Tourner à droite";
+            this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
             this.btnDroite.Click += new System.EventHandler(this.btnDroite_Click);
             // 
             // btnGauche
             // 
-            this.btnGauche.Location = new System.Drawing.Point(644, 119);
+            this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGauche.Location = new System.Drawing.Point(584, 165);
             this.btnGauche.Name = "btnGauche";
-            this.btnGauche.Size = new System.Drawing.Size(114, 23);
+            this.btnGauche.Size = new System.Drawing.Size(83, 39);
             this.btnGauche.TabIndex = 0;
-            this.btnGauche.Text = "Tourner à gauche";
+            this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
             this.btnGauche.Click += new System.EventHandler(this.btnGauche_Click);
             // 
-            // timer1
+            // tmrInvalidate
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.tmrInvalidate.Enabled = true;
+            this.tmrInvalidate.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // btnAvancer
             // 
-            this.btnAvancer.Location = new System.Drawing.Point(644, 78);
+            this.btnAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAvancer.Location = new System.Drawing.Point(584, 120);
             this.btnAvancer.Name = "btnAvancer";
-            this.btnAvancer.Size = new System.Drawing.Size(114, 23);
+            this.btnAvancer.Size = new System.Drawing.Size(174, 39);
             this.btnAvancer.TabIndex = 0;
-            this.btnAvancer.Text = "Avancer";
+            this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
             this.btnAvancer.Click += new System.EventHandler(this.btnAvancer_Click);
             // 
@@ -75,16 +81,43 @@
             // 
             this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxInstruction.FormattingEnabled = true;
-            this.lbxInstruction.Location = new System.Drawing.Point(644, 210);
+            this.lbxInstruction.Location = new System.Drawing.Point(584, 210);
             this.lbxInstruction.Name = "lbxInstruction";
-            this.lbxInstruction.Size = new System.Drawing.Size(114, 329);
+            this.lbxInstruction.Size = new System.Drawing.Size(174, 329);
             this.lbxInstruction.TabIndex = 1;
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Location = new System.Drawing.Point(584, 36);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(174, 23);
+            this.btnPlay.TabIndex = 2;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            // 
+            // tmrAvancer
+            // 
+            this.tmrAvancer.Interval = 500;
+            this.tmrAvancer.Tick += new System.EventHandler(this.tmrAvancer_Tick);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(584, 65);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(174, 23);
+            this.btnReset.TabIndex = 3;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lbxInstruction);
             this.Controls.Add(this.btnAvancer);
             this.Controls.Add(this.btnGauche);
@@ -105,9 +138,12 @@
 
         private System.Windows.Forms.Button btnDroite;
         private System.Windows.Forms.Button btnGauche;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tmrInvalidate;
         private System.Windows.Forms.Button btnAvancer;
         private System.Windows.Forms.ListBox lbxInstruction;
+        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Timer tmrAvancer;
+        private System.Windows.Forms.Button btnReset;
     }
 }
 

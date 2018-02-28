@@ -11,10 +11,32 @@ namespace WFLostNFurious
 {
     class Personnage
     {
-        PointF position;
-        string orientation;
+        private PointF position;
+        private string orientation;
 
-        public PointF Position { get => position;}
+        public PointF Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+
+        public string Orientation
+        {
+            get
+            {
+                return orientation;
+            }
+            set
+            {
+                orientation = value;
+            }
+        }
 
         public Personnage(PointF pos , string orient)
         {
