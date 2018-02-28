@@ -12,8 +12,11 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
-        Personnage p = new Personnage(new PointF(255, 45), "haut");
+        Personnage p = new Personnage(new PointF(255, 495), "haut");
+        
         List<Bloc> labyrinthe = new List<Bloc>();
+
+        
 
         public frmMain()
         {
@@ -23,7 +26,7 @@ namespace WFLostNFurious
 
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
-            CreationLabyrithe();
+            
         }
 
         public void CreationLabyrithe()
@@ -164,37 +167,78 @@ namespace WFLostNFurious
             {
                 creationMur(x, y);
             }
-			
+
             creationMur(40, 460);
-			
-            for (int x = 40, y = 490; x < 220; x += 30)
+
+            for (int x = 40, y = 490; x <= 220; x += 30)
             {
                 creationMur(x, y);
             }
             creationMur(430, 430);
+
+            for (int x = 70, y = 460; x < 130; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            creationMur(70, 370);
+            creationMur(100, 430);
+
+            for (int x = 130, y = 460; y >= 340; y -= 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 100, y = 310; x < 280; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 190, y = 460; y >= 430; y -= 30)
+            {
+                creationMur(x, y);
+            }
+
+            for (int x = 220, y = 460; y >= 430; y -= 30)
+            {
+                creationMur(x, y);
+            }
+
+            creationMur(220, 340);
+
+            for (int x = 190, y = 370; x <= 220; x += 30)
+            {
+                creationMur(x, y);
+            }
+
+            creationMur(130, 280);
+
             #endregion
         }
+        PaintEventHandler image;
 
         public void creationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
             labyrinthe.Add(bordure);
-            this.Paint += bordure.Paint;
+            image += bordure.Paint;
+            //this.Paint += bordure.Paint;
         }
 
         public void creationArrivee(int x, int y)
         {
             var arrivee = new Arrivee(x, y);
             labyrinthe.Add(arrivee);
-            this.Paint += p.Paint;
-            this.Paint += arrivee.Paint;
+            image += arrivee.Paint;
+            //this.Paint += arrivee.Paint;
         }
 
         public void creationMur(int x, int y)
         {
             var bloc = new Bloc(x, y);
             labyrinthe.Add(bloc);
-            this.Paint += bloc.Paint;
+            image += bloc.Paint;
+            //this.Paint += bloc.Paint;
         }
 
 
@@ -212,22 +256,46 @@ namespace WFLostNFurious
         {
             p.Avancer();
 
+            bool collision = false;
+
+            //Analise tous les blocs
             foreach (Bloc b in labyrinthe)
             {
-                if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
+                if (!collision)
                 {
-                    this.Text = "Collision!!!!";
-                }
-                else
-                {
-                    this.Text = "non!!!!";
+                    if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                    {
+                        collision = true;
+                    }
+                    else
+                    {
+                        collision = false;
+                    }
                 }
             }
+            if (collision)
+            {
+                this.Text = "Collision";
+            }
+            else
+            {
+                this.Text = "Non";
+            }
+
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            this.Paint += p.Paint;
+            CreationLabyrithe();
+            this.Paint += image;
         }
     }
 }
