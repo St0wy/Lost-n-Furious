@@ -45,7 +45,7 @@
             this.btnDroite.Location = new System.Drawing.Point(675, 165);
             this.btnDroite.Name = "btnDroite";
             this.btnDroite.Size = new System.Drawing.Size(83, 39);
-            this.btnDroite.TabIndex = 0;
+            this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
             this.btnDroite.Click += new System.EventHandler(this.btnDroite_Click);
@@ -56,7 +56,7 @@
             this.btnGauche.Location = new System.Drawing.Point(584, 165);
             this.btnGauche.Name = "btnGauche";
             this.btnGauche.Size = new System.Drawing.Size(83, 39);
-            this.btnGauche.TabIndex = 0;
+            this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
             this.btnGauche.Click += new System.EventHandler(this.btnGauche_Click);
@@ -72,7 +72,7 @@
             this.btnAvancer.Location = new System.Drawing.Point(584, 120);
             this.btnAvancer.Name = "btnAvancer";
             this.btnAvancer.Size = new System.Drawing.Size(174, 39);
-            this.btnAvancer.TabIndex = 0;
+            this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
             this.btnAvancer.Click += new System.EventHandler(this.btnAvancer_Click);
@@ -84,14 +84,15 @@
             this.lbxInstruction.Location = new System.Drawing.Point(584, 210);
             this.lbxInstruction.Name = "lbxInstruction";
             this.lbxInstruction.Size = new System.Drawing.Size(174, 329);
-            this.lbxInstruction.TabIndex = 1;
+            this.lbxInstruction.TabIndex = 5;
             // 
             // btnPlay
             // 
+            this.btnPlay.Enabled = false;
             this.btnPlay.Location = new System.Drawing.Point(584, 36);
             this.btnPlay.Name = "btnPlay";
             this.btnPlay.Size = new System.Drawing.Size(174, 23);
-            this.btnPlay.TabIndex = 2;
+            this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
@@ -103,10 +104,11 @@
             // 
             // btnReset
             // 
+            this.btnReset.Enabled = false;
             this.btnReset.Location = new System.Drawing.Point(584, 65);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(174, 23);
-            this.btnReset.TabIndex = 3;
+            this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);

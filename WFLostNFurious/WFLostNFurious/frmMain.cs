@@ -309,6 +309,8 @@ namespace WFLostNFurious
              
             lbxInstruction.Items.Add("Tourner à droite");
 
+            btnPlay.Enabled = true;
+
             instruction.Add(3);
         }
 
@@ -317,12 +319,16 @@ namespace WFLostNFurious
 
             lbxInstruction.Items.Add("Tourner à gauche");
 
+            btnPlay.Enabled = true;
+
             instruction.Add(2);
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
+
+            btnPlay.Enabled = true;
 
             instruction.Add(1);
         }
@@ -347,6 +353,7 @@ namespace WFLostNFurious
             btnGauche.Enabled = false;
             btnAvancer.Enabled = false;
             btnPlay.Enabled = false;
+            btnReset.Enabled = true;
         }
 
         private void tmrAvancer_Tick(object sender, EventArgs e)
@@ -443,7 +450,7 @@ namespace WFLostNFurious
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
-            btnPlay.Enabled = true;
+            btnReset.Enabled = false;
             p.Position = new PointF(255, 495);
             p.Orientation = "haut";
             compteur = 0;
