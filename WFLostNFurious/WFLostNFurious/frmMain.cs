@@ -11,10 +11,7 @@ using System.Windows.Forms;
 
 
 //TO DO:
-//collision arrivée à traiter
-//créer bouton pour enlever la dernière instruction
-//vérifier la gestion de l'activation et la desactivation des boutons
-//highlighter instruction en cours
+// Gerer les click dans la listbox pendant le Play --> Ya deja event click tout en bas
 namespace WFLostNFurious
 {
     public partial class frmMain : Form
@@ -22,8 +19,8 @@ namespace WFLostNFurious
         Personnage p = new Personnage(new PointF(255, 495), "haut");
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
-        List<Arrivee> lstArrivee = new List<Arrivee>();
-        List<int> instruction = new List<int>();
+        bool inPlay = false;
+        List<string> instruction = new List<string>();
         int compteur = 0;
 
         public frmMain()
@@ -346,8 +343,6 @@ namespace WFLostNFurious
             lbxInstruction.Items.Add("Tourner à droite");
 
             btnPlay.Enabled = true;
-
-            instruction.Add(3);
         }
 
         private void btnGauche_Click(object sender, EventArgs e)
@@ -356,8 +351,6 @@ namespace WFLostNFurious
             lbxInstruction.Items.Add("Tourner à gauche");
 
             btnPlay.Enabled = true;
-
-            instruction.Add(2);
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
@@ -365,8 +358,6 @@ namespace WFLostNFurious
             lbxInstruction.Items.Add("Avancer");
 
             btnPlay.Enabled = true;
-
-            instruction.Add(1);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -385,6 +376,14 @@ namespace WFLostNFurious
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            foreach(string s in lbxInstruction.Items)
+            {
+                instruction.Add(s);
+            }
+
+            inPlay = true;
+            lbxInstruction.Focus();
+            lbxInstruction.SelectedIndex = 0;
             tmrAvancer.Enabled = true;
             btnDroite.Enabled = false;
             btnGauche.Enabled = false;
@@ -395,104 +394,109 @@ namespace WFLostNFurious
 
         private void tmrAvancer_Tick(object sender, EventArgs e)
         {
-            string instrucAcruelle = lbxInstruction.Items[compteur].ToString();
-            bool collision = false;
-
-
-            if (instrucAcruelle == "Avancer")
+            if (instruction.Count != 0)
             {
-                p.Avancer();
+                string instrucAcruelle = instruction.ElementAt(compteur).ToString();
+                bool collision = false;
 
-                foreach (Bloc b in labyrinthe)
+                if (instrucAcruelle == "Avancer")
                 {
-                    //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
-                    if (!collision)
+                    p.Avancer();
+
+                    foreach (Bloc b in labyrinthe)
                     {
-                        if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                        //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
+                        if (!collision)
                         {
-                            collision = true;
-                            if (b == modele)
+							if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+							{
+								collision = true;
+								if (b == modele)
+								{
+									tmrAvancer.Enabled = false;
+									MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
+									btnReset_Click(sender, e);
+									nouvelleArrivee();
+									inPlay = false;
+									break;
+								}
+							}
+                            else
                             {
-                                tmrAvancer.Enabled = false;
-                                MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
-                                btnReset_Click(sender, e);
-                                nouvelleArrivee();
-                                //mettre le booleen de sonja
-                                break;
+                                collision = false;
                             }
                         }
-                        else
+                    }
+                    if (collision)
+                    {
+
+                        switch (p.Orientation)
                         {
-                            collision = false;
+                            case "gauche":
+                                p.Orientation = "droite";
+                                p.Avancer();
+                                p.Orientation = "gauche";
+                                break;
+                            case "droite":
+                                p.Orientation = "gauche";
+                                p.Avancer();
+                                p.Orientation = "droite";
+                                break;
+                            case "bas":
+                                p.Orientation = "haut";
+                                p.Avancer();
+                                p.Orientation = "bas";
+                                break;
+                            case "haut":
+                                p.Orientation = "bas";
+                                p.Avancer();
+                                p.Orientation = "haut";
+                                break;
+                        }
+                        tmrAvancer.Enabled = false;
+
+                        DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
+
+                        if (dr == DialogResult.Yes)
+                        {
+                            btnReset_Click(sender, e);
+                            inPlay = false;
                         }
                     }
                     
-                }
-                if (collision)
-                {
-                    
-                    switch (p.Orientation)
-                    {
-                        case "gauche":
-                            p.Orientation = "droite";
-                            p.Avancer();
-                            p.Orientation = "gauche";
-                            break;
-                        case "droite":
-                            p.Orientation = "gauche";
-                            p.Avancer();
-                            p.Orientation = "droite";
-                            break;
-                        case "bas":
-                            p.Orientation = "haut";
-                            p.Avancer();
-                            p.Orientation = "bas";
-                            break;
-                        case "haut":
-                            p.Orientation = "bas";
-                            p.Avancer();
-                            p.Orientation = "haut";
-                            break;
-                    }
-                    tmrAvancer.Enabled = false;
-
-                    DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                    if (dr == DialogResult.Yes)
-                    {
-                        btnReset_Click(sender, e);
-                    }
-                    else
-                    {
-                        this.Close();
-
-                    }
-                }
-            }
-            else
-            {
-                if (instrucAcruelle == "Tourner à droite")
-                {
-                    p.PivoterDroite();
-
                 }
                 else
                 {
-                    if (instrucAcruelle == "Tourner à gauche")
+                    if (instrucAcruelle == "Tourner à droite")
                     {
-                        p.PivoterGauche();
+                        p.PivoterDroite();
+					}
+                    else
+                    {
+                        if (instrucAcruelle == "Tourner à gauche")
+                        {
+                            p.PivoterGauche();
+                        }
                     }
                 }
+                if (compteur == lbxInstruction.Items.Count - 1)
+                {
+                    tmrAvancer.Enabled = false;
+                }
+                compteur++;
+
+                if (lbxInstruction.SelectedIndex < lbxInstruction.Items.Count - 1)
+                {
+                    lbxInstruction.SelectedIndex += 1;
+                }
             }
-            if (compteur == lbxInstruction.Items.Count - 1)
-            {
-                tmrAvancer.Enabled = false;
-            }
-            compteur++;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Clear();
+            instruction.Clear();
+            inPlay = false;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
@@ -500,6 +504,22 @@ namespace WFLostNFurious
             p.Position = new PointF(255, 495);
             p.Orientation = "haut";
             compteur = 0;
+        }
+
+        private void lbxInstruction_DoubleClick(object sender, EventArgs e)
+        {
+            if (!inPlay)
+            {
+                lbxInstruction.Items.RemoveAt(lbxInstruction.SelectedIndex);
+            }
+        }
+
+        private void lbxInstruction_Click(object sender, EventArgs e)
+        {
+            if (inPlay)
+            {
+                
+            }
         }
     }
 }
