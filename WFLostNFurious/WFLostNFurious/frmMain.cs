@@ -20,8 +20,9 @@ namespace WFLostNFurious
     public partial class frmMain : Form
     {
         Personnage p = new Personnage(new PointF(255, 495), "haut");
-        
+        Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
+        List<Arrivee> lstArrivee = new List<Arrivee>();
         List<int> instruction = new List<int>();
         int compteur = 0;
 
@@ -33,7 +34,7 @@ namespace WFLostNFurious
 
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         public void CreationLabyrithe()
@@ -303,10 +304,45 @@ namespace WFLostNFurious
             //this.Paint += bloc.Paint;
         }
 
+        public void nouvelleArrivee()
+        {
+            Random rnd = new Random();
+            int valArrive = rnd.Next(3);
+            int tmp = 0;
+
+            Label lblArrivee = new Label();
+            lblArrivee.Location = new Point(584, 91);
+            lblArrivee.Font = new Font("Arial", 13);
+
+            foreach (Bloc m in labyrinthe)
+            {
+                if(m is Arrivee)
+                {
+                    if (valArrive == tmp)
+                    {
+                        modele = m;
+                    }
+                    tmp++;
+                }
+            }
+            if (valArrive == 0)
+            {
+                lblArrivee.Text = "Arrivée: A";
+            }
+            else if (valArrive == 1)
+            {
+                lblArrivee.Text = "Arrivée: B";
+            }
+            else if (valArrive == 2)
+            {
+                lblArrivee.Text = "Arrivée: C";
+            }
+            this.Controls.Add(lblArrivee);
+        }
 
         private void btnDroite_Click(object sender, EventArgs e)
         {
-             
+
             lbxInstruction.Items.Add("Tourner à droite");
 
             btnPlay.Enabled = true;
@@ -344,6 +380,7 @@ namespace WFLostNFurious
             this.Paint += p.Paint;
             CreationLabyrithe();
             this.Paint += image;
+            nouvelleArrivee();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -361,7 +398,7 @@ namespace WFLostNFurious
             string instrucAcruelle = lbxInstruction.Items[compteur].ToString();
             bool collision = false;
 
-            
+
             if (instrucAcruelle == "Avancer")
             {
                 p.Avancer();
@@ -374,16 +411,26 @@ namespace WFLostNFurious
                         if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
                         {
                             collision = true;
+                            if (b == modele)
+                            {
+                                tmrAvancer.Enabled = false;
+                                MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
+                                btnReset_Click(sender, e);
+                                nouvelleArrivee();
+                                //mettre le booleen de sonja
+                                break;
+                            }
                         }
                         else
                         {
                             collision = false;
                         }
                     }
+                    
                 }
                 if (collision)
                 {
-                   
+                    
                     switch (p.Orientation)
                     {
                         case "gauche":
@@ -410,7 +457,6 @@ namespace WFLostNFurious
                     tmrAvancer.Enabled = false;
 
                     DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                    
                     if (dr == DialogResult.Yes)
                     {
                         btnReset_Click(sender, e);
@@ -418,7 +464,7 @@ namespace WFLostNFurious
                     else
                     {
                         this.Close();
-                        
+
                     }
                 }
             }
@@ -437,7 +483,7 @@ namespace WFLostNFurious
                     }
                 }
             }
-            if (compteur == lbxInstruction.Items.Count-1)
+            if (compteur == lbxInstruction.Items.Count - 1)
             {
                 tmrAvancer.Enabled = false;
             }

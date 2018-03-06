@@ -63,6 +63,11 @@ namespace WFLostNFurious
             this.y = y;
         }
 
+        public Arrivee()
+        {
+
+        }
+
         public override void Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.FillRectangle(Brushes.Red, x, y, 30, 30);
