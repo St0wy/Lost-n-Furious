@@ -84,13 +84,9 @@
             this.lbxInstruction.Location = new System.Drawing.Point(584, 210);
             this.lbxInstruction.Name = "lbxInstruction";
             this.lbxInstruction.Size = new System.Drawing.Size(174, 329);
-<<<<<<< HEAD
-            this.lbxInstruction.TabIndex = 5;
-=======
             this.lbxInstruction.TabIndex = 1;
             this.lbxInstruction.Click += new System.EventHandler(this.lbxInstruction_Click);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
->>>>>>> Suppression instruction dans liste
             // 
             // btnPlay
             // 
