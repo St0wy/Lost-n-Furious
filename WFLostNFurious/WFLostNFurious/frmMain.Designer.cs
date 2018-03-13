@@ -37,6 +37,7 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.tmrAvancer = new System.Windows.Forms.Timer(this.components);
             this.btnReset = new System.Windows.Forms.Button();
+            this.debug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnDroite
@@ -115,12 +116,23 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // debug
+            // 
+            this.debug.Location = new System.Drawing.Point(584, 94);
+            this.debug.Name = "debug";
+            this.debug.Size = new System.Drawing.Size(174, 23);
+            this.debug.TabIndex = 0;
+            this.debug.Text = "debug";
+            this.debug.UseVisualStyleBackColor = true;
+            this.debug.Click += new System.EventHandler(this.debug_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.debug);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lbxInstruction);
             this.Controls.Add(this.btnAvancer);
@@ -148,6 +160,7 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Timer tmrAvancer;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button debug;
     }
 }
 

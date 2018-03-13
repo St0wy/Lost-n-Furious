@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bloc.cs" />
+    <Compile Include="frmGrandLabyrinthe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGrandLabyrinthe.Designer.cs">
+      <DependentUpon>frmGrandLabyrinthe.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

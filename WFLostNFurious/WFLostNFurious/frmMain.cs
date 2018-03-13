@@ -365,7 +365,7 @@ namespace WFLostNFurious
             Invalidate();
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        public virtual void frmMain_Load(object sender, EventArgs e)
         {
             //Affiche le personnage et le labyrinthe
             this.Paint += p.Paint;
@@ -520,6 +520,12 @@ namespace WFLostNFurious
             {
                 
             }
+        }
+
+        private void debug_Click(object sender, EventArgs e)
+        {
+            frmGrandLabyrinthe frm = new frmGrandLabyrinthe();
+            frm.Show();
         }
     }
 }
