@@ -17,13 +17,13 @@ namespace WFLostNFurious
     public partial class frmMain : Form
     {
         PaintEventHandler image;    //Variable d'affichage du labyrinthe
-        Personnage p;
+        Personnage p = new Personnage(new PointF(0, 0), "haut");
+
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
         bool inPlay = false;
         List<string> instruction = new List<string>();
         int compteur = 0;
-        PaintEventHandler image;    //Variable d'affichage du labyrinthe
 
         int[][] tabLabPetit = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
@@ -113,8 +113,7 @@ namespace WFLostNFurious
                     }
                     else if (tabLab[i][j] == 3)
                     {
-                        p = new Personnage(new PointF(x + 5, y + 5), "haut");
-                        this.Paint += p.Paint;
+                        p.Position = new PointF(Convert.ToSingle(x) + 5f, Convert.ToSingle(y) + 5f);
                     }
                 }
             }
@@ -208,11 +207,12 @@ namespace WFLostNFurious
 
         public virtual void frmMain_Load(object sender, EventArgs e)
         {
-            //Affiche le personnage et le labyrinthe
-            
+            //Affiche le labyrinthe
             CreateLabFromGrid(tabLabMoyen);
             this.Paint += image;
+            this.Paint += p.Paint;
             nouvelleArrivee();
+
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -402,19 +402,24 @@ namespace WFLostNFurious
                 if (difficulteLaby == "Grand")
                 {
                     //appeler creation labyrinthe grand
+                    CreateLabFromGrid(tabLabGrand);
+                    nouvelleArrivee();
                     lblDifficulteTaille.Text = "Grand";
                     btnReset_Click(sender, e);
                 }
                 else if (difficulteLaby == "Moyen")
                 {
                     //appeler creation labyrinthe moyen
-                    CreationLabyrithe();
+                    CreateLabFromGrid(tabLabMoyen);
+                    nouvelleArrivee();
                     lblDifficulteTaille.Text = "Moyen";
                     btnReset_Click(sender, e);
                 }
                 else if (difficulteLaby == "Petit")
                 {
                     //appeler creation labyrinthe petit
+                    CreateLabFromGrid(tabLabPetit);
+                    nouvelleArrivee();
                     lblDifficulteTaille.Text = "Petit";
                     btnReset_Click(sender, e);
                 }
