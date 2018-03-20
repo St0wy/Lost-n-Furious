@@ -87,6 +87,7 @@
             this.lbxInstruction.Size = new System.Drawing.Size(174, 329);
             this.lbxInstruction.TabIndex = 1;
             this.lbxInstruction.Click += new System.EventHandler(this.lbxInstruction_Click);
+            this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.lbxInstruction_SelectedIndexChanged);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
             // 
             // btnPlay

@@ -341,23 +341,17 @@ namespace WFLostNFurious
         {
 
             lbxInstruction.Items.Add("Tourner à droite");
-
-            btnPlay.Enabled = true;
         }
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
 
             lbxInstruction.Items.Add("Tourner à gauche");
-
-            btnPlay.Enabled = true;
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
-
-            btnPlay.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -526,6 +520,18 @@ namespace WFLostNFurious
         {
             frmGrandLabyrinthe frm = new frmGrandLabyrinthe();
             frm.Show();
+        }
+
+        private void lbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lbxInstruction.Items.Count == 0)
+            {
+                btnPlay.Enabled = false;
+            }
+            else
+            {
+                btnPlay.Enabled = true;
+            }
         }
     }
 }

@@ -18,7 +18,6 @@ namespace WFLostNFurious
         }
         public override void frmMain_Load(object sender, EventArgs e)
         {
-
             //base.frmMain_Load(sender, e);
         }
     }
