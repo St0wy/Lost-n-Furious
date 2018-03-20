@@ -17,258 +17,108 @@ namespace WFLostNFurious
     public partial class frmMain : Form
     {
         PaintEventHandler image;    //Variable d'affichage du labyrinthe
-        Personnage p = new Personnage(new PointF(255, 495), "haut"); //Pour fabian a changer
+        Personnage p;
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
         bool inPlay = false;
         List<string> instruction = new List<string>();
         int compteur = 0;
+        PaintEventHandler image;    //Variable d'affichage du labyrinthe
+
+        int[][] tabLabPetit = new int[][] {
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
+        };
+
+        int[][] tabLabMoyen = new int[][] {
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 4 },
+            new int[] { 4, 2, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 2, 4 },
+            new int[] { 4, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
+        };
+
+        int[][] tabLabGrand = new int[][] {
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 0, 0, 1, 0, 6, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 6, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 2, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 4 },
+            new int[] { 4, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 1, 1, 1, 1, 0, 6, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
+        };
 
         public frmMain()
         {
             InitializeComponent();
             DoubleBuffered = true;
         }
-
-        public void CreationLabyrithe()
+		
+        public void CreateLabFromGrid(int[][] tabLab)
         {
-            #region Creation Bordure
-            //Creation Bordure
-
-            for (int x = 10, y = 10; x <= 520; x += 30)
+            for (int i = 0; i < tabLab.Length; i++)
             {
-                creationBordure(x, y);
+                int y = (i + 1) * 30 + 10;
+                for (int j = 0; j < tabLab[i].Length; j++)
+                {
+                    int x = (j + 1) * 30 + 10;
+                    if (tabLab[i][j] == 1)
+                    {
+                        creationMur(x, y);
+                    }
+                    else if (tabLab[i][j] == 2)
+                    {
+                        creationArrivee(x, y);
+                    }
+                    else if (tabLab[i][j] == 3)
+                    {
+                        p = new Personnage(new PointF(x + 5, y + 5), "haut");
+                        this.Paint += p.Paint;
+                    }
+                }
             }
-
-            for (int x = 520, y = 10; y <= 520; y += 30)
-            {
-                creationBordure(x, y);
-            }
-
-            for (int x = 520, y = 520; x >= 10; x -= 30)
-            {
-                creationBordure(x, y);
-            }
-
-            for (int y = 520, x = 10; y >= 10; y -= 30)
-            {
-                creationBordure(x, y);
-            }
-            #endregion
-
-            //Creation Arrivee
-            creationArrivee(250, 40);
-            creationArrivee(40, 430);
-            creationArrivee(490, 430);
-
-            creationMur(40, 40);
-
-            #region Creation Mur
-            for (int x = 280, y = 40; x <= 490; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 70, x = 340; y <= 100; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 310, y = 130; x <= 340; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 70, x = 400; y <= 100; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 400, y = 130; x <= 430; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 190, x = 310; y <= 250; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 190, x = 370; y <= 280; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 400, y = 190; x <= 460; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 70, x = 490; y <= 400; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 460, x = 490; y <= 490; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 310, y = 490; x <= 460; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 430, x = 280; y <= 490; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 280, x = 430; y <= 340; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 310, x = 310; y <= 340; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 340, y = 340; x <= 400; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 280, y = 370; x <= 370; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 400, x = 340; y <= 430; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int y = 400, x = 370; y <= 460; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 430, y = 400; x <= 460; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 400, y = 220; x <= 430; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(280, 70);
-            creationMur(460, 70);
-
-            for (int x = 40, y = 70; y <= 420; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(40, 460);
-
-            for (int x = 40, y = 490; x <= 220; x += 30)
-            {
-                creationMur(x, y);
-            }
-            creationMur(430, 430);
-
-            for (int x = 70, y = 460; x < 130; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(70, 370);
-            creationMur(100, 430);
-
-            for (int x = 130, y = 460; y >= 340; y -= 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 100, y = 310; x < 280; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 190, y = 460; y >= 430; y -= 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 220, y = 460; y >= 430; y -= 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(220, 340);
-
-            for (int x = 190, y = 370; x <= 220; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(130, 280);
-
-            for (int x = 70, y = 220; y <= 250; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 100, y = 160; y <= 220; y += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(130, 220);
-
-            for (int x = 190, y = 250; x <= 250; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 190, y = 190; x <= 280; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 160, y = 160; x <= 190; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 190, y = 130; x <= 250; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            creationMur(220, 100);
-
-            for (int x = 100, y = 70; x <= 160; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 70, y = 40; x <= 220; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            for (int x = 100, y = 100; x <= 130; x += 30)
-            {
-                creationMur(x, y);
-            }
-
-            #endregion
         }
-        
 
         public void creationBordure(int x, int y)
         {
@@ -276,7 +126,6 @@ namespace WFLostNFurious
             labyrinthe.Add(bordure);
             //Ajoute l'affichage de l'objet dans une variable d'image
             image += bordure.Paint;
-            //this.Paint += bordure.Paint;
         }
 
         public void creationArrivee(int x, int y)
@@ -285,7 +134,6 @@ namespace WFLostNFurious
             labyrinthe.Add(arrivee);
             //Ajoute l'affichage de l'objet dans une variable d'image
             image += arrivee.Paint;
-            //this.Paint += arrivee.Paint;
         }
 
         public void creationMur(int x, int y)
@@ -294,7 +142,6 @@ namespace WFLostNFurious
             labyrinthe.Add(bloc);
             //Ajoute l'affichage de l'objet dans une variable d'image
             image += bloc.Paint;
-            //this.Paint += bloc.Paint;
         }
 
         public void nouvelleArrivee()
@@ -304,12 +151,12 @@ namespace WFLostNFurious
             int tmp = 0;
 
             Label lblArrivee = new Label();
-            lblArrivee.Location = new Point(584, 91);
+            lblArrivee.Location = new Point(779, 116);
             lblArrivee.Font = new Font("Arial", 13);
 
             foreach (Bloc m in labyrinthe)
             {
-                if(m is Arrivee)
+                if (m is Arrivee)
                 {
                     if (valArrive == tmp)
                     {
@@ -335,7 +182,6 @@ namespace WFLostNFurious
 
         private void btnDroite_Click(object sender, EventArgs e)
         {
-
             lbxInstruction.Items.Add("Tourner à droite");
 
             btnPlay.Enabled = true;
@@ -343,7 +189,6 @@ namespace WFLostNFurious
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
-
             lbxInstruction.Items.Add("Tourner à gauche");
 
             btnPlay.Enabled = true;
@@ -364,15 +209,15 @@ namespace WFLostNFurious
         public virtual void frmMain_Load(object sender, EventArgs e)
         {
             //Affiche le personnage et le labyrinthe
-            this.Paint += p.Paint;
-            CreationLabyrithe();
+            
+            CreateLabFromGrid(tabLabMoyen);
             this.Paint += image;
             nouvelleArrivee();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            foreach(string s in lbxInstruction.Items)
+            foreach (string s in lbxInstruction.Items)
             {
                 instruction.Add(s);
             }
@@ -419,6 +264,19 @@ namespace WFLostNFurious
 									break;
 								}
 							}
+                            if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                            {
+                                collision = true;
+                                if (b == modele)
+                                {
+                                    tmrAvancer.Enabled = false;
+                                    MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
+                                    btnReset_Click(sender, e);
+                                    nouvelleArrivee();
+                                    inPlay = false;
+                                    break;
+                                }
+                            }
                             else
                             {
                                 collision = false;
@@ -466,14 +324,14 @@ namespace WFLostNFurious
                             btnPlay.Enabled = false;
                         }
                     }
-                    
+
                 }
                 else
                 {
                     if (instrucAcruelle == "Tourner à droite")
                     {
                         p.PivoterDroite();
-					}
+                    }
                     else
                     {
                         if (instrucAcruelle == "Tourner à gauche")
@@ -531,7 +389,7 @@ namespace WFLostNFurious
         {
             string difficulteLaby = "";
             frmLogin frmLog = new frmLogin();
-
+			
             if (DialogResult.OK == frmLog.ShowDialog())
             {
                 difficulteLaby = frmLog.GetDifficulte();
@@ -563,6 +421,11 @@ namespace WFLostNFurious
 
                 this.Paint += image;
             }
+        }
+
+        private void frmMain_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

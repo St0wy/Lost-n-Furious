@@ -49,9 +49,10 @@
             // btnDroite
             // 
             this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDroite.Location = new System.Drawing.Point(675, 165);
+            this.btnDroite.Location = new System.Drawing.Point(900, 203);
+            this.btnDroite.Margin = new System.Windows.Forms.Padding(4);
             this.btnDroite.Name = "btnDroite";
-            this.btnDroite.Size = new System.Drawing.Size(83, 39);
+            this.btnDroite.Size = new System.Drawing.Size(111, 48);
             this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
@@ -60,9 +61,10 @@
             // btnGauche
             // 
             this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGauche.Location = new System.Drawing.Point(584, 165);
+            this.btnGauche.Location = new System.Drawing.Point(779, 203);
+            this.btnGauche.Margin = new System.Windows.Forms.Padding(4);
             this.btnGauche.Name = "btnGauche";
-            this.btnGauche.Size = new System.Drawing.Size(83, 39);
+            this.btnGauche.Size = new System.Drawing.Size(111, 48);
             this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
@@ -76,9 +78,10 @@
             // btnAvancer
             // 
             this.btnAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvancer.Location = new System.Drawing.Point(584, 120);
+            this.btnAvancer.Location = new System.Drawing.Point(779, 148);
+            this.btnAvancer.Margin = new System.Windows.Forms.Padding(4);
             this.btnAvancer.Name = "btnAvancer";
-            this.btnAvancer.Size = new System.Drawing.Size(174, 39);
+            this.btnAvancer.Size = new System.Drawing.Size(232, 48);
             this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
@@ -88,7 +91,9 @@
             // 
             this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxInstruction.FormattingEnabled = true;
-            this.lbxInstruction.Location = new System.Drawing.Point(584, 210);
+            this.lbxInstruction.ItemHeight = 17;
+            this.lbxInstruction.Location = new System.Drawing.Point(779, 258);
+            this.lbxInstruction.Margin = new System.Windows.Forms.Padding(4);
             this.lbxInstruction.Name = "lbxInstruction";
             this.lbxInstruction.Size = new System.Drawing.Size(174, 290);
             this.lbxInstruction.TabIndex = 1;
@@ -98,9 +103,10 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(584, 36);
+            this.btnPlay.Location = new System.Drawing.Point(779, 44);
+            this.btnPlay.Margin = new System.Windows.Forms.Padding(4);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(174, 23);
+            this.btnPlay.Size = new System.Drawing.Size(232, 28);
             this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
@@ -114,9 +120,10 @@
             // btnReset
             // 
             this.btnReset.Enabled = false;
-            this.btnReset.Location = new System.Drawing.Point(584, 65);
+            this.btnReset.Location = new System.Drawing.Point(779, 80);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(174, 23);
+            this.btnReset.Size = new System.Drawing.Size(232, 28);
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -172,14 +179,14 @@
             this.lblDifficulteTaille.Size = new System.Drawing.Size(39, 13);
             this.lblDifficulteTaille.TabIndex = 7;
             this.lblDifficulteTaille.Text = "Moyen";
-            // 
+			//
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.lblDifficulteTaille);
             this.Controls.Add(this.label5);
+            this.ClientSize = new System.Drawing.Size(1045, 801);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lbxInstruction);
@@ -189,6 +196,7 @@
             this.Controls.Add(this.menu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menu;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
