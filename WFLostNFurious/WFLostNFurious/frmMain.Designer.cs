@@ -37,7 +37,13 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.tmrAvancer = new System.Windows.Forms.Timer(this.components);
             this.btnReset = new System.Windows.Forms.Button();
-            this.debug = new System.Windows.Forms.Button();
+            this.menu = new System.Windows.Forms.MenuStrip();
+            this.menuFichier = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFichierAdmin = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFichierQuitter = new System.Windows.Forms.ToolStripMenuItem();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblDifficulteTaille = new System.Windows.Forms.Label();
+            this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDroite
@@ -84,9 +90,8 @@
             this.lbxInstruction.FormattingEnabled = true;
             this.lbxInstruction.Location = new System.Drawing.Point(584, 210);
             this.lbxInstruction.Name = "lbxInstruction";
-            this.lbxInstruction.Size = new System.Drawing.Size(174, 329);
+            this.lbxInstruction.Size = new System.Drawing.Size(174, 290);
             this.lbxInstruction.TabIndex = 1;
-            this.lbxInstruction.Click += new System.EventHandler(this.lbxInstruction_Click);
             this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.lbxInstruction_SelectedIndexChanged);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
             // 
@@ -117,36 +122,82 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
-            // debug
+            // menu
             // 
-            this.debug.Location = new System.Drawing.Point(584, 94);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(174, 23);
-            this.debug.TabIndex = 0;
-            this.debug.Text = "debug";
-            this.debug.UseVisualStyleBackColor = true;
-            this.debug.Click += new System.EventHandler(this.debug_Click);
+            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFichier});
+            this.menu.Location = new System.Drawing.Point(0, 0);
+            this.menu.Name = "menu";
+            this.menu.Size = new System.Drawing.Size(784, 24);
+            this.menu.TabIndex = 5;
+            this.menu.Text = "menuStrip1";
+            // 
+            // menuFichier
+            // 
+            this.menuFichier.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFichierAdmin,
+            this.menuFichierQuitter});
+            this.menuFichier.Name = "menuFichier";
+            this.menuFichier.Size = new System.Drawing.Size(54, 20);
+            this.menuFichier.Text = "Fichier";
+            // 
+            // menuFichierAdmin
+            // 
+            this.menuFichierAdmin.Name = "menuFichierAdmin";
+            this.menuFichierAdmin.Size = new System.Drawing.Size(153, 22);
+            this.menuFichierAdmin.Text = "Mode Admin";
+            this.menuFichierAdmin.Click += new System.EventHandler(this.menuFichierAdmin_Click);
+            // 
+            // menuFichierQuitter
+            // 
+            this.menuFichierQuitter.Name = "menuFichierQuitter";
+            this.menuFichierQuitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.menuFichierQuitter.Size = new System.Drawing.Size(153, 22);
+            this.menuFichierQuitter.Text = "Quitter";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(584, 524);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Taille actuelle: ";
+            // 
+            // lblDifficulteTaille
+            // 
+            this.lblDifficulteTaille.AutoSize = true;
+            this.lblDifficulteTaille.Location = new System.Drawing.Point(704, 524);
+            this.lblDifficulteTaille.Name = "lblDifficulteTaille";
+            this.lblDifficulteTaille.Size = new System.Drawing.Size(39, 13);
+            this.lblDifficulteTaille.TabIndex = 7;
+            this.lblDifficulteTaille.Text = "Moyen";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.lblDifficulteTaille);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.debug);
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lbxInstruction);
             this.Controls.Add(this.btnAvancer);
             this.Controls.Add(this.btnGauche);
             this.Controls.Add(this.btnDroite);
+            this.Controls.Add(this.menu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menu;
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lost\'n\'Furious";
             this.Load += new System.EventHandler(this.frmMain_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.frmMain_Paint);
+            this.menu.ResumeLayout(false);
+            this.menu.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -161,7 +212,12 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Timer tmrAvancer;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Button debug;
+        private System.Windows.Forms.MenuStrip menu;
+        private System.Windows.Forms.ToolStripMenuItem menuFichier;
+        private System.Windows.Forms.ToolStripMenuItem menuFichierAdmin;
+        private System.Windows.Forms.ToolStripMenuItem menuFichierQuitter;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblDifficulteTaille;
     }
 }
 

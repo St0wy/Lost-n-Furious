@@ -16,7 +16,8 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
-        Personnage p = new Personnage(new PointF(255, 495), "haut");
+        PaintEventHandler image;    //Variable d'affichage du labyrinthe
+        Personnage p = new Personnage(new PointF(255, 495), "haut"); //Pour fabian a changer
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
         bool inPlay = false;
@@ -27,11 +28,6 @@ namespace WFLostNFurious
         {
             InitializeComponent();
             DoubleBuffered = true;
-        }
-
-        private void frmMain_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         public void CreationLabyrithe()
@@ -272,7 +268,7 @@ namespace WFLostNFurious
 
             #endregion
         }
-        PaintEventHandler image;    //Variable d'affichage du labyrinthe
+        
 
         public void creationBordure(int x, int y)
         {
@@ -341,17 +337,23 @@ namespace WFLostNFurious
         {
 
             lbxInstruction.Items.Add("Tourner à droite");
+
+            btnPlay.Enabled = true;
         }
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
 
             lbxInstruction.Items.Add("Tourner à gauche");
+
+            btnPlay.Enabled = true;
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
+
+            btnPlay.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -376,6 +378,7 @@ namespace WFLostNFurious
             }
 
             inPlay = true;
+            lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
             tmrAvancer.Enabled = true;
@@ -412,6 +415,7 @@ namespace WFLostNFurious
 									btnReset_Click(sender, e);
 									nouvelleArrivee();
 									inPlay = false;
+                                    lbxInstruction.Enabled = true;
 									break;
 								}
 							}
@@ -450,11 +454,16 @@ namespace WFLostNFurious
                         tmrAvancer.Enabled = false;
 
                         DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
+                        inPlay = false;
 
                         if (dr == DialogResult.Yes)
                         {
                             btnReset_Click(sender, e);
-                            inPlay = false;
+                            lbxInstruction.Enabled = true;
+                        }
+                        else
+                        {
+                            btnPlay.Enabled = false;
                         }
                     }
                     
@@ -491,6 +500,8 @@ namespace WFLostNFurious
             lbxInstruction.Items.Clear();
             instruction.Clear();
             inPlay = false;
+            btnPlay.Enabled = false;
+            lbxInstruction.Enabled = true;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
@@ -508,29 +519,49 @@ namespace WFLostNFurious
             }
         }
 
-        private void lbxInstruction_Click(object sender, EventArgs e)
-        {
-            if (inPlay)
-            {
-                
-            }
-        }
-
-        private void debug_Click(object sender, EventArgs e)
-        {
-            frmGrandLabyrinthe frm = new frmGrandLabyrinthe();
-            frm.Show();
-        }
-
         private void lbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxInstruction.Items.Count == 0)
             {
                 btnPlay.Enabled = false;
             }
-            else
+        }
+
+        private void menuFichierAdmin_Click(object sender, EventArgs e)
+        {
+            string difficulteLaby = "";
+            frmLogin frmLog = new frmLogin();
+
+            if (DialogResult.OK == frmLog.ShowDialog())
             {
-                btnPlay.Enabled = true;
+                difficulteLaby = frmLog.GetDifficulte();
+
+                this.Paint -= image;
+                image = null;
+                //vider variable image
+
+
+                if (difficulteLaby == "Grand")
+                {
+                    //appeler creation labyrinthe grand
+                    lblDifficulteTaille.Text = "Grand";
+                    btnReset_Click(sender, e);
+                }
+                else if (difficulteLaby == "Moyen")
+                {
+                    //appeler creation labyrinthe moyen
+                    CreationLabyrithe();
+                    lblDifficulteTaille.Text = "Moyen";
+                    btnReset_Click(sender, e);
+                }
+                else if (difficulteLaby == "Petit")
+                {
+                    //appeler creation labyrinthe petit
+                    lblDifficulteTaille.Text = "Petit";
+                    btnReset_Click(sender, e);
+                }
+
+                this.Paint += image;
             }
         }
     }
