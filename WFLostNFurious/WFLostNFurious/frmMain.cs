@@ -568,5 +568,16 @@ namespace WFLostNFurious
                 e.Cancel = true;
             }
         }
+
+        private void menuAideAbout_Click(object sender, EventArgs e)
+        {
+            frmAbout frm = new frmAbout();
+            frm.ShowDialog();
+        }
+
+        private void menuAideAide_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Double clic sur une instruction pour l'enlever" + Environment.NewLine + "Pour changer de difficulté il faut ouvrir le menu qui se trouve dans: Fichier => Mode Admin.");
+        }
     }
 }

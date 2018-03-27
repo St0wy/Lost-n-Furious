@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("WFLostNFurious")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Lost n Furious")]
+[assembly: AssemblyDescription("Il faut sortir d'un labyrinthe avec une liste d'instruction.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WFLostNFurious")]
+[assembly: AssemblyCompany("CFPT")]
+[assembly: AssemblyProduct("Lost n Furious")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

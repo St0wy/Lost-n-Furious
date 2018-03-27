@@ -46,7 +46,9 @@
             this.lblArrivee = new System.Windows.Forms.Label();
             this.pnlInstructions = new System.Windows.Forms.Panel();
             this.pnlTailleGrid = new System.Windows.Forms.Panel();
-            this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAide = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAideAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAideAide = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.pnlInstructions.SuspendLayout();
             this.pnlTailleGrid.SuspendLayout();
@@ -141,7 +143,7 @@
             this.menu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuFichier,
-            this.aProposToolStripMenuItem});
+            this.menuAide});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -232,11 +234,28 @@
             this.pnlTailleGrid.Size = new System.Drawing.Size(316, 64);
             this.pnlTailleGrid.TabIndex = 10;
             // 
-            // aProposToolStripMenuItem
+            // menuAide
             // 
-            this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
-            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
-            this.aProposToolStripMenuItem.Text = "A Propos";
+            this.menuAide.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuAideAbout,
+            this.menuAideAide});
+            this.menuAide.Name = "menuAide";
+            this.menuAide.Size = new System.Drawing.Size(52, 24);
+            this.menuAide.Text = "Aide";
+            // 
+            // menuAideAbout
+            // 
+            this.menuAideAbout.Name = "menuAideAbout";
+            this.menuAideAbout.Size = new System.Drawing.Size(181, 26);
+            this.menuAideAbout.Text = "A Propos";
+            this.menuAideAbout.Click += new System.EventHandler(this.menuAideAbout_Click);
+            // 
+            // menuAideAide
+            // 
+            this.menuAideAide.Name = "menuAideAide";
+            this.menuAideAide.Size = new System.Drawing.Size(181, 26);
+            this.menuAideAide.Text = "Aide";
+            this.menuAideAide.Click += new System.EventHandler(this.menuAideAide_Click);
             // 
             // frmMain
             // 
@@ -284,7 +303,9 @@
         private System.Windows.Forms.Label lblArrivee;
         private System.Windows.Forms.Panel pnlInstructions;
         private System.Windows.Forms.Panel pnlTailleGrid;
-        private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuAide;
+        private System.Windows.Forms.ToolStripMenuItem menuAideAbout;
+        private System.Windows.Forms.ToolStripMenuItem menuAideAide;
     }
 }
 
