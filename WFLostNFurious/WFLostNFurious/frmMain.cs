@@ -579,5 +579,15 @@ namespace WFLostNFurious
         {
             MessageBox.Show("Double clic sur une instruction pour l'enlever" + Environment.NewLine + "Pour changer de difficulté il faut ouvrir le menu qui se trouve dans: Fichier => Mode Admin.");
         }
+
+        private void btnViderListe_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

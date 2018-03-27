@@ -49,21 +49,30 @@ namespace WFLostNFurious
 
         public void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(Pens.Black, position.X, position.Y, 20, 20);
+            //e.Graphics.DrawEllipse(Pens.Black, position.X, position.Y, 20, 20);
+            Image droite = Properties.Resources.raichuDroite;
+            Image gauche = Properties.Resources.raichuGauche;
+            Image haut = Properties.Resources.raichuHaut;
+            Image bas = Properties.Resources.raichuBas;
+           
 
             switch (orientation)
             {
                 case "gauche":
-                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X - 5, position.Y + 10);
+                    e.Graphics.DrawImage(gauche, position.X - 10, position.Y - 10);
+                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X - 5, position.Y + 10);
                     break;
                 case "droite":
-                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 25, position.Y + 10);
+                    e.Graphics.DrawImage(droite, position.X - 10, position.Y - 10);
+                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 25, position.Y + 10);
                     break;
                 case "bas":
-                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y + 25);
+                    e.Graphics.DrawImage(bas, position.X - 10, position.Y - 10);
+                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y + 25);
                     break;
                 case "haut":
-                    e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y - 5);
+                    e.Graphics.DrawImage(haut, position.X - 10, position.Y - 10);
+                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y - 5);
                     break;
             }
 

@@ -49,7 +49,9 @@
             this.menuAide = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAideAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAideAide = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu.SuspendLayout();
+            this.btnViderListe = new System.Windows.Forms.Button();
+            this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            
             this.pnlInstructions.SuspendLayout();
             this.pnlTailleGrid.SuspendLayout();
             this.SuspendLayout();
@@ -208,6 +210,7 @@
             // 
             // pnlInstructions
             // 
+            this.pnlInstructions.Controls.Add(this.btnViderListe);
             this.pnlInstructions.Controls.Add(this.pnlTailleGrid);
             this.pnlInstructions.Controls.Add(this.btnPlay);
             this.pnlInstructions.Controls.Add(this.lblArrivee);
@@ -235,6 +238,7 @@
             this.pnlTailleGrid.TabIndex = 10;
             // 
             // menuAide
+            // btnViderListe
             // 
             this.menuAide.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuAideAbout,
@@ -242,8 +246,15 @@
             this.menuAide.Name = "menuAide";
             this.menuAide.Size = new System.Drawing.Size(52, 24);
             this.menuAide.Text = "Aide";
+            this.btnViderListe.Location = new System.Drawing.Point(28, 482);
+            this.btnViderListe.Name = "btnViderListe";
+            this.btnViderListe.Size = new System.Drawing.Size(174, 23);
+            this.btnViderListe.TabIndex = 11;
+            this.btnViderListe.Text = "Vider la liste";
+            this.btnViderListe.UseVisualStyleBackColor = true;
             // 
             // menuAideAbout
+            // fichierToolStripMenuItem
             // 
             this.menuAideAbout.Name = "menuAideAbout";
             this.menuAideAbout.Size = new System.Drawing.Size(181, 26);
@@ -256,6 +267,20 @@
             this.menuAideAide.Size = new System.Drawing.Size(181, 26);
             this.menuAideAide.Text = "Aide";
             this.menuAideAide.Click += new System.EventHandler(this.menuAideAide_Click);
+            // 
+            this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
+            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.fichierToolStripMenuItem.Text = "Fichier";
+            // 
+            // menu
+            // 
+            this.menu.Location = new System.Drawing.Point(0, 0);
+            this.menu.Name = "menu";
+            this.menu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menu.Size = new System.Drawing.Size(823, 24);
+            this.menu.TabIndex = 5;
+            this.menu.Text = "menuStrip1";
+            this.menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menu_ItemClicked);
             // 
             // frmMain
             // 
@@ -273,8 +298,6 @@
             this.Text = "Lost\'n\'Furious";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
-            this.menu.ResumeLayout(false);
-            this.menu.PerformLayout();
             this.pnlInstructions.ResumeLayout(false);
             this.pnlTailleGrid.ResumeLayout(false);
             this.pnlTailleGrid.PerformLayout();
@@ -306,6 +329,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuAide;
         private System.Windows.Forms.ToolStripMenuItem menuAideAbout;
         private System.Windows.Forms.ToolStripMenuItem menuAideAide;
+        private System.Windows.Forms.Button btnViderListe;
+        private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
     }
 }
 
