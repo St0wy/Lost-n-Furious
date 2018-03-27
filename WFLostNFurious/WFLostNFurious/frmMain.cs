@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace WFLostNFurious
         PaintEventHandler image;    //Variable d'affichage du labyrinthe
         Personnage p = new Personnage(new PointF(0, 0), "haut");
         PointF positionDepartpersonnage = new Point();
+        string arriveDemande = "";
+        Stopwatch swTempsEcoule = new Stopwatch();
 
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
@@ -235,16 +238,21 @@ namespace WFLostNFurious
             if (valArrive == 0)
             {
                 lblArrivee.Text = "Arrivée: A";
+                arriveDemande = "A";
             }
             else if (valArrive == 1)
             {
                 lblArrivee.Text = "Arrivée: B";
+                arriveDemande = "B";
 
             }
             else if (valArrive == 2)
             {
                 lblArrivee.Text = "Arrivée: C";
+                arriveDemande = "C";
             }
+
+            swTempsEcoule.Restart();
         }
 
         private void btnDroite_Click(object sender, EventArgs e)
@@ -271,6 +279,7 @@ namespace WFLostNFurious
         private void timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
+            lblTempsEcoule.Text = Convert.ToString(swTempsEcoule.ElapsedMilliseconds / 1000);
         }
 
         public virtual void frmMain_Load(object sender, EventArgs e)
@@ -283,48 +292,48 @@ namespace WFLostNFurious
 
 
             //Sortie C en Moyen
-           //for (int i = 0; i < 5; i++)
-           //{
-           //    btnAvancer_Click(sender, e);
-           //}
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnGauche_Click(sender, e);
-           //btnAvancer_Click(sender, e);
-           //btnDroite_Click(sender, e);
-           //btnAvancer_Click(sender, e);
+           for (int i = 0; i < 5; i++)
+           {
+               btnAvancer_Click(sender, e);
+           }
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnGauche_Click(sender, e);
+           btnAvancer_Click(sender, e);
+           btnDroite_Click(sender, e);
+           btnAvancer_Click(sender, e);
 
         }
 
@@ -376,7 +385,21 @@ namespace WFLostNFurious
                                 if (b.Position == modele.Position)
                                 {
                                     tmrAvancer.Enabled = false;
-                                    MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
+                                    swTempsEcoule.Stop();
+
+                                    frmScores frmScore = new frmScores();
+                                    frmScore.Text = "Bravo vous avez gagné!";
+                                    frmScore.SetPnlNewScoreVisible(true);
+                                    frmScore.SetSortieDemande(arriveDemande);
+                                    frmScore.SetDifficulte(lblDifficulteTaille.Text);
+                                    frmScore.SetTempsEcoule(swTempsEcoule.ElapsedMilliseconds);
+
+                                    if (DialogResult.OK == frmScore.ShowDialog())
+                                    {
+                                        // Enregistrer new score
+                                        // MessageBox qui dit que Ok
+                                    }
+
                                     btnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
                                     inPlay = false;
@@ -568,7 +591,7 @@ namespace WFLostNFurious
                 e.Cancel = true;
             }
         }
-
+		
         private void menuAideAbout_Click(object sender, EventArgs e)
         {
             frmAbout frm = new frmAbout();
@@ -588,6 +611,15 @@ namespace WFLostNFurious
         private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+		}
+        private void menuFichierScores_Click(object sender, EventArgs e)
+        {
+            frmScores frmScore = new frmScores();
+
+            frmScore.Text = "Tableaux des scores";
+            frmScore.SetPnlNewScoreVisible(false);
+
+            frmScore.ShowDialog();
         }
     }
 }

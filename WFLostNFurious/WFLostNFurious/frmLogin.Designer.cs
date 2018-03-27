@@ -164,7 +164,11 @@
             this.Controls.Add(this.lblNomUser);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbxNomUser);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "frmLogin";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Labyrinthe - Connexion";
             this.gbxDifficultes.ResumeLayout(false);

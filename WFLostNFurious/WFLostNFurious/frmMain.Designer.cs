@@ -51,6 +51,9 @@
             this.btnViderListe = new System.Windows.Forms.Button();
             this.pnlTailleGrid = new System.Windows.Forms.Panel();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFichierScores = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblTempsEcoule = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.pnlInstructions.SuspendLayout();
             this.pnlTailleGrid.SuspendLayout();
@@ -151,6 +154,7 @@
             // 
             this.menuFichier.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuFichierAdmin,
+            this.menuFichierScores,
             this.menuFichierQuitter});
             this.menuFichier.Name = "menuFichier";
             this.menuFichier.Size = new System.Drawing.Size(54, 20);
@@ -255,6 +259,8 @@
             // 
             // pnlTailleGrid
             // 
+            this.pnlTailleGrid.Controls.Add(this.lblTempsEcoule);
+            this.pnlTailleGrid.Controls.Add(this.label2);
             this.pnlTailleGrid.Controls.Add(this.lblDifficulteTaille);
             this.pnlTailleGrid.Controls.Add(this.label5);
             this.pnlTailleGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -268,6 +274,34 @@
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.fichierToolStripMenuItem.Text = "Fichier";
+            // menuFichierScores
+            // 
+            this.menuFichierScores.Name = "menuFichierScores";
+            this.menuFichierScores.Size = new System.Drawing.Size(250, 22);
+            this.menuFichierScores.Text = "Tableaux des Scores";
+            this.menuFichierScores.Click += new System.EventHandler(this.menuFichierScores_Click);
+            // 
+            // lblTempsEcoule
+            // 
+            this.lblTempsEcoule.AutoSize = true;
+            this.lblTempsEcoule.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTempsEcoule.Location = new System.Drawing.Point(148, 27);
+            this.lblTempsEcoule.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTempsEcoule.Name = "lblTempsEcoule";
+            this.lblTempsEcoule.Size = new System.Drawing.Size(54, 16);
+            this.lblTempsEcoule.TabIndex = 9;
+            this.lblTempsEcoule.Text = "Moyen";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(25, 27);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(101, 16);
+            this.label2.TabIndex = 8;
+            this.label2.Text = " Temps écoulé:";
             // 
             // frmMain
             // 
@@ -319,6 +353,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuAideAide;
         private System.Windows.Forms.Button btnViderListe;
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuFichierScores;
+        private System.Windows.Forms.Label lblTempsEcoule;
+        private System.Windows.Forms.Label label2;
     }
 }
 
