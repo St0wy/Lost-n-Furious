@@ -26,6 +26,7 @@ namespace WFLostNFurious
         bool inPlay = false;
         List<string> instruction = new List<string>();
         int compteur = 0;
+        
 
         int[][] tabLabPetit = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
@@ -72,10 +73,10 @@ namespace WFLostNFurious
             new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 4 },
             new int[] { 4, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
             new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 0, 0, 1, 0, 6, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 0, 0, 1, 0, 5, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
             new int[] { 4, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 4 },
             new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 6, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 5, 1, 1, 0, 1, 4 },
             new int[] { 4, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 4 },
             new int[] { 4, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4 },
@@ -85,7 +86,7 @@ namespace WFLostNFurious
             new int[] { 4, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 4 },
             new int[] { 4, 2, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 4 },
             new int[] { 4, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 1, 1, 1, 1, 0, 6, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 1, 1, 1, 1, 0, 5, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
             new int[] { 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
@@ -97,21 +98,54 @@ namespace WFLostNFurious
             DoubleBuffered = true;
         }
 		
+        public void deleteLabel()
+        {
+            foreach (Control lbl in Controls)
+            {
+                if (lbl is Label)
+                {
+                    Controls.Remove(lbl);
+                }
+            }
+        }
+
         public void CreateLabFromGrid(int[][] tabLab)
         {
+            deleteLabel();
+
+            int compteur = 0;
+            int tailleCarre = 30;
+            Point positionLaby = new Point(10, 10);
+
             for (int i = 0; i < tabLab.Length; i++)
             {
-                int y = (i + 1) * 30 + 10;
+                int y = (i + 1) * tailleCarre + positionLaby.Y;
                 for (int j = 0; j < tabLab[i].Length; j++)
                 {
-                    int x = (j + 1) * 30 + 10;
+                    int x = (j + 1) * tailleCarre + positionLaby.X;
                     if (tabLab[i][j] == 1)
                     {
                         creationMur(x, y);
                     }
                     else if (tabLab[i][j] == 2)
                     {
+                        
+                        string[] lettre = { "A", "B", "C" };
+
                         creationArrivee(x, y);
+                        Label lbl = new Label();
+                        lbl.Location = new Point(x, y);
+                        lbl.Text = lettre[compteur];
+                        lbl.AutoSize = false;
+                        lbl.Size = new Size(tailleCarre, tailleCarre);
+                        lbl.Font = new Font("Arial", 15);
+                        lbl.TextAlign = ContentAlignment.MiddleCenter;
+                        lbl.BackColor = Color.Transparent;
+                        compteur++;
+                        
+                        Controls.Add(lbl);
+
+                        //image += lbl.Paint;
                     }
                     else if (tabLab[i][j] == 3)
                     {
@@ -175,10 +209,6 @@ namespace WFLostNFurious
             int valArrive = rnd.Next(3);
             int tmp = 0;
 
-            //Label lblArrivee = new Label();
-            //lblArrivee.Location = new Point(779, 116);
-            //lblArrivee.Font = new Font("Arial", 13);
-
             foreach (Bloc m in labyrinthe)
             {
                 if (m is Arrivee)
@@ -191,34 +221,21 @@ namespace WFLostNFurious
                 }
             }
 
+
+            //Met l'arrivee de facon que ce soit de droite a gauche lors du nommage de chacune
             if (valArrive == 0)
             {
-                lblArrivee.Text = "Arrivée: B";
+                lblArrivee.Text = "Arrivée: A";
             }
             else if (valArrive == 1)
             {
-                if (difficulteLaby == "Petit")
-                {
-                    lblArrivee.Text = "Arrivée: C";
-                }
-                else
-                {
-                    lblArrivee.Text = "Arrivée: A";
-                }
-                
+                lblArrivee.Text = "Arrivée: B";
+
             }
             else if (valArrive == 2)
             {
-                if (difficulteLaby == "Petit")
-                {
-                    lblArrivee.Text = "Arrivée: A";
-                }
-                else
-                {
-                    lblArrivee.Text = "Arrivée: C";
-                }
+                lblArrivee.Text = "Arrivée: C";
             }
-            //this.Controls.Add(lblArrivee);
         }
 
         private void btnDroite_Click(object sender, EventArgs e)
