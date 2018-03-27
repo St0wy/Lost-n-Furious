@@ -144,8 +144,6 @@ namespace WFLostNFurious
                         compteur++;
                         
                         Controls.Add(lbl);
-
-                        //image += lbl.Paint;
                     }
                     else if (tabLab[i][j] == 3)
                     {
@@ -155,6 +153,10 @@ namespace WFLostNFurious
                     else if (tabLab[i][j] == 4)
                     {
                         creationBordure(x, y);
+                    }
+                    else if (tabLab[i][j] == 5)
+                    {
+                        creationMurInvisible(x, y);
                     }
                 }
             }
@@ -176,7 +178,6 @@ namespace WFLostNFurious
                 lbxInstruction.Height = 520;
                 this.Height = (tabLab.Length * 30) + 105;
             }
-            
         }
 
         public void creationBordure(int x, int y)
@@ -201,6 +202,14 @@ namespace WFLostNFurious
             labyrinthe.Add(bloc);
             //Ajoute l'affichage de l'objet dans une variable d'image
             image += bloc.Paint;
+        }
+
+        public void creationMurInvisible(int x, int y)
+        {
+            var blocInvisible = new BlocInvisible(x, y);
+            labyrinthe.Add(blocInvisible);
+            //Ajoute l'affichage de l'objet dans une variable d'image
+            image += blocInvisible.Paint;
         }
 
         public void nouvelleArrivee()
@@ -353,14 +362,16 @@ namespace WFLostNFurious
 
                     foreach (Bloc b in labyrinthe)
                     {
-                        //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
+                        //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collisionne (empeche le clignottement)
                         if (!collision)
                         {
                             if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
                             {
                                 string arriveePrecedente = lblArrivee.Text;
-
-                                collision = true;
+                                if(!(b is BlocInvisible))
+                                {
+                                    collision = true;
+                                }
 
                                 if (b.Position == modele.Position)
                                 {
@@ -384,6 +395,7 @@ namespace WFLostNFurious
                             }
                         }
                     }
+
                     if (collision && !arrive)
                     {
 
@@ -442,7 +454,7 @@ namespace WFLostNFurious
                     }
                 }
 
-                if (compteur == lbxInstruction.Items.Count - 1) // jai remis le -1 peut etre ki faudra le renlever
+                if (compteur == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
                 }

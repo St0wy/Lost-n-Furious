@@ -73,4 +73,11 @@ namespace WFLostNFurious
             e.Graphics.FillRectangle(Brushes.Red, x, y, 30, 30);
         }
     }
+
+    class BlocInvisible : Bloc
+    {
+        public BlocInvisible(int x, int y) : base(x, y)
+        {
+        }
+    }
 }
