@@ -16,8 +16,10 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
+        string difficulteLaby = "Moyen";
         PaintEventHandler image;    //Variable d'affichage du labyrinthe
         Personnage p = new Personnage(new PointF(0, 0), "haut");
+        PointF positionDepartpersonnage = new Point();
 
         Bloc modele = new Arrivee();
         List<Bloc> labyrinthe = new List<Bloc>();
@@ -114,9 +116,33 @@ namespace WFLostNFurious
                     else if (tabLab[i][j] == 3)
                     {
                         p.Position = new PointF(Convert.ToSingle(x) + 5f, Convert.ToSingle(y) + 5f);
+                        positionDepartpersonnage = p.Position;
+                    }
+                    else if (tabLab[i][j] == 4)
+                    {
+                        creationBordure(x, y);
                     }
                 }
             }
+
+            //Change la taille de la forme et de la listebox en fonction de la taille du laby
+            this.Width = (tabLab[0].Length * 30) + pnlInstructions.Width + 60;
+            if (difficulteLaby == "Petit")
+            {
+                lbxInstruction.Height = 190;
+                this.Height = (tabLab.Length * 30) + 105;
+            }
+            else if (difficulteLaby == "Moyen")
+            {
+                lbxInstruction.Height = 330;
+                this.Height = (tabLab.Length * 30) + 105;
+            }
+            else if (difficulteLaby == "Grand")
+            {
+                lbxInstruction.Height = 520;
+                this.Height = (tabLab.Length * 30) + 105;
+            }
+            
         }
 
         public void creationBordure(int x, int y)
@@ -149,9 +175,9 @@ namespace WFLostNFurious
             int valArrive = rnd.Next(3);
             int tmp = 0;
 
-            Label lblArrivee = new Label();
-            lblArrivee.Location = new Point(779, 116);
-            lblArrivee.Font = new Font("Arial", 13);
+            //Label lblArrivee = new Label();
+            //lblArrivee.Location = new Point(779, 116);
+            //lblArrivee.Font = new Font("Arial", 13);
 
             foreach (Bloc m in labyrinthe)
             {
@@ -164,39 +190,55 @@ namespace WFLostNFurious
                     tmp++;
                 }
             }
+
             if (valArrive == 0)
-            {
-                lblArrivee.Text = "Arrivée: A";
-            }
-            else if (valArrive == 1)
             {
                 lblArrivee.Text = "Arrivée: B";
             }
+            else if (valArrive == 1)
+            {
+                if (difficulteLaby == "Petit")
+                {
+                    lblArrivee.Text = "Arrivée: C";
+                }
+                else
+                {
+                    lblArrivee.Text = "Arrivée: A";
+                }
+                
+            }
             else if (valArrive == 2)
             {
-                lblArrivee.Text = "Arrivée: C";
+                if (difficulteLaby == "Petit")
+                {
+                    lblArrivee.Text = "Arrivée: A";
+                }
+                else
+                {
+                    lblArrivee.Text = "Arrivée: C";
+                }
             }
-            this.Controls.Add(lblArrivee);
+            //this.Controls.Add(lblArrivee);
         }
 
         private void btnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à droite");
-
+            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
         private void btnGauche_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à gauche");
-
+            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
         private void btnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
-
+            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
@@ -212,6 +254,51 @@ namespace WFLostNFurious
             this.Paint += image;
             this.Paint += p.Paint;
             nouvelleArrivee();
+
+
+            //Sortie C en Moyen
+           //for (int i = 0; i < 5; i++)
+           //{
+           //    btnAvancer_Click(sender, e);
+           //}
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnGauche_Click(sender, e);
+           //btnAvancer_Click(sender, e);
+           //btnDroite_Click(sender, e);
+           //btnAvancer_Click(sender, e);
 
         }
 
@@ -236,6 +323,8 @@ namespace WFLostNFurious
 
         private void tmrAvancer_Tick(object sender, EventArgs e)
         {
+            bool arrive = false;
+
             if (instruction.Count != 0)
             {
                 string instrucAcruelle = instruction.ElementAt(compteur).ToString();
@@ -250,30 +339,25 @@ namespace WFLostNFurious
                         //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collision (empeche le clignottement)
                         if (!collision)
                         {
-							if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
-							{
-								collision = true;
-								if (b == modele)
-								{
-									tmrAvancer.Enabled = false;
-									MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
-									btnReset_Click(sender, e);
-									nouvelleArrivee();
-									inPlay = false;
-                                    lbxInstruction.Enabled = true;
-									break;
-								}
-							}
                             if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
                             {
+                                string arriveePrecedente = lblArrivee.Text;
+
                                 collision = true;
-                                if (b == modele)
+
+                                if (b.Position == modele.Position)
                                 {
                                     tmrAvancer.Enabled = false;
                                     MessageBox.Show("Bravo! Tu as a gagné. Tu es beau.");
                                     btnReset_Click(sender, e);
-                                    nouvelleArrivee();
+                                    lbxInstruction.Enabled = true;
                                     inPlay = false;
+                                    arrive = true;
+
+                                    while (lblArrivee.Text == arriveePrecedente)
+                                    {
+                                        nouvelleArrivee();
+                                    }
                                     break;
                                 }
                             }
@@ -283,7 +367,7 @@ namespace WFLostNFurious
                             }
                         }
                     }
-                    if (collision)
+                    if (collision && !arrive)
                     {
 
                         switch (p.Orientation)
@@ -340,11 +424,16 @@ namespace WFLostNFurious
                         }
                     }
                 }
-                if (compteur == lbxInstruction.Items.Count - 1)
+
+                if (compteur == lbxInstruction.Items.Count) // jai enlevé le -1 peut etre ki faudra remetre
                 {
                     tmrAvancer.Enabled = false;
                 }
-                compteur++;
+
+                if (!arrive) 
+                {
+                    compteur++;
+                }
 
                 if (lbxInstruction.SelectedIndex < lbxInstruction.Items.Count - 1)
                 {
@@ -360,11 +449,12 @@ namespace WFLostNFurious
             inPlay = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
+            tmrAvancer.Enabled = false;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            p.Position = new PointF(255, 495);
+            p.Position = positionDepartpersonnage;
             p.Orientation = "haut";
             compteur = 0;
         }
@@ -387,7 +477,6 @@ namespace WFLostNFurious
 
         private void menuFichierAdmin_Click(object sender, EventArgs e)
         {
-            string difficulteLaby = "";
             frmLogin frmLog = new frmLogin();
 			
             if (DialogResult.OK == frmLog.ShowDialog())
@@ -396,8 +485,9 @@ namespace WFLostNFurious
 
                 this.Paint -= image;
                 image = null;
-                //vider variable image
 
+                btnReset_Click(sender, e);
+                labyrinthe.Clear();
 
                 if (difficulteLaby == "Grand")
                 {
@@ -424,6 +514,7 @@ namespace WFLostNFurious
                     btnReset_Click(sender, e);
                 }
 
+                nouvelleArrivee();
                 this.Paint += image;
             }
         }
@@ -431,6 +522,19 @@ namespace WFLostNFurious
         private void frmMain_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void menuFichierQuitter_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult.No == MessageBox.Show("Voulez-vous vraiment quitter l'application?", "Quitter", MessageBoxButtons.YesNo))
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
