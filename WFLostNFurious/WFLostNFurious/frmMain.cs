@@ -165,17 +165,17 @@ namespace WFLostNFurious
             this.Width = (tabLab[0].Length * 30) + pnlInstructions.Width + 60;
             if (difficulteLaby == "Petit")
             {
-                lbxInstruction.Height = 190;
+                lbxInstruction.Height = 140;
                 this.Height = (tabLab.Length * 30) + 105;
             }
             else if (difficulteLaby == "Moyen")
             {
-                lbxInstruction.Height = 330;
+                lbxInstruction.Height = 280;
                 this.Height = (tabLab.Length * 30) + 105;
             }
             else if (difficulteLaby == "Grand")
             {
-                lbxInstruction.Height = 520;
+                lbxInstruction.Height = 470;
                 this.Height = (tabLab.Length * 30) + 105;
             }
         }
