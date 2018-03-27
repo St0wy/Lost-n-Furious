@@ -46,6 +46,7 @@
             this.lblArrivee = new System.Windows.Forms.Label();
             this.pnlInstructions = new System.Windows.Forms.Panel();
             this.pnlTailleGrid = new System.Windows.Forms.Panel();
+            this.aProposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.pnlInstructions.SuspendLayout();
             this.pnlTailleGrid.SuspendLayout();
@@ -54,9 +55,10 @@
             // btnDroite
             // 
             this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDroite.Location = new System.Drawing.Point(119, 146);
+            this.btnDroite.Location = new System.Drawing.Point(159, 180);
+            this.btnDroite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDroite.Name = "btnDroite";
-            this.btnDroite.Size = new System.Drawing.Size(83, 39);
+            this.btnDroite.Size = new System.Drawing.Size(111, 48);
             this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
@@ -65,9 +67,10 @@
             // btnGauche
             // 
             this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGauche.Location = new System.Drawing.Point(28, 146);
+            this.btnGauche.Location = new System.Drawing.Point(37, 180);
+            this.btnGauche.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGauche.Name = "btnGauche";
-            this.btnGauche.Size = new System.Drawing.Size(83, 39);
+            this.btnGauche.Size = new System.Drawing.Size(111, 48);
             this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
@@ -82,9 +85,10 @@
             // btnAvancer
             // 
             this.btnAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvancer.Location = new System.Drawing.Point(28, 101);
+            this.btnAvancer.Location = new System.Drawing.Point(37, 124);
+            this.btnAvancer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAvancer.Name = "btnAvancer";
-            this.btnAvancer.Size = new System.Drawing.Size(174, 39);
+            this.btnAvancer.Size = new System.Drawing.Size(232, 48);
             this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
@@ -94,9 +98,11 @@
             // 
             this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxInstruction.FormattingEnabled = true;
-            this.lbxInstruction.Location = new System.Drawing.Point(28, 191);
+            this.lbxInstruction.ItemHeight = 17;
+            this.lbxInstruction.Location = new System.Drawing.Point(37, 235);
+            this.lbxInstruction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lbxInstruction.Name = "lbxInstruction";
-            this.lbxInstruction.Size = new System.Drawing.Size(174, 303);
+            this.lbxInstruction.Size = new System.Drawing.Size(231, 361);
             this.lbxInstruction.TabIndex = 1;
             this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.lbxInstruction_SelectedIndexChanged);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
@@ -104,9 +110,10 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(28, 17);
+            this.btnPlay.Location = new System.Drawing.Point(37, 21);
+            this.btnPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(174, 23);
+            this.btnPlay.Size = new System.Drawing.Size(232, 28);
             this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
@@ -120,9 +127,10 @@
             // btnReset
             // 
             this.btnReset.Enabled = false;
-            this.btnReset.Location = new System.Drawing.Point(28, 46);
+            this.btnReset.Location = new System.Drawing.Point(37, 57);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(174, 23);
+            this.btnReset.Size = new System.Drawing.Size(232, 28);
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -130,12 +138,14 @@
             // 
             // menu
             // 
+            this.menu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuFichier});
+            this.menuFichier,
+            this.aProposToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menu.Size = new System.Drawing.Size(823, 24);
+            this.menu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menu.Size = new System.Drawing.Size(1097, 28);
             this.menu.TabIndex = 5;
             this.menu.Text = "menuStrip1";
             // 
@@ -145,13 +155,13 @@
             this.menuFichierAdmin,
             this.menuFichierQuitter});
             this.menuFichier.Name = "menuFichier";
-            this.menuFichier.Size = new System.Drawing.Size(54, 20);
+            this.menuFichier.Size = new System.Drawing.Size(64, 24);
             this.menuFichier.Text = "Fichier";
             // 
             // menuFichierAdmin
             // 
             this.menuFichierAdmin.Name = "menuFichierAdmin";
-            this.menuFichierAdmin.Size = new System.Drawing.Size(250, 22);
+            this.menuFichierAdmin.Size = new System.Drawing.Size(303, 26);
             this.menuFichierAdmin.Text = "Mode Admin - Changer difficulté";
             this.menuFichierAdmin.Click += new System.EventHandler(this.menuFichierAdmin_Click);
             // 
@@ -159,7 +169,7 @@
             // 
             this.menuFichierQuitter.Name = "menuFichierQuitter";
             this.menuFichierQuitter.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.menuFichierQuitter.Size = new System.Drawing.Size(153, 22);
+            this.menuFichierQuitter.Size = new System.Drawing.Size(303, 26);
             this.menuFichierQuitter.Text = "Quitter";
             this.menuFichierQuitter.Click += new System.EventHandler(this.menuFichierQuitter_Click);
             // 
@@ -167,10 +177,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(25, 10);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Location = new System.Drawing.Point(33, 12);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 16);
+            this.label5.Size = new System.Drawing.Size(127, 20);
             this.label5.TabIndex = 6;
             this.label5.Text = " Taille actuelle: ";
             // 
@@ -178,19 +187,19 @@
             // 
             this.lblDifficulteTaille.AutoSize = true;
             this.lblDifficulteTaille.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDifficulteTaille.Location = new System.Drawing.Point(148, 10);
-            this.lblDifficulteTaille.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblDifficulteTaille.Location = new System.Drawing.Point(197, 12);
             this.lblDifficulteTaille.Name = "lblDifficulteTaille";
-            this.lblDifficulteTaille.Size = new System.Drawing.Size(54, 16);
+            this.lblDifficulteTaille.Size = new System.Drawing.Size(63, 20);
             this.lblDifficulteTaille.TabIndex = 7;
             this.lblDifficulteTaille.Text = "Moyen";
             // 
             // lblArrivee
             // 
             this.lblArrivee.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblArrivee.Location = new System.Drawing.Point(28, 75);
+            this.lblArrivee.Location = new System.Drawing.Point(37, 92);
+            this.lblArrivee.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblArrivee.Name = "lblArrivee";
-            this.lblArrivee.Size = new System.Drawing.Size(174, 23);
+            this.lblArrivee.Size = new System.Drawing.Size(232, 28);
             this.lblArrivee.TabIndex = 8;
             this.lblArrivee.Text = "lblArrivee";
             this.lblArrivee.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -206,9 +215,10 @@
             this.pnlInstructions.Controls.Add(this.btnReset);
             this.pnlInstructions.Controls.Add(this.lbxInstruction);
             this.pnlInstructions.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlInstructions.Location = new System.Drawing.Point(586, 24);
+            this.pnlInstructions.Location = new System.Drawing.Point(781, 28);
+            this.pnlInstructions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlInstructions.Name = "pnlInstructions";
-            this.pnlInstructions.Size = new System.Drawing.Size(237, 563);
+            this.pnlInstructions.Size = new System.Drawing.Size(316, 694);
             this.pnlInstructions.TabIndex = 9;
             // 
             // pnlTailleGrid
@@ -216,20 +226,28 @@
             this.pnlTailleGrid.Controls.Add(this.lblDifficulteTaille);
             this.pnlTailleGrid.Controls.Add(this.label5);
             this.pnlTailleGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlTailleGrid.Location = new System.Drawing.Point(0, 511);
+            this.pnlTailleGrid.Location = new System.Drawing.Point(0, 630);
+            this.pnlTailleGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlTailleGrid.Name = "pnlTailleGrid";
-            this.pnlTailleGrid.Size = new System.Drawing.Size(237, 52);
+            this.pnlTailleGrid.Size = new System.Drawing.Size(316, 64);
             this.pnlTailleGrid.TabIndex = 10;
+            // 
+            // aProposToolStripMenuItem
+            // 
+            this.aProposToolStripMenuItem.Name = "aProposToolStripMenuItem";
+            this.aProposToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.aProposToolStripMenuItem.Text = "A Propos";
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(823, 587);
+            this.ClientSize = new System.Drawing.Size(1097, 722);
             this.Controls.Add(this.pnlInstructions);
             this.Controls.Add(this.menu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menu;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -266,6 +284,7 @@
         private System.Windows.Forms.Label lblArrivee;
         private System.Windows.Forms.Panel pnlInstructions;
         private System.Windows.Forms.Panel pnlTailleGrid;
+        private System.Windows.Forms.ToolStripMenuItem aProposToolStripMenuItem;
     }
 }
 
