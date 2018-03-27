@@ -442,14 +442,17 @@ namespace WFLostNFurious
                     }
                 }
 
-                if (compteur == lbxInstruction.Items.Count) // jai enlevé le -1 peut etre ki faudra remetre
+                if (compteur == lbxInstruction.Items.Count - 1) // jai remis le -1 peut etre ki faudra le renlever
                 {
                     tmrAvancer.Enabled = false;
                 }
 
                 if (!arrive) 
                 {
-                    compteur++;
+                   if (tmrAvancer.Enabled)
+                   {
+                        compteur++;
+                   }
                 }
 
                 if (lbxInstruction.SelectedIndex < lbxInstruction.Items.Count - 1)
@@ -466,7 +469,6 @@ namespace WFLostNFurious
             inPlay = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
-            tmrAvancer.Enabled = false;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
@@ -474,6 +476,7 @@ namespace WFLostNFurious
             p.Position = positionDepartpersonnage;
             p.Orientation = "haut";
             compteur = 0;
+            tmrAvancer.Enabled = false;
         }
 
         private void lbxInstruction_DoubleClick(object sender, EventArgs e)
