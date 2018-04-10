@@ -166,10 +166,12 @@ namespace WFLostNFurious
 
             //Change la taille de la forme et de la listebox en fonction de la taille du laby
             this.Width = (tabLab[0].Length * 30) + pnlInstructions.Width + 60;
+
             if (difficulteLaby == "Petit")
             {
                 lbxInstruction.Height = 140;
                 this.Height = (tabLab.Length * 30) + 105;
+                
             }
             else if (difficulteLaby == "Moyen")
             {
@@ -181,6 +183,9 @@ namespace WFLostNFurious
                 lbxInstruction.Height = 470;
                 this.Height = (tabLab.Length * 30) + 105;
             }
+
+            btnViderListe.Location = new Point(28, lbxInstruction.Location.Y + lbxInstruction.Height + 15);
+            this.CenterToScreen();
         }
 
         public void creationBordure(int x, int y)
@@ -352,6 +357,7 @@ namespace WFLostNFurious
             btnDroite.Enabled = false;
             btnGauche.Enabled = false;
             btnAvancer.Enabled = false;
+            btnViderListe.Enabled = false;
             btnPlay.Enabled = false;
             btnReset.Enabled = true;
         }
@@ -387,6 +393,8 @@ namespace WFLostNFurious
                                     tmrAvancer.Enabled = false;
                                     swTempsEcoule.Stop();
 
+                                    MessageBox.Show("Bravo tu as réussi! Tu est beau.");
+
                                     frmScores frmScore = new frmScores();
                                     frmScore.Text = "Bravo vous avez gagné!";
                                     frmScore.SetPnlNewScoreVisible(true);
@@ -394,11 +402,7 @@ namespace WFLostNFurious
                                     frmScore.SetDifficulte(lblDifficulteTaille.Text);
                                     frmScore.SetTempsEcoule(swTempsEcoule.ElapsedMilliseconds);
 
-                                    if (DialogResult.OK == frmScore.ShowDialog())
-                                    {
-                                        // Enregistrer new score
-                                        // MessageBox qui dit que Ok
-                                    }
+                                    frmScore.ShowDialog();
 
                                     btnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
@@ -527,6 +531,11 @@ namespace WFLostNFurious
             if (lbxInstruction.Items.Count == 0)
             {
                 btnPlay.Enabled = false;
+                btnViderListe.Enabled = false;
+            }
+            else if (!tmrAvancer.Enabled)
+            {
+                btnViderListe.Enabled = true;
             }
         }
 
@@ -605,7 +614,10 @@ namespace WFLostNFurious
 
         private void btnViderListe_Click(object sender, EventArgs e)
         {
-
+            btnPlay.Enabled = false;
+            lbxInstruction.Items.Clear();
+            instruction.Clear();
+            btnViderListe.Enabled = false;
         }
 
         private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -614,12 +626,19 @@ namespace WFLostNFurious
 		}
         private void menuFichierScores_Click(object sender, EventArgs e)
         {
-            frmScores frmScore = new frmScores();
+            if (!tmrAvancer.Enabled)
+            {
+                frmScores frmScore = new frmScores();
 
-            frmScore.Text = "Tableaux des scores";
-            frmScore.SetPnlNewScoreVisible(false);
+                frmScore.Text = "Tableaux des scores";
+                frmScore.SetPnlNewScoreVisible(false);
 
-            frmScore.ShowDialog();
+                frmScore.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Veuillez attendre que le personnage ai fini de se déplacer");
+            }
         }
     }
 }
