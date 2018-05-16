@@ -15,21 +15,41 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
-        string difficulteLaby = "Petit";
-        PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
-        Personnage p = new Personnage(new PointF(0, 0), "haut");
-        PointF positionDepartpersonnage = new Point();
-        string arriveDemande = "";
-        Stopwatch swTempsEcoule = new Stopwatch();
+        const int TAILLECARRE = 30;
+        //Valeurs pour la matrice qui genere le labyrinthe
+        const int NUM_MUR = 1;
+        const int NUM_ARRIVEE = 2;
+        const int NUM_PERSONNAGE = 3;
+        const int NUM_BORDURE = 4;
 
-        Bloc modele = new Arrivee();
-        List<Bloc> labyrinthe = new List<Bloc>();
-        bool inPlay = false;
-        List<string> instruction = new List<string>();
-        int compteur = 0;
+        const int POSITION_LABYRINTHE_X = 10;
+        const int POSITION_LABYRINTHE_Y = 10;
+        const int NOMBRE_SORTIES = 3;
+
+        const int DUREE_UNE_SECONDE_EN_MS = 1000;
+
+        const int POSITION_CODE_VICTOIRE_X = 0;
+        const int POSITION_CODE_VICTOIRE_Y = -10;
+
+        const int CODE_MIN = 10;
+        const int CODE_MAX = 50;
+
+        enum Direction { Haut, Bas, Gauche, Droite };
+
+        PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
+        Personnage raichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
+        PointF positionDepartpersonnage = new Point();
+        Stopwatch swTempsEcoule = new Stopwatch();
+        Random rnd = new Random();
+
+        Bloc arriveeDemandee = new Arrivee();
+        List<Bloc> lstLabyrinthe = new List<Bloc>();
+        bool enJeu = false;
+        List<string> lstInstruction = new List<string>();
+        int compteurInstructionsEffectuees = 0;
         
         
-        int[][] tabLabPetit = new int[][] {
+        int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
@@ -43,7 +63,7 @@ namespace WFLostNFurious
             new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };
+        };  //Matrice du labyrinthe
 
         public frmMain()
         {
@@ -68,26 +88,25 @@ namespace WFLostNFurious
         /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
         /// </summary>
-        /// <param name="tabLab">Schema du labyrinthe</param>
-        public void CreateLabFromGrid(int[][] tabLab)
+        /// <param name="matriceLabyrinthe">Schema du labyrinthe</param>
+        public void CreateLabFromGrid(int[][] matriceLabyrinthe)
         {
             DeleteLabel();
-
             int compteurSortie = 0;
-            int tailleCarre = 30;
-            Point positionLaby = new Point(10, 10);
+            
+            Point positionLaby = new Point(POSITION_LABYRINTHE_X, POSITION_LABYRINTHE_Y);
 
-            for (int i = 0; i < tabLab.Length; i++)
+            for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
-                int y = (i + 1) * tailleCarre + positionLaby.Y;
-                for (int j = 0; j < tabLab[i].Length; j++)
+                int y = (i + 1) * TAILLECARRE + positionLaby.Y;
+                for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
-                    int x = (j + 1) * tailleCarre + positionLaby.X;
-                    if (tabLab[i][j] == 1)
+                    int x = (j + 1) * TAILLECARRE + positionLaby.X;
+                    if (matriceLabyrinthe[i][j] == NUM_MUR)
                     {
                         creationMur(x, y);
                     }
-                    else if (tabLab[i][j] == 2)
+                    else if (matriceLabyrinthe[i][j] == NUM_ARRIVEE)
                     {
                         string[] lettresSorties = { "A", "B", "C" };
 
@@ -96,7 +115,7 @@ namespace WFLostNFurious
                         lbl.Location = new Point(x, y);
                         lbl.Text = lettresSorties[compteurSortie];
                         lbl.AutoSize = false;
-                        lbl.Size = new Size(tailleCarre, tailleCarre);
+                        lbl.Size = new Size(TAILLECARRE, TAILLECARRE);
                         lbl.Font = new Font("Arial", 15);
                         lbl.TextAlign = ContentAlignment.MiddleCenter;
                         lbl.BackColor = Color.Transparent;
@@ -104,12 +123,12 @@ namespace WFLostNFurious
                         
                         Controls.Add(lbl);
                     }
-                    else if (tabLab[i][j] == 3)
+                    else if (matriceLabyrinthe[i][j] == NUM_PERSONNAGE)
                     {
-                        p.Position = new PointF(Convert.ToSingle(x) + 5f, Convert.ToSingle(y) + 5f);
-                        positionDepartpersonnage = p.Position;
+                        raichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
+                        positionDepartpersonnage = raichu.Position;
                     }
-                    else if (tabLab[i][j] == 4)
+                    else if (matriceLabyrinthe[i][j] == NUM_BORDURE)
                     {
                         creationBordure(x, y);
                     }
@@ -120,7 +139,7 @@ namespace WFLostNFurious
         public void creationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
-            labyrinthe.Add(bordure);
+            lstLabyrinthe.Add(bordure);
             //Ajoute l'affichage de l'objet dans une variable d'image
             dessinLabyrinthe += bordure.Paint;
         }
@@ -128,7 +147,7 @@ namespace WFLostNFurious
         public void creationArrivee(int x, int y)
         {
             var arrivee = new Arrivee(x, y);
-            labyrinthe.Add(arrivee);
+            lstLabyrinthe.Add(arrivee);
             //Ajoute l'affichage de l'objet dans une variable d'image
             dessinLabyrinthe += arrivee.Paint;
         }
@@ -136,7 +155,7 @@ namespace WFLostNFurious
         public void creationMur(int x, int y)
         {
             var bloc = new Bloc(x, y);
-            labyrinthe.Add(bloc);
+            lstLabyrinthe.Add(bloc);
             //Ajoute l'affichage de l'objet dans une variable d'image
             dessinLabyrinthe += bloc.Paint;
         }
@@ -146,40 +165,35 @@ namespace WFLostNFurious
         /// </summary>
         public void nouvelleArrivee()
         {
-            Random rnd = new Random();
-            int valArrive = rnd.Next(3);
+            
+            int valArrive = rnd.Next(NOMBRE_SORTIES);
             int tmp = 0;
 
             //Regarde chaque bloc du labyrinthe
-            foreach (Bloc m in labyrinthe)
+            foreach (Bloc m in lstLabyrinthe)
             {
                 if (m is Arrivee)
                 {
                     if (valArrive == tmp) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
                     {
-                        modele = m;
+                        arriveeDemandee = m;
                     }
                     tmp++;
                 }
             }
 
-
             //Met l'arrivee de facon que ce soit de droite a gauche lors du nommage de chacune
             if (valArrive == 0)
             {
                 lblArrivee.Text = "Arrivée: A";
-                arriveDemande = "A";
             }
             else if (valArrive == 1)
             {
                 lblArrivee.Text = "Arrivée: B";
-                arriveDemande = "B";
-
             }
             else if (valArrive == 2)
             {
                 lblArrivee.Text = "Arrivée: C";
-                arriveDemande = "C";
             }
 
             swTempsEcoule.Restart();
@@ -209,74 +223,27 @@ namespace WFLostNFurious
         private void timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            lblTempsEcoule.Text = Convert.ToString(swTempsEcoule.ElapsedMilliseconds / 1000);
+            lblTempsEcoule.Text = Convert.ToString(swTempsEcoule.ElapsedMilliseconds / DUREE_UNE_SECONDE_EN_MS);
         }
 
         public virtual void frmMain_Load(object sender, EventArgs e)
         {
             //Affiche le labyrinthe
-            CreateLabFromGrid(tabLabPetit);
+            CreateLabFromGrid(matriceLabyrinthe);
             this.Paint += dessinLabyrinthe;
-            this.Paint += p.Paint;
+            this.Paint += raichu.Paint;
             nouvelleArrivee();
-
-
-            #region SolutionCMoyen
-            //Sortie C en Moyen
-            for (int i = 0; i < 5; i++)
-            {
-                btnAvancer_Click(sender, e);
-            }
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnGauche_Click(sender, e);
-            btnAvancer_Click(sender, e);
-            btnDroite_Click(sender, e);
-            btnAvancer_Click(sender, e); 
-            #endregion
-
+            
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
             foreach (string s in lbxInstruction.Items)
             {
-                instruction.Add(s);
+                lstInstruction.Add(s);
             }
 
-            inPlay = true;
+            enJeu = true;
             lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
@@ -289,42 +256,57 @@ namespace WFLostNFurious
             btnReset.Enabled = true;
         }
 
+        private void Gagner()
+        {
+            tmrAvancer.Enabled = false;
+            swTempsEcoule.Stop();
+
+            this.Controls.Clear();
+            this.Paint -= dessinLabyrinthe;
+            this.Paint -= raichu.Paint;
+
+            Label lbl = new Label();
+            lbl.Location = new Point(POSITION_CODE_VICTOIRE_X, POSITION_CODE_VICTOIRE_Y);
+            lbl.Text = "Le code est :" + Environment.NewLine + rnd.Next(CODE_MIN, CODE_MAX + 1).ToString();
+            lbl.AutoSize = false;
+            lbl.Size = new Size(this.Width, this.Height);
+            lbl.Font = new Font("Arial", 50);
+            lbl.TextAlign = ContentAlignment.MiddleCenter;
+            lbl.BackColor = Color.Transparent;
+            this.Controls.Add(lbl);
+
+        }
+
         private void tmrAvancer_Tick(object sender, EventArgs e)
         {
             bool arrive = false;
 
-            if (instruction.Count != 0)
+            if (lstInstruction.Count != 0)
             {
-                string instrucAcruelle = instruction.ElementAt(compteur).ToString();
+                string instrucAcruelle = lstInstruction.ElementAt(compteurInstructionsEffectuees).ToString();
                 bool collision = false;
 
                 if (instrucAcruelle == "Avancer")
                 {
-                    p.Avancer();
+                    raichu.Avancer();
 
-                    foreach (Bloc b in labyrinthe)
+                    foreach (Bloc b in lstLabyrinthe)
                     {
                         //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collisionne (empeche le clignottement)
                         if (!collision)
                         {
-                            if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                            if (new PointF(raichu.Position.X , raichu.Position.Y ) == b.Position)
                             {
                                 string arriveePrecedente = lblArrivee.Text;
-                                if(!(b is BlocInvisible))
-                                {
-                                    collision = true;
-                                }
 
-                                if (b.Position == modele.Position)
+                                if (b.Position == arriveeDemandee.Position)
                                 {
-                                    tmrAvancer.Enabled = false;
-                                    swTempsEcoule.Stop();
-
-                                    MessageBox.Show("Bravo tu as réussi! Tu est beau.");
+                                    //Action apres avoir gagne
+                                    Gagner();
 
                                     btnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
-                                    inPlay = false;
+                                    enJeu = false;
                                     arrive = true;
 
                                     while (lblArrivee.Text == arriveePrecedente)
@@ -344,33 +326,33 @@ namespace WFLostNFurious
                     if (collision && !arrive)
                     {
 
-                        switch (p.Orientation)
+                        switch (raichu.Orientation)
                         {
-                            case "gauche":
-                                p.Orientation = "droite";
-                                p.Avancer();
-                                p.Orientation = "gauche";
+                            case (int)Direction.Gauche:
+                                raichu.Orientation = (int)Direction.Droite;
+                                raichu.Avancer();
+                                raichu.Orientation = (int)Direction.Gauche;
                                 break;
-                            case "droite":
-                                p.Orientation = "gauche";
-                                p.Avancer();
-                                p.Orientation = "droite";
+                            case (int)Direction.Droite:
+                                raichu.Orientation = (int)Direction.Gauche;
+                                raichu.Avancer();
+                                raichu.Orientation = (int)Direction.Droite;
                                 break;
-                            case "bas":
-                                p.Orientation = "haut";
-                                p.Avancer();
-                                p.Orientation = "bas";
+                            case (int)Direction.Bas:
+                                raichu.Orientation = (int)Direction.Haut;
+                                raichu.Avancer();
+                                raichu.Orientation = (int)Direction.Bas;
                                 break;
-                            case "haut":
-                                p.Orientation = "bas";
-                                p.Avancer();
-                                p.Orientation = "haut";
+                            case (int)Direction.Haut:
+                                raichu.Orientation = (int)Direction.Bas;
+                                raichu.Avancer();
+                                raichu.Orientation = (int)Direction.Haut;
                                 break;
                         }
                         tmrAvancer.Enabled = false;
 
                         DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                        inPlay = false;
+                        enJeu = false;
 
                         if (dr == DialogResult.Yes)
                         {
@@ -388,18 +370,18 @@ namespace WFLostNFurious
                 {
                     if (instrucAcruelle == "Tourner à droite")
                     {
-                        p.PivoterDroite();
+                        raichu.PivoterDroite();
                     }
                     else
                     {
                         if (instrucAcruelle == "Tourner à gauche")
                         {
-                            p.PivoterGauche();
+                            raichu.PivoterGauche();
                         }
                     }
                 }
 
-                if (compteur == lbxInstruction.Items.Count - 1)
+                if (compteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
                 }
@@ -408,7 +390,7 @@ namespace WFLostNFurious
                 {
                    if (tmrAvancer.Enabled)
                    {
-                        compteur++;
+                        compteurInstructionsEffectuees++;
                    }
                 }
 
@@ -422,23 +404,23 @@ namespace WFLostNFurious
         private void btnReset_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Clear();
-            instruction.Clear();
-            inPlay = false;
+            lstInstruction.Clear();
+            enJeu = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            p.Position = positionDepartpersonnage;
-            p.Orientation = "haut";
-            compteur = 0;
+            raichu.Position = positionDepartpersonnage;
+            raichu.Orientation = (int)Direction.Haut;
+            compteurInstructionsEffectuees = 0;
             tmrAvancer.Enabled = false;
         }
 
         private void lbxInstruction_DoubleClick(object sender, EventArgs e)
         {
-            if (!inPlay)
+            if (!enJeu)
             {
                 lbxInstruction.Items.RemoveAt(lbxInstruction.SelectedIndex);
             }
@@ -471,7 +453,7 @@ namespace WFLostNFurious
         {
             btnPlay.Enabled = false;
             lbxInstruction.Items.Clear();
-            instruction.Clear();
+            lstInstruction.Clear();
             btnViderListe.Enabled = false;
         }
     }

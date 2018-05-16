@@ -52,10 +52,9 @@
             // btnDroite
             // 
             this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDroite.Location = new System.Drawing.Point(159, 180);
-            this.btnDroite.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDroite.Location = new System.Drawing.Point(119, 146);
             this.btnDroite.Name = "btnDroite";
-            this.btnDroite.Size = new System.Drawing.Size(111, 48);
+            this.btnDroite.Size = new System.Drawing.Size(83, 39);
             this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
@@ -64,10 +63,9 @@
             // btnGauche
             // 
             this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGauche.Location = new System.Drawing.Point(37, 180);
-            this.btnGauche.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGauche.Location = new System.Drawing.Point(28, 146);
             this.btnGauche.Name = "btnGauche";
-            this.btnGauche.Size = new System.Drawing.Size(111, 48);
+            this.btnGauche.Size = new System.Drawing.Size(83, 39);
             this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
@@ -82,10 +80,9 @@
             // btnAvancer
             // 
             this.btnAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvancer.Location = new System.Drawing.Point(37, 124);
-            this.btnAvancer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAvancer.Location = new System.Drawing.Point(28, 101);
             this.btnAvancer.Name = "btnAvancer";
-            this.btnAvancer.Size = new System.Drawing.Size(232, 48);
+            this.btnAvancer.Size = new System.Drawing.Size(174, 39);
             this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
@@ -95,11 +92,9 @@
             // 
             this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxInstruction.FormattingEnabled = true;
-            this.lbxInstruction.ItemHeight = 17;
-            this.lbxInstruction.Location = new System.Drawing.Point(37, 235);
-            this.lbxInstruction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lbxInstruction.Location = new System.Drawing.Point(28, 191);
             this.lbxInstruction.Name = "lbxInstruction";
-            this.lbxInstruction.Size = new System.Drawing.Size(231, 327);
+            this.lbxInstruction.Size = new System.Drawing.Size(174, 199);
             this.lbxInstruction.TabIndex = 1;
             this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.lbxInstruction_SelectedIndexChanged);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
@@ -107,10 +102,9 @@
             // btnPlay
             // 
             this.btnPlay.Enabled = false;
-            this.btnPlay.Location = new System.Drawing.Point(37, 21);
-            this.btnPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPlay.Location = new System.Drawing.Point(28, 17);
             this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(232, 28);
+            this.btnPlay.Size = new System.Drawing.Size(174, 23);
             this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
@@ -124,10 +118,9 @@
             // btnReset
             // 
             this.btnReset.Enabled = false;
-            this.btnReset.Location = new System.Drawing.Point(37, 57);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnReset.Location = new System.Drawing.Point(28, 46);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(232, 28);
+            this.btnReset.Size = new System.Drawing.Size(174, 23);
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -137,9 +130,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(33, 0);
+            this.label5.Location = new System.Drawing.Point(25, 11);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(137, 20);
+            this.label5.Size = new System.Drawing.Size(107, 16);
             this.label5.TabIndex = 6;
             this.label5.Text = " Taille actuelle  : ";
             // 
@@ -147,19 +141,19 @@
             // 
             this.lblDifficulteTaille.AutoSize = true;
             this.lblDifficulteTaille.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDifficulteTaille.Location = new System.Drawing.Point(197, 0);
+            this.lblDifficulteTaille.Location = new System.Drawing.Point(148, 11);
+            this.lblDifficulteTaille.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDifficulteTaille.Name = "lblDifficulteTaille";
-            this.lblDifficulteTaille.Size = new System.Drawing.Size(63, 20);
+            this.lblDifficulteTaille.Size = new System.Drawing.Size(54, 16);
             this.lblDifficulteTaille.TabIndex = 7;
             this.lblDifficulteTaille.Text = "Moyen";
             // 
             // lblArrivee
             // 
             this.lblArrivee.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblArrivee.Location = new System.Drawing.Point(37, 92);
-            this.lblArrivee.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblArrivee.Location = new System.Drawing.Point(28, 75);
             this.lblArrivee.Name = "lblArrivee";
-            this.lblArrivee.Size = new System.Drawing.Size(232, 28);
+            this.lblArrivee.Size = new System.Drawing.Size(174, 23);
             this.lblArrivee.TabIndex = 8;
             this.lblArrivee.Text = "lblArrivee";
             this.lblArrivee.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -176,18 +170,17 @@
             this.pnlInstructions.Controls.Add(this.btnReset);
             this.pnlInstructions.Controls.Add(this.lbxInstruction);
             this.pnlInstructions.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlInstructions.Location = new System.Drawing.Point(781, 0);
-            this.pnlInstructions.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlInstructions.Location = new System.Drawing.Point(437, 0);
             this.pnlInstructions.Name = "pnlInstructions";
-            this.pnlInstructions.Size = new System.Drawing.Size(316, 722);
+            this.pnlInstructions.Size = new System.Drawing.Size(237, 501);
             this.pnlInstructions.TabIndex = 9;
             // 
             // btnViderListe
             // 
-            this.btnViderListe.Location = new System.Drawing.Point(37, 582);
-            this.btnViderListe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnViderListe.Location = new System.Drawing.Point(28, 395);
+            this.btnViderListe.Margin = new System.Windows.Forms.Padding(2);
             this.btnViderListe.Name = "btnViderListe";
-            this.btnViderListe.Size = new System.Drawing.Size(232, 23);
+            this.btnViderListe.Size = new System.Drawing.Size(174, 19);
             this.btnViderListe.TabIndex = 11;
             this.btnViderListe.Text = "Vider la liste";
             this.btnViderListe.UseVisualStyleBackColor = true;
@@ -200,19 +193,19 @@
             this.pnlTailleGrid.Controls.Add(this.lblDifficulteTaille);
             this.pnlTailleGrid.Controls.Add(this.label5);
             this.pnlTailleGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlTailleGrid.Location = new System.Drawing.Point(0, 643);
-            this.pnlTailleGrid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlTailleGrid.Location = new System.Drawing.Point(0, 437);
             this.pnlTailleGrid.Name = "pnlTailleGrid";
-            this.pnlTailleGrid.Size = new System.Drawing.Size(316, 79);
+            this.pnlTailleGrid.Size = new System.Drawing.Size(237, 64);
             this.pnlTailleGrid.TabIndex = 10;
             // 
             // lblTempsEcoule
             // 
             this.lblTempsEcoule.AutoSize = true;
             this.lblTempsEcoule.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTempsEcoule.Location = new System.Drawing.Point(197, 21);
+            this.lblTempsEcoule.Location = new System.Drawing.Point(148, 28);
+            this.lblTempsEcoule.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTempsEcoule.Name = "lblTempsEcoule";
-            this.lblTempsEcoule.Size = new System.Drawing.Size(63, 20);
+            this.lblTempsEcoule.Size = new System.Drawing.Size(54, 16);
             this.lblTempsEcoule.TabIndex = 9;
             this.lblTempsEcoule.Text = "Moyen";
             // 
@@ -220,9 +213,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 21);
+            this.label2.Location = new System.Drawing.Point(25, 28);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(129, 20);
+            this.label2.Size = new System.Drawing.Size(104, 16);
             this.label2.TabIndex = 8;
             this.label2.Text = " Temps écoulé :";
             // 
@@ -234,12 +228,11 @@
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1097, 722);
+            this.ClientSize = new System.Drawing.Size(674, 501);
             this.Controls.Add(this.pnlInstructions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
