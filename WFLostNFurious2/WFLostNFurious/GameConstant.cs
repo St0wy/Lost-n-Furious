@@ -25,7 +25,10 @@ namespace WFLostNFurious
         public const int CODE_MIN = 10;
         public const int CODE_MAX = 50;
         
-        public const int TAILLE_BLOC_X = 30;
-        public const int TAILLE_BLOC_Y = 30;
+        public const int TAILLE_BLOC_X = 70;
+        public const int TAILLE_BLOC_Y = 70;
+
+        public const string IP_CIBLE = "127.0.0.1";
+        public const int PORT_CIBLE = 5035;
     }
 }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,22 +16,19 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
-        //Valeurs pour la matrice qui genere le labyrinthe
-        
-
         enum Direction { Haut, Bas, Gauche, Droite };
 
+        static UdpClient udpClient = new UdpClient(1080);
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
-        Personnage personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
         PointF positionDepartpersonnage = new Point();
         Random rnd = new Random();
-
+        Personnage personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
         Bloc arriveeDemandee = new Arrivee();
         List<Bloc> lstLabyrinthe = new List<Bloc>();
-        bool enJeu = false;
         List<string> lstInstruction = new List<string>();
+        bool enJeu = false;
         int compteurInstructionsEffectuees = 0;
-
+        int numero;
 
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
@@ -181,6 +179,35 @@ namespace WFLostNFurious
 
         }
 
+        private void Gagner()
+        {
+            pnlInstructions.Visible = false;
+            this.Paint -= dessinLabyrinthe;
+            this.Paint -= personnageRaichu.Paint;
+
+            Label lbl = new Label();
+            lbl.Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y);
+            lbl.Text = "Le code est :" + Environment.NewLine + numero.ToString();
+            lbl.AutoSize = false;
+            lbl.Size = new Size(this.Width, this.Height);
+            lbl.Font = new Font("Arial", 75);
+            lbl.TextAlign = ContentAlignment.MiddleCenter;
+            lbl.BackColor = Color.Transparent;
+            this.Controls.Add(lbl);
+
+        }
+
+        private void CommencerPartie()
+        {
+            //Affiche les controles
+            pnlInstructions.Visible = true;
+            //Affiche le labyrinthe
+            CreateLabFromGrid(matriceLabyrinthe);
+            this.Paint += dessinLabyrinthe;
+            this.Paint += personnageRaichu.Paint;
+            NouvelleArrivee();
+        }
+
         private void btnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à droite");
@@ -207,20 +234,9 @@ namespace WFLostNFurious
             Invalidate();
         }
 
-        private void CommencerPartie()
-        {
-            //Affiche les controles
-            pnlInstructions.Visible = true;
-            //Affiche le labyrinthe
-            CreateLabFromGrid(matriceLabyrinthe);
-            this.Paint += dessinLabyrinthe;
-            this.Paint += personnageRaichu.Paint;
-            NouvelleArrivee();
-        }
-
         private void frmMain_Load(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -242,24 +258,6 @@ namespace WFLostNFurious
             btnViderListe.Enabled = false;
             btnPlay.Enabled = false;
             btnReset.Enabled = true;
-        }
-
-        private void Gagner()
-        {
-            this.Controls.Clear();
-            this.Paint -= dessinLabyrinthe;
-            this.Paint -= personnageRaichu.Paint;
-
-            Label lbl = new Label();
-            lbl.Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y);
-            lbl.Text = "Le code est :" + Environment.NewLine + rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1).ToString();
-            lbl.AutoSize = false;
-            lbl.Size = new Size(this.Width, this.Height);
-            lbl.Font = new Font("Arial", 50);
-            lbl.TextAlign = ContentAlignment.MiddleCenter;
-            lbl.BackColor = Color.Transparent;
-            this.Controls.Add(lbl);
-
         }
 
         private void tmrAvancer_Tick(object sender, EventArgs e)
@@ -443,6 +441,11 @@ namespace WFLostNFurious
         {
             btnStartGame.Visible = false;
             CommencerPartie();
+            numero = rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1);
+
+            byte[] message;
+            message = Encoding.Default.GetBytes(numero.ToString());
+            udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
         }
     }
 }
