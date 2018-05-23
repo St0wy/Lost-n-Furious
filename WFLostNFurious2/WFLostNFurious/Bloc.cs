@@ -11,9 +11,6 @@ namespace WFLostNFurious
     
     class Bloc
     {
-        protected const int TAILLE_BLOC_X = 30;
-        protected const int TAILLE_BLOC_Y = 30;
-
         int x;
         int y;
 
@@ -30,7 +27,7 @@ namespace WFLostNFurious
 
         public virtual void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Black, x, y, TAILLE_BLOC_X, TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
         }
 
         public PointF Position
@@ -54,7 +51,7 @@ namespace WFLostNFurious
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, TAILLE_BLOC_X, TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
         }
     }
 
@@ -75,7 +72,7 @@ namespace WFLostNFurious
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Red, x, y, TAILLE_BLOC_X, TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
         }
     }
 }

@@ -16,31 +16,13 @@ namespace WFLostNFurious
     public partial class frmMain : Form
     {
         //Valeurs pour la matrice qui genere le labyrinthe
-        const int NUM_MUR = 1;
-        const int NUM_ARRIVEE = 2;
-        const int NUM_PERSONNAGE = 3;
-        const int NUM_BORDURE = 4;
-
-        const int POSITION_LABYRINTHE_X = 10;
-        const int POSITION_LABYRINTHE_Y = 10;
-        const int NOMBRE_SORTIES = 3;
-
-        const int DUREE_UNE_SECONDE_EN_MS = 1000;
-
-        const int POSITION_CODE_VICTOIRE_X = 0;
-        const int POSITION_CODE_VICTOIRE_Y = -10;
-
-        const int CODE_MIN = 10;
-        const int CODE_MAX = 50;
-
-        const int TAILLECARRE = 30;
+        
 
         enum Direction { Haut, Bas, Gauche, Droite };
 
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
         Personnage personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
         PointF positionDepartpersonnage = new Point();
-        Stopwatch swTempsEcoule = new Stopwatch();
         Random rnd = new Random();
 
         Bloc arriveeDemandee = new Arrivee();
@@ -95,19 +77,19 @@ namespace WFLostNFurious
             DeleteLabel();
             int compteurSortie = 0;
 
-            Point positionLaby = new Point(POSITION_LABYRINTHE_X, POSITION_LABYRINTHE_Y);
+            Point positionLaby = new Point(GameConstant.POSITION_LABYRINTHE_X, GameConstant.POSITION_LABYRINTHE_Y);
 
             for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
-                int y = (i + 1) * TAILLECARRE + positionLaby.Y;
+                int y = (i + 1) * GameConstant.TAILLE_BLOC_Y + positionLaby.Y;
                 for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
-                    int x = (j + 1) * TAILLECARRE + positionLaby.X;
-                    if (matriceLabyrinthe[i][j] == NUM_MUR)
+                    int x = (j + 1) * GameConstant.TAILLE_BLOC_X + positionLaby.X;
+                    if (matriceLabyrinthe[i][j] == GameConstant.NUM_MUR)
                     {
                         CreationMur(x, y);
                     }
-                    else if (matriceLabyrinthe[i][j] == NUM_ARRIVEE)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_ARRIVEE)
                     {
                         string[] lettresSorties = { "A", "B", "C" };
 
@@ -116,7 +98,7 @@ namespace WFLostNFurious
                         lbl.Location = new Point(x, y);
                         lbl.Text = lettresSorties[compteurSortie];
                         lbl.AutoSize = false;
-                        lbl.Size = new Size(TAILLECARRE, TAILLECARRE);
+                        lbl.Size = new Size(GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
                         lbl.Font = new Font("Arial", 15);
                         lbl.TextAlign = ContentAlignment.MiddleCenter;
                         lbl.BackColor = Color.Transparent;
@@ -124,12 +106,12 @@ namespace WFLostNFurious
 
                         Controls.Add(lbl);
                     }
-                    else if (matriceLabyrinthe[i][j] == NUM_PERSONNAGE)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_PERSONNAGE)
                     {
                         personnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
                         positionDepartpersonnage = personnageRaichu.Position;
                     }
-                    else if (matriceLabyrinthe[i][j] == NUM_BORDURE)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_BORDURE)
                     {
                         CreationBordure(x, y);
                     }
@@ -167,7 +149,7 @@ namespace WFLostNFurious
         public void NouvelleArrivee()
         {
 
-            int valArrive = rnd.Next(NOMBRE_SORTIES);
+            int valArrive = rnd.Next(GameConstant.NOMBRE_SORTIES);
             int tmp = 0;
 
             //Regarde chaque bloc du labyrinthe
@@ -197,7 +179,6 @@ namespace WFLostNFurious
                 lblArrivee.Text = "Arrivée: C";
             }
 
-            swTempsEcoule.Restart();
         }
 
         private void btnDroite_Click(object sender, EventArgs e)
@@ -224,16 +205,22 @@ namespace WFLostNFurious
         private void timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            lblTempsEcoule.Text = Convert.ToString(swTempsEcoule.ElapsedMilliseconds / DUREE_UNE_SECONDE_EN_MS);
         }
 
-        public virtual void frmMain_Load(object sender, EventArgs e)
+        private void CommencerPartie()
         {
+            //Affiche les controles
+            pnlInstructions.Visible = true;
             //Affiche le labyrinthe
             CreateLabFromGrid(matriceLabyrinthe);
             this.Paint += dessinLabyrinthe;
             this.Paint += personnageRaichu.Paint;
             NouvelleArrivee();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            
 
         }
 
@@ -264,8 +251,8 @@ namespace WFLostNFurious
             this.Paint -= personnageRaichu.Paint;
 
             Label lbl = new Label();
-            lbl.Location = new Point(POSITION_CODE_VICTOIRE_X, POSITION_CODE_VICTOIRE_Y);
-            lbl.Text = "Le code est :" + Environment.NewLine + rnd.Next(CODE_MIN, CODE_MAX + 1).ToString();
+            lbl.Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y);
+            lbl.Text = "Le code est :" + Environment.NewLine + rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1).ToString();
             lbl.AutoSize = false;
             lbl.Size = new Size(this.Width, this.Height);
             lbl.Font = new Font("Arial", 50);
@@ -298,7 +285,6 @@ namespace WFLostNFurious
                                 string arriveePrecedente = lblArrivee.Text;
                                 collision = true;
                                 tmrAvancer.Enabled = false;
-                                swTempsEcoule.Stop();
 
                                 if (b.Position == arriveeDemandee.Position) //Verifie qui le personnage est sur une arrivee
                                 {
@@ -451,6 +437,12 @@ namespace WFLostNFurious
             lbxInstruction.Items.Clear();
             lstInstruction.Clear();
             btnViderListe.Enabled = false;
+        }
+
+        private void btnStartGame_Click(object sender, EventArgs e)
+        {
+            btnStartGame.Visible = false;
+            CommencerPartie();
         }
     }
 }
