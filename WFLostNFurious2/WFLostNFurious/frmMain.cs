@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -18,7 +19,9 @@ namespace WFLostNFurious
     {
         enum Direction { Haut, Bas, Gauche, Droite };
 
-        static UdpClient udpClient = new UdpClient(1080);
+        static UdpClient udpClient = new UdpClient(GameConstant.PORT_HOTE);
+        private static Thread thEcoute;
+
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
         PointF positionDepartpersonnage = new Point();
         Random rnd = new Random();
@@ -187,14 +190,13 @@ namespace WFLostNFurious
 
             Label lbl = new Label();
             lbl.Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y);
-            lbl.Text = "Le code est :" + Environment.NewLine + numero.ToString();
+            lbl.Text = $"Le code est :{Environment.NewLine}{numero.ToString()}";
             lbl.AutoSize = false;
             lbl.Size = new Size(this.Width, this.Height);
             lbl.Font = new Font("Arial", 75);
             lbl.TextAlign = ContentAlignment.MiddleCenter;
             lbl.BackColor = Color.Transparent;
             this.Controls.Add(lbl);
-
         }
 
         private void CommencerPartie()
@@ -206,6 +208,35 @@ namespace WFLostNFurious
             this.Paint += dessinLabyrinthe;
             this.Paint += personnageRaichu.Paint;
             NouvelleArrivee();
+        }
+
+        private void Ecouter()
+        {
+            while (true)
+            {
+                IPEndPoint client = null;
+                byte[] data = udpClient.Receive(ref client);
+                bool recommencer = Convert.ToBoolean(Encoding.Default.GetString(data));
+
+                if (recommencer)
+                {
+                    Recommencer();
+                }
+            }
+        }
+
+        private void Recommencer()
+        {
+            if (InvokeRequired)
+            {
+                // after we've done all the processing, 
+                this.Invoke(new MethodInvoker(delegate {
+                    System.Diagnostics.Process.Start(Application.ExecutablePath);
+                    //this.Close();
+                    Environment.Exit(0);
+                }));
+                return;
+            }
         }
 
         private void btnDroite_Click(object sender, EventArgs e)
@@ -236,8 +267,8 @@ namespace WFLostNFurious
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-
-
+            thEcoute = new Thread(new ThreadStart(Ecouter));
+            thEcoute.Start();
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -446,6 +477,11 @@ namespace WFLostNFurious
             byte[] message;
             message = Encoding.Default.GetBytes(numero.ToString());
             udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
