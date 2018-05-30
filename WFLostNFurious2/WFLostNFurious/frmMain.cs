@@ -120,6 +120,11 @@ namespace WFLostNFurious
             }
         }
 
+        /// <summary>
+        /// Creer une bordure
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
         public void CreationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
@@ -128,6 +133,11 @@ namespace WFLostNFurious
             dessinLabyrinthe += bordure.Paint;
         }
 
+        /// <summary>
+        /// Creer une Arrivee
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
         public void CreationArrivee(int x, int y)
         {
             var arrivee = new Arrivee(x, y);
@@ -136,6 +146,11 @@ namespace WFLostNFurious
             dessinLabyrinthe += arrivee.Paint;
         }
 
+        /// <summary>
+        /// Creer un Mur
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
         public void CreationMur(int x, int y)
         {
             var bloc = new Bloc(x, y);
@@ -182,6 +197,9 @@ namespace WFLostNFurious
 
         }
 
+        /// <summary>
+        /// Vide l'interface et met le code de victoire au millieu de l'ecran
+        /// </summary>
         private void Gagner()
         {
             pnlInstructions.Visible = false;
@@ -199,6 +217,9 @@ namespace WFLostNFurious
             this.Controls.Add(lbl);
         }
 
+        /// <summary>
+        /// Affiche l'interface et creer le labyrinthe
+        /// </summary>
         private void CommencerPartie()
         {
             //Affiche les controles
@@ -210,6 +231,9 @@ namespace WFLostNFurious
             NouvelleArrivee();
         }
 
+        /// <summary>
+        /// Fonction d'ecoute pour le signal qui demande de redemarer l'application
+        /// </summary>
         private void Ecouter()
         {
             while (true)
@@ -225,53 +249,54 @@ namespace WFLostNFurious
             }
         }
 
+        /// <summary>
+        /// Lance une nouvelle instance de l'application et ferme l'ancienne
+        /// </summary>
         private void Recommencer()
         {
             if (InvokeRequired)
             {
-                // after we've done all the processing, 
                 this.Invoke(new MethodInvoker(delegate {
                     System.Diagnostics.Process.Start(Application.ExecutablePath);
-                    //this.Close();
                     Environment.Exit(0);
                 }));
-                return;
             }
         }
 
-        private void btnDroite_Click(object sender, EventArgs e)
+        private void BtnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à droite");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void btnGauche_Click(object sender, EventArgs e)
+        private void BtnGauche_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à gauche");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void btnAvancer_Click(object sender, EventArgs e)
+        private void BtnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void FrmMain_Load(object sender, EventArgs e)
         {
+            //Commence a ecouter le signal du serveur
             thEcoute = new Thread(new ThreadStart(Ecouter));
             thEcoute.Start();
         }
 
-        private void btnPlay_Click(object sender, EventArgs e)
+        private void BtnPlay_Click(object sender, EventArgs e)
         {
             foreach (string s in lbxInstruction.Items)
             {
@@ -291,7 +316,7 @@ namespace WFLostNFurious
             btnReset.Enabled = true;
         }
 
-        private void tmrAvancer_Tick(object sender, EventArgs e)
+        private void TmrAvancer_Tick(object sender, EventArgs e)
         {
             bool arrive = false;
 
@@ -320,7 +345,7 @@ namespace WFLostNFurious
                                     //Action apres avoir gagne
                                     Gagner();
 
-                                    btnReset_Click(sender, e);
+                                    BtnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
                                     enJeu = false;
                                     arrive = true;
@@ -373,7 +398,7 @@ namespace WFLostNFurious
 
                         if (dr == DialogResult.Yes)
                         {
-                            btnReset_Click(sender, e);
+                            BtnReset_Click(sender, e);
                             lbxInstruction.Enabled = true;
                         }
                         else
@@ -412,7 +437,7 @@ namespace WFLostNFurious
             }
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void BtnReset_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Clear();
             lstInstruction.Clear();
@@ -429,7 +454,7 @@ namespace WFLostNFurious
             tmrAvancer.Enabled = false;
         }
 
-        private void lbxInstruction_DoubleClick(object sender, EventArgs e)
+        private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
             if (!enJeu)
             {
@@ -437,7 +462,7 @@ namespace WFLostNFurious
             }
         }
 
-        private void lbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxInstruction.Items.Count == 0)
             {
@@ -450,17 +475,17 @@ namespace WFLostNFurious
             }
         }
 
-        private void frmMain_Paint(object sender, PaintEventArgs e)
+        private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //e.Cancel = true;
         }
 
-        private void btnViderListe_Click(object sender, EventArgs e)
+        private void BtnViderListe_Click(object sender, EventArgs e)
         {
             btnPlay.Enabled = false;
             lbxInstruction.Items.Clear();
@@ -468,7 +493,7 @@ namespace WFLostNFurious
             btnViderListe.Enabled = false;
         }
 
-        private void btnStartGame_Click(object sender, EventArgs e)
+        private void BtnStartGame_Click(object sender, EventArgs e)
         {
             btnStartGame.Visible = false;
             CommencerPartie();
@@ -479,7 +504,7 @@ namespace WFLostNFurious
             udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
         }
 
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
         }

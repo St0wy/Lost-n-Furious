@@ -53,7 +53,7 @@
             this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "→";
             this.btnDroite.UseVisualStyleBackColor = true;
-            this.btnDroite.Click += new System.EventHandler(this.btnDroite_Click);
+            this.btnDroite.Click += new System.EventHandler(this.BtnDroite_Click);
             // 
             // btnGauche
             // 
@@ -64,13 +64,13 @@
             this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "←";
             this.btnGauche.UseVisualStyleBackColor = true;
-            this.btnGauche.Click += new System.EventHandler(this.btnGauche_Click);
+            this.btnGauche.Click += new System.EventHandler(this.BtnGauche_Click);
             // 
             // tmrInvalidate
             // 
             this.tmrInvalidate.Enabled = true;
             this.tmrInvalidate.Interval = 16;
-            this.tmrInvalidate.Tick += new System.EventHandler(this.timer1_Tick);
+            this.tmrInvalidate.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // btnAvancer
             // 
@@ -81,7 +81,7 @@
             this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "↑";
             this.btnAvancer.UseVisualStyleBackColor = true;
-            this.btnAvancer.Click += new System.EventHandler(this.btnAvancer_Click);
+            this.btnAvancer.Click += new System.EventHandler(this.BtnAvancer_Click);
             // 
             // lbxInstruction
             // 
@@ -91,8 +91,8 @@
             this.lbxInstruction.Name = "lbxInstruction";
             this.lbxInstruction.Size = new System.Drawing.Size(174, 706);
             this.lbxInstruction.TabIndex = 1;
-            this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.lbxInstruction_SelectedIndexChanged);
-            this.lbxInstruction.DoubleClick += new System.EventHandler(this.lbxInstruction_DoubleClick);
+            this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.LbxInstruction_SelectedIndexChanged);
+            this.lbxInstruction.DoubleClick += new System.EventHandler(this.LbxInstruction_DoubleClick);
             // 
             // btnPlay
             // 
@@ -103,12 +103,12 @@
             this.btnPlay.TabIndex = 0;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
+            this.btnPlay.Click += new System.EventHandler(this.BtnPlay_Click);
             // 
             // tmrAvancer
             // 
             this.tmrAvancer.Interval = 500;
-            this.tmrAvancer.Tick += new System.EventHandler(this.tmrAvancer_Tick);
+            this.tmrAvancer.Tick += new System.EventHandler(this.TmrAvancer_Tick);
             // 
             // btnReset
             // 
@@ -119,7 +119,7 @@
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
             // lblArrivee
             // 
@@ -157,7 +157,7 @@
             this.btnViderListe.TabIndex = 11;
             this.btnViderListe.Text = "Vider la liste";
             this.btnViderListe.UseVisualStyleBackColor = true;
-            this.btnViderListe.Click += new System.EventHandler(this.btnViderListe_Click);
+            this.btnViderListe.Click += new System.EventHandler(this.BtnViderListe_Click);
             // 
             // fichierToolStripMenuItem
             // 
@@ -173,7 +173,7 @@
             this.btnStartGame.TabIndex = 10;
             this.btnStartGame.Text = "Commencer";
             this.btnStartGame.UseVisualStyleBackColor = true;
-            this.btnStartGame.Click += new System.EventHandler(this.btnStartGame_Click);
+            this.btnStartGame.Click += new System.EventHandler(this.BtnStartGame_Click);
             // 
             // frmMain
             // 
@@ -187,9 +187,9 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lost\'n\'Furious";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
-            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlInstructions.ResumeLayout(false);
             this.ResumeLayout(false);
 
