@@ -15,12 +15,16 @@ namespace WFEnvoisServeur
 {
     public partial class frmEnvoisServeur : Form
     {
-        static UdpClient udpClient = new UdpClient(1081);
+        static UdpClient udpClient;
         private static Thread thEcoute;
+        static string input;
 
         public frmEnvoisServeur()
         {
             InitializeComponent();
+
+            input = "";
+            udpClient = new UdpClient(1081);
         }
 
         private void BtnSend_Click(object sender, EventArgs e)
@@ -49,8 +53,18 @@ namespace WFEnvoisServeur
             {
                 IPEndPoint client = null;
                 byte[] data = udpClient.Receive(ref client);
-                tbxRecieve.Text += String.Format("Données en provenance de {0}:{1}", client.Address, client.Port) + Environment.NewLine;
-                tbxRecieve.Text += Encoding.Default.GetString(data);
+                input += $"Données en provenance de {client.Address}:{client.Port}{Environment.NewLine}{Encoding.Default.GetString(data)}{Environment.NewLine}";
+                UpdateInput();
+            }
+        }
+
+        private void UpdateInput()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate {
+                    tbxRecieve.Text = input;
+                }));
             }
         }
 

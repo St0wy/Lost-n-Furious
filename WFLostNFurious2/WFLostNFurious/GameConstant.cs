@@ -31,5 +31,7 @@ namespace WFLostNFurious
         public const string IP_CIBLE = "127.0.0.1";
         public const int PORT_CIBLE = 1081;
         public const int PORT_HOTE = 1080;
+
+        public const int TAG_ARRIVEE = 1;
     }
 }
