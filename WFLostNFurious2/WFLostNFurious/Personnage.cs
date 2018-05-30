@@ -52,6 +52,9 @@ namespace WFLostNFurious
             }
         }
 
+        /// <summary>
+        /// Tourne le personnage vers la droite
+        /// </summary>
         public void PivoterDroite()
         {
             switch (Orientation)
@@ -70,6 +73,10 @@ namespace WFLostNFurious
                     break;
             }
         }
+
+        /// <summary>
+        /// Tourne le personnage vers la gauche
+        /// </summary>
         public void PivoterGauche()
         {
             switch (Orientation)
@@ -89,6 +96,9 @@ namespace WFLostNFurious
             }
         }
 
+        /// <summary>
+        /// Fait avance le personnage
+        /// </summary>
         public void Avancer()
         {
             switch (Orientation)

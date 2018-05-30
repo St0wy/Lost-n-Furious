@@ -112,7 +112,7 @@
             this.btnSTOP.TabIndex = 8;
             this.btnSTOP.Text = "STOPI";
             this.btnSTOP.UseVisualStyleBackColor = true;
-            this.btnSTOP.Click += new System.EventHandler(this.btnSTOP_Click);
+            this.btnSTOP.Click += new System.EventHandler(this.BtnSTOP_Click);
             // 
             // frmEnvoisServeur
             // 
@@ -130,8 +130,8 @@
             this.Controls.Add(this.btnSend);
             this.Name = "frmEnvoisServeur";
             this.Text = "Envois serveur";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmEnvoisServeur_FormClosed);
-            this.Load += new System.EventHandler(this.frmEnvoisServeur_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEnvoisServeur_FormClosed);
+            this.Load += new System.EventHandler(this.FrmEnvoisServeur_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -23,7 +23,7 @@ namespace WFEnvoisServeur
             InitializeComponent();
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private void BtnSend_Click(object sender, EventArgs e)
         {
             string ipCible = tbxIp.Text.ToString();
             int portCible = Convert.ToInt32(tbxPort.Text);
@@ -34,12 +34,15 @@ namespace WFEnvoisServeur
 
         }
 
-        private void frmEnvoisServeur_Load(object sender, EventArgs e)
+        private void FrmEnvoisServeur_Load(object sender, EventArgs e)
         {
             thEcoute = new Thread(new ThreadStart(Ecouter));
             thEcoute.Start();
         }
 
+        /// <summary>
+        /// Fonction pour ecouter
+        /// </summary>
         private void Ecouter()
         {
             while (true)
@@ -51,7 +54,7 @@ namespace WFEnvoisServeur
             }
         }
 
-        private void btnSTOP_Click(object sender, EventArgs e)
+        private void BtnSTOP_Click(object sender, EventArgs e)
         {
             string ipCible = "127.0.0.1";
             int portCible = 1080;
@@ -61,7 +64,7 @@ namespace WFEnvoisServeur
             udpClient.Send(message, message.Length, ipCible, portCible);
         }
 
-        private void frmEnvoisServeur_FormClosed(object sender, FormClosedEventArgs e)
+        private void FrmEnvoisServeur_FormClosed(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
         }

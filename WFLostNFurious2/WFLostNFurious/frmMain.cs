@@ -218,20 +218,6 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Affiche l'interface et creer le labyrinthe
-        /// </summary>
-        private void CommencerPartie()
-        {
-            //Affiche les controles
-            pnlInstructions.Visible = true;
-            //Affiche le labyrinthe
-            CreateLabFromGrid(matriceLabyrinthe);
-            this.Paint += dessinLabyrinthe;
-            this.Paint += personnageRaichu.Paint;
-            NouvelleArrivee();
-        }
-
-        /// <summary>
         /// Fonction d'ecoute pour le signal qui demande de redemarer l'application
         /// </summary>
         private void Ecouter()
@@ -496,9 +482,17 @@ namespace WFLostNFurious
         private void BtnStartGame_Click(object sender, EventArgs e)
         {
             btnStartGame.Visible = false;
-            CommencerPartie();
-            numero = rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1);
 
+            //Affiche les controles
+            pnlInstructions.Visible = true;
+            //Affiche le labyrinthe
+            CreateLabFromGrid(matriceLabyrinthe);
+            this.Paint += dessinLabyrinthe;
+            this.Paint += personnageRaichu.Paint;
+            NouvelleArrivee();
+
+            //Envois le message
+            numero = rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1);
             byte[] message;
             message = Encoding.Default.GetBytes(numero.ToString());
             udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
