@@ -53,7 +53,7 @@ namespace WFEnvoisServeur
             {
                 IPEndPoint client = null;
                 byte[] data = udpClient.Receive(ref client);
-                input += $"Données en provenance de {client.Address}:{client.Port}{Environment.NewLine}{Encoding.Default.GetString(data)}{Environment.NewLine}";
+                input += $"Données en provenance de {client.Address}: {client.Port}{Environment.NewLine}{Encoding.Default.GetString(data)}{Environment.NewLine}";
                 UpdateInput();
             }
         }

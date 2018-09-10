@@ -150,6 +150,7 @@
             // 
             // btnViderListe
             // 
+            this.btnViderListe.Enabled = false;
             this.btnViderListe.Location = new System.Drawing.Point(28, 911);
             this.btnViderListe.Margin = new System.Windows.Forms.Padding(2);
             this.btnViderListe.Name = "btnViderListe";
@@ -167,6 +168,7 @@
             // 
             // btnStartGame
             // 
+            this.btnStartGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.btnStartGame.Location = new System.Drawing.Point(344, 242);
             this.btnStartGame.Name = "btnStartGame";
             this.btnStartGame.Size = new System.Drawing.Size(589, 532);

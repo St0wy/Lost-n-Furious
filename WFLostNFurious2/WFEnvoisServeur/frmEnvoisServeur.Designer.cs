@@ -41,6 +41,7 @@
             // 
             // btnSend
             // 
+            this.btnSend.AccessibleDescription = "btnSend";
             this.btnSend.Location = new System.Drawing.Point(12, 135);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(127, 23);
@@ -61,18 +62,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(15, 13);
+            this.label1.Size = new System.Drawing.Size(22, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "ip";
+            this.label1.Text = "Ip :";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "port";
+            this.label2.Text = "Port :";
             // 
             // tbxPort
             // 
@@ -86,9 +87,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 93);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "message";
+            this.label3.Text = "Message :";
             // 
             // tbxMessage
             // 
@@ -102,14 +103,16 @@
             this.tbxRecieve.Location = new System.Drawing.Point(145, 25);
             this.tbxRecieve.Multiline = true;
             this.tbxRecieve.Name = "tbxRecieve";
-            this.tbxRecieve.Size = new System.Drawing.Size(127, 133);
+            this.tbxRecieve.ReadOnly = true;
+            this.tbxRecieve.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbxRecieve.Size = new System.Drawing.Size(127, 190);
             this.tbxRecieve.TabIndex = 7;
             // 
             // btnSTOP
             // 
             this.btnSTOP.Location = new System.Drawing.Point(12, 164);
             this.btnSTOP.Name = "btnSTOP";
-            this.btnSTOP.Size = new System.Drawing.Size(127, 92);
+            this.btnSTOP.Size = new System.Drawing.Size(127, 51);
             this.btnSTOP.TabIndex = 8;
             this.btnSTOP.Text = "STOPI";
             this.btnSTOP.UseVisualStyleBackColor = true;
@@ -119,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(417, 340);
+            this.ClientSize = new System.Drawing.Size(287, 228);
             this.Controls.Add(this.btnSTOP);
             this.Controls.Add(this.tbxRecieve);
             this.Controls.Add(this.label3);
@@ -129,7 +132,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbxIp);
             this.Controls.Add(this.btnSend);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmEnvoisServeur";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Envois serveur";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEnvoisServeur_FormClosed);
             this.Load += new System.EventHandler(this.FrmEnvoisServeur_Load);
