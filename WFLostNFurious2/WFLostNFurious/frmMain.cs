@@ -33,7 +33,6 @@ namespace WFLostNFurious
         int compteurInstructionsEffectuees;
         int numero;
         bool recommencer;
-
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
@@ -192,6 +191,7 @@ namespace WFLostNFurious
                     if (valArrive == tmp) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
                     {
                         arriveeDemandee = m;
+                        (arriveeDemandee as Arrivee).Activate();
                     }
                     tmp++;
                 }
@@ -515,6 +515,9 @@ namespace WFLostNFurious
             byte[] message;
             message = Encoding.Default.GetBytes(numero.ToString());
             udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
+            lblAnnonce.Visible = true;
+            lblAnnonce.Location.X = 0;
+            lblAnnonce.Location.Y = 0;
         }
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)

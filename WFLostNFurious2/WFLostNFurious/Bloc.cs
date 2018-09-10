@@ -58,11 +58,13 @@ namespace WFLostNFurious
     class Arrivee : Bloc
     {
         int x, y;
+        bool isActive;
 
         public Arrivee(int x, int y) : base(x, y)
         {
             this.x = x;
             this.y = y;
+            isActive = false;
         }
 
         public Arrivee()
@@ -70,9 +72,26 @@ namespace WFLostNFurious
 
         }
 
+        public void Activate()
+        {
+            isActive = true;
+        }
+
+        public void Desactivate()
+        {
+            isActive = false;
+        }
+
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            if (isActive)
+            {
+                e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            }
         }
     }
 }
