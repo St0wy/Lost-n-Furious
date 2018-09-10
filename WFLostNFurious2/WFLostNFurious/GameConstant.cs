@@ -28,7 +28,7 @@ namespace WFLostNFurious
         public const int TAILLE_BLOC_X = 70;
         public const int TAILLE_BLOC_Y = 70;
 
-        public const string IP_CIBLE = "127.0.0.1";
+        public const string IP_CIBLE = "10.5.57.43"; //Mettre l'ip de la machine du serveur
         public const int PORT_CIBLE = 1081;
         public const int PORT_HOTE = 1080;
 
