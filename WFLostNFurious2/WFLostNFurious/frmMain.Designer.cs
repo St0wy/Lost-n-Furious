@@ -46,23 +46,23 @@
             // 
             // btnDroite
             // 
-            this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDroite.Location = new System.Drawing.Point(119, 146);
             this.btnDroite.Name = "btnDroite";
             this.btnDroite.Size = new System.Drawing.Size(83, 39);
             this.btnDroite.TabIndex = 4;
-            this.btnDroite.Text = "→";
+            this.btnDroite.Text = "Pivoter à droite";
             this.btnDroite.UseVisualStyleBackColor = true;
             this.btnDroite.Click += new System.EventHandler(this.BtnDroite_Click);
             // 
             // btnGauche
             // 
-            this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGauche.Location = new System.Drawing.Point(28, 146);
             this.btnGauche.Name = "btnGauche";
             this.btnGauche.Size = new System.Drawing.Size(83, 39);
             this.btnGauche.TabIndex = 3;
-            this.btnGauche.Text = "←";
+            this.btnGauche.Text = "Pivoter à gauche";
             this.btnGauche.UseVisualStyleBackColor = true;
             this.btnGauche.Click += new System.EventHandler(this.BtnGauche_Click);
             // 
@@ -79,7 +79,7 @@
             this.btnAvancer.Name = "btnAvancer";
             this.btnAvancer.Size = new System.Drawing.Size(174, 39);
             this.btnAvancer.TabIndex = 2;
-            this.btnAvancer.Text = "↑";
+            this.btnAvancer.Text = "Avancer";
             this.btnAvancer.UseVisualStyleBackColor = true;
             this.btnAvancer.Click += new System.EventHandler(this.BtnAvancer_Click);
             // 
