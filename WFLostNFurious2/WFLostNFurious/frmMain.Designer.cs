@@ -43,14 +43,15 @@
             this.btnViderListe = new System.Windows.Forms.Button();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnStartGame = new System.Windows.Forms.Button();
-            this.lblAnnonce = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlInstructions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDroite
             // 
             this.btnDroite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDroite.Location = new System.Drawing.Point(119, 146);
+            this.btnDroite.Location = new System.Drawing.Point(119, 236);
             this.btnDroite.Name = "btnDroite";
             this.btnDroite.Size = new System.Drawing.Size(83, 39);
             this.btnDroite.TabIndex = 4;
@@ -61,7 +62,7 @@
             // btnGauche
             // 
             this.btnGauche.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGauche.Location = new System.Drawing.Point(28, 146);
+            this.btnGauche.Location = new System.Drawing.Point(28, 236);
             this.btnGauche.Name = "btnGauche";
             this.btnGauche.Size = new System.Drawing.Size(83, 39);
             this.btnGauche.TabIndex = 3;
@@ -78,7 +79,7 @@
             // btnAvancer
             // 
             this.btnAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvancer.Location = new System.Drawing.Point(28, 101);
+            this.btnAvancer.Location = new System.Drawing.Point(28, 191);
             this.btnAvancer.Name = "btnAvancer";
             this.btnAvancer.Size = new System.Drawing.Size(174, 39);
             this.btnAvancer.TabIndex = 2;
@@ -91,9 +92,9 @@
             this.lbxInstruction.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbxInstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxInstruction.FormattingEnabled = true;
-            this.lbxInstruction.Location = new System.Drawing.Point(28, 191);
+            this.lbxInstruction.Location = new System.Drawing.Point(28, 282);
             this.lbxInstruction.Name = "lbxInstruction";
-            this.lbxInstruction.Size = new System.Drawing.Size(174, 650);
+            this.lbxInstruction.Size = new System.Drawing.Size(174, 559);
             this.lbxInstruction.TabIndex = 1;
             this.lbxInstruction.SelectedIndexChanged += new System.EventHandler(this.LbxInstruction_SelectedIndexChanged);
             this.lbxInstruction.DoubleClick += new System.EventHandler(this.LbxInstruction_DoubleClick);
@@ -137,6 +138,7 @@
             // 
             // pnlInstructions
             // 
+            this.pnlInstructions.Controls.Add(this.pictureBox1);
             this.pnlInstructions.Controls.Add(this.label1);
             this.pnlInstructions.Controls.Add(this.btnViderListe);
             this.pnlInstructions.Controls.Add(this.btnPlay);
@@ -160,6 +162,7 @@
             this.label1.Size = new System.Drawing.Size(174, 34);
             this.label1.TabIndex = 12;
             this.label1.Text = "Un double clic permet de supprimer une instruction.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnViderListe
             // 
@@ -190,23 +193,21 @@
             this.btnStartGame.UseVisualStyleBackColor = true;
             this.btnStartGame.Click += new System.EventHandler(this.BtnStartGame_Click);
             // 
-            // lblAnnonce
+            // pictureBox1
             // 
-            this.lblAnnonce.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F);
-            this.lblAnnonce.Location = new System.Drawing.Point(12, 8);
-            this.lblAnnonce.Name = "lblAnnonce";
-            this.lblAnnonce.Size = new System.Drawing.Size(1009, 69);
-            this.lblAnnonce.TabIndex = 11;
-            this.lblAnnonce.Text = "Cité des métiers 20 au 26 novembre ";
-            this.lblAnnonce.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblAnnonce.Visible = false;
+            this.pictureBox1.Image = global::WFLostNFurious.Properties.Resources.logoCFPT;
+            this.pictureBox1.Location = new System.Drawing.Point(55, 73);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(116, 112);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 985);
-            this.Controls.Add(this.lblAnnonce);
             this.Controls.Add(this.btnStartGame);
             this.Controls.Add(this.pnlInstructions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -215,11 +216,12 @@
             this.MinimizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Labyrinthe";
+            this.Text = "Cité des métiers du 20 au 26 novembre";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlInstructions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -241,7 +243,7 @@
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
         private System.Windows.Forms.Button btnStartGame;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblAnnonce;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

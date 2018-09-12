@@ -515,9 +515,6 @@ namespace WFLostNFurious
             byte[] message;
             message = Encoding.Default.GetBytes(numero.ToString());
             udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
-            lblAnnonce.Visible = true;
-            lblAnnonce.Location.X = 0;
-            lblAnnonce.Location.Y = 0;
         }
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
