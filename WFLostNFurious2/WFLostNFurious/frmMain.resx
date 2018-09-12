@@ -123,6 +123,12 @@
   <metadata name="tmrAvancer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>130, 18</value>
   </metadata>
+  <data name="lblinstructions.Text" xml:space="preserve">
+    <value>Guidez Raichu vers la sortie ! Utiliser les boutons pour envoyer des instructions dans la liste. 
+Une fois que vous êtes sûr de votre chemin, cliquez play et Raichu les exécutera.
+Vous pouvez supprimer une instruction en double-cliquant dessus et vous pouvez vider la liste avec le bouton dedié.
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>31</value>
   </metadata>

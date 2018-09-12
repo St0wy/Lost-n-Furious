@@ -196,21 +196,6 @@ namespace WFLostNFurious
                     tmp++;
                 }
             }
-
-            //Met l'arrivee de facon que ce soit de droite a gauche lors du nommage de chacune
-            if (valArrive == 0)
-            {
-                lblArrivee.Text = "Arrivée: A";
-            }
-            else if (valArrive == 1)
-            {
-                lblArrivee.Text = "Arrivée: B";
-            }
-            else if (valArrive == 2)
-            {
-                lblArrivee.Text = "Arrivée: C";
-            }
-
         }
 
         /// <summary>
@@ -341,7 +326,6 @@ namespace WFLostNFurious
                         {
                             if (personnageRaichu.Position == b.Position)    //Verifie s'il y a une collision
                             {
-                                string arriveePrecedente = lblArrivee.Text;
                                 collision = true;
                                 tmrAvancer.Enabled = false;
 
@@ -355,10 +339,6 @@ namespace WFLostNFurious
                                     enJeu = false;
                                     arrive = true;
 
-                                    while (lblArrivee.Text == arriveePrecedente)
-                                    {
-                                        NouvelleArrivee();
-                                    }
                                     break;
                                 }
                             }
@@ -503,6 +483,7 @@ namespace WFLostNFurious
             btnStartGame.Visible = false;
 
             //Affiche les controles
+            pnlCommandes.Visible = true;
             pnlInstructions.Visible = true;
             //Affiche le labyrinthe
             CreateLabFromGrid(matriceLabyrinthe);

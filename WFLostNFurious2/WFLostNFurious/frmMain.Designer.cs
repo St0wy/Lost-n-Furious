@@ -37,15 +37,17 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.tmrAvancer = new System.Windows.Forms.Timer(this.components);
             this.btnReset = new System.Windows.Forms.Button();
-            this.lblArrivee = new System.Windows.Forms.Label();
-            this.pnlInstructions = new System.Windows.Forms.Panel();
+            this.pnlCommandes = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnViderListe = new System.Windows.Forms.Button();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnStartGame = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pnlInstructions.SuspendLayout();
+            this.pnlInstructions = new System.Windows.Forms.Panel();
+            this.lblinstructions = new System.Windows.Forms.Label();
+            this.pnlCommandes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlInstructions.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDroite
@@ -126,34 +128,33 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
-            // lblArrivee
+            // pnlCommandes
             // 
-            this.lblArrivee.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblArrivee.Location = new System.Drawing.Point(11, 9);
-            this.lblArrivee.Name = "lblArrivee";
-            this.lblArrivee.Size = new System.Drawing.Size(214, 32);
-            this.lblArrivee.TabIndex = 8;
-            this.lblArrivee.Text = "lblArrivee";
-            this.lblArrivee.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pnlCommandes.Controls.Add(this.pictureBox1);
+            this.pnlCommandes.Controls.Add(this.label1);
+            this.pnlCommandes.Controls.Add(this.btnViderListe);
+            this.pnlCommandes.Controls.Add(this.btnPlay);
+            this.pnlCommandes.Controls.Add(this.btnDroite);
+            this.pnlCommandes.Controls.Add(this.btnGauche);
+            this.pnlCommandes.Controls.Add(this.btnAvancer);
+            this.pnlCommandes.Controls.Add(this.btnReset);
+            this.pnlCommandes.Controls.Add(this.lbxInstruction);
+            this.pnlCommandes.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlCommandes.Location = new System.Drawing.Point(1027, 0);
+            this.pnlCommandes.Name = "pnlCommandes";
+            this.pnlCommandes.Size = new System.Drawing.Size(237, 985);
+            this.pnlCommandes.TabIndex = 9;
+            this.pnlCommandes.Visible = false;
             // 
-            // pnlInstructions
+            // pictureBox1
             // 
-            this.pnlInstructions.Controls.Add(this.pictureBox1);
-            this.pnlInstructions.Controls.Add(this.label1);
-            this.pnlInstructions.Controls.Add(this.btnViderListe);
-            this.pnlInstructions.Controls.Add(this.btnPlay);
-            this.pnlInstructions.Controls.Add(this.lblArrivee);
-            this.pnlInstructions.Controls.Add(this.btnDroite);
-            this.pnlInstructions.Controls.Add(this.btnGauche);
-            this.pnlInstructions.Controls.Add(this.btnAvancer);
-            this.pnlInstructions.Controls.Add(this.btnReset);
-            this.pnlInstructions.Controls.Add(this.lbxInstruction);
-            this.pnlInstructions.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlInstructions.Location = new System.Drawing.Point(1027, 0);
-            this.pnlInstructions.Name = "pnlInstructions";
-            this.pnlInstructions.Size = new System.Drawing.Size(237, 985);
-            this.pnlInstructions.TabIndex = 9;
-            this.pnlInstructions.Visible = false;
+            this.pictureBox1.Image = global::WFLostNFurious.Properties.Resources.logoCFPT;
+            this.pictureBox1.Location = new System.Drawing.Point(55, 73);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(116, 112);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // label1
             // 
@@ -167,10 +168,10 @@
             // btnViderListe
             // 
             this.btnViderListe.Enabled = false;
-            this.btnViderListe.Location = new System.Drawing.Point(28, 43);
+            this.btnViderListe.Location = new System.Drawing.Point(28, 11);
             this.btnViderListe.Margin = new System.Windows.Forms.Padding(2);
             this.btnViderListe.Name = "btnViderListe";
-            this.btnViderListe.Size = new System.Drawing.Size(174, 25);
+            this.btnViderListe.Size = new System.Drawing.Size(174, 48);
             this.btnViderListe.TabIndex = 11;
             this.btnViderListe.Text = "Vider la liste";
             this.btnViderListe.UseVisualStyleBackColor = true;
@@ -193,23 +194,33 @@
             this.btnStartGame.UseVisualStyleBackColor = true;
             this.btnStartGame.Click += new System.EventHandler(this.BtnStartGame_Click);
             // 
-            // pictureBox1
+            // pnlInstructions
             // 
-            this.pictureBox1.Image = global::WFLostNFurious.Properties.Resources.logoCFPT;
-            this.pictureBox1.Location = new System.Drawing.Point(55, 73);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(116, 112);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.pnlInstructions.Controls.Add(this.lblinstructions);
+            this.pnlInstructions.Location = new System.Drawing.Point(13, 9);
+            this.pnlInstructions.Name = "pnlInstructions";
+            this.pnlInstructions.Size = new System.Drawing.Size(1008, 100);
+            this.pnlInstructions.TabIndex = 11;
+            this.pnlInstructions.Visible = false;
+            // 
+            // lblinstructions
+            // 
+            this.lblinstructions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblinstructions.Location = new System.Drawing.Point(46, 11);
+            this.lblinstructions.Name = "lblinstructions";
+            this.lblinstructions.Size = new System.Drawing.Size(947, 69);
+            this.lblinstructions.TabIndex = 0;
+            this.lblinstructions.Text = resources.GetString("lblinstructions.Text");
+            this.lblinstructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 985);
-            this.Controls.Add(this.btnStartGame);
             this.Controls.Add(this.pnlInstructions);
+            this.Controls.Add(this.btnStartGame);
+            this.Controls.Add(this.pnlCommandes);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -220,8 +231,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.pnlInstructions.ResumeLayout(false);
+            this.pnlCommandes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlInstructions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -237,13 +249,14 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Timer tmrAvancer;
         private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Label lblArrivee;
-        private System.Windows.Forms.Panel pnlInstructions;
+        private System.Windows.Forms.Panel pnlCommandes;
         private System.Windows.Forms.Button btnViderListe;
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
         private System.Windows.Forms.Button btnStartGame;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel pnlInstructions;
+        private System.Windows.Forms.Label lblinstructions;
     }
 }
 
