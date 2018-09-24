@@ -6,13 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WFLostNFurious3
+namespace WFLostNFurious
 {
-    
     class Bloc
     {
-        int x;
-        int y;
+        int x, y;
 
         public Bloc() :this(10, 10)
         {
@@ -27,7 +25,7 @@ namespace WFLostNFurious3
 
         public virtual void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.Black, x, y, 30, 30);
         }
 
         public PointF Position
@@ -51,20 +49,18 @@ namespace WFLostNFurious3
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, 30, 30);
         }
     }
 
     class Arrivee : Bloc
     {
         int x, y;
-        bool isActive;
 
         public Arrivee(int x, int y) : base(x, y)
         {
             this.x = x;
             this.y = y;
-            isActive = false;
         }
 
         public Arrivee()
@@ -72,26 +68,16 @@ namespace WFLostNFurious3
 
         }
 
-        public void Activate()
-        {
-            isActive = true;
-        }
-
-        public void Desactivate()
-        {
-            isActive = false;
-        }
-
         public override void Paint(object sender, PaintEventArgs e)
         {
-            if (isActive)
-            {
-                e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
-            }
+            e.Graphics.FillRectangle(Brushes.Red, x, y, 30, 30);
+        }
+    }
+
+    class BlocInvisible : Bloc
+    {
+        public BlocInvisible(int x, int y) : base(x, y)
+        {
         }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WFLostNFurious3.Properties
+namespace WFLostNFurious.Properties
 {
 
 

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("WFLostNFurious3")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Lost n Furious")]
+[assembly: AssemblyDescription("Il faut sortir d'un labyrinthe avec une liste d'instruction.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WFLostNFurious3")]
+[assembly: AssemblyCompany("CFPT")]
+[assembly: AssemblyProduct("Lost n Furious")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("17f59ba4-023a-43e2-8cf5-798e36280350")]
+[assembly: Guid("e4a6bf3f-201a-42d8-8605-76630665e34c")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //

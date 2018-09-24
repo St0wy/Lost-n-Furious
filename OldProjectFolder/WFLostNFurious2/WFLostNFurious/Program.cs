@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WFLostNFurious3
+namespace WFLostNFurious
 {
     static class Program
     {

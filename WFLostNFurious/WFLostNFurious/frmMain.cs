@@ -2,36 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
-//TO DO:
-// Gerer les click dans la listbox pendant le Play --> Ya deja event click tout en bas
 namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
-        string difficulteLaby = "Moyen";
-        PaintEventHandler image;    //Variable d'affichage du labyrinthe
-        Personnage p = new Personnage(new PointF(0, 0), "haut");
-        PointF positionDepartpersonnage = new Point();
-        string arriveDemande = "";
-        Stopwatch swTempsEcoule = new Stopwatch();
+        enum Direction { Haut, Bas, Gauche, Droite };
 
-        Bloc modele = new Arrivee();
-        List<Bloc> labyrinthe = new List<Bloc>();
-        bool inPlay = false;
-        List<string> instruction = new List<string>();
-        int compteur = 0;
-        
+        static UdpClient udpClient;
+        private static Thread thEcoute;
 
-        int[][] tabLabPetit = new int[][] {
+        PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
+        PointF positionDepartpersonnage;
+        Random rnd = new Random();
+        Personnage personnageRaichu;
+        Bloc arriveeDemandee;
+        List<Bloc> lstLabyrinthe;
+        List<string> lstInstruction;
+        bool enJeu;
+        int compteurInstructionsEffectuees;
+        int numero;
+        bool recommencer;
+        int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
@@ -45,63 +45,30 @@ namespace WFLostNFurious
             new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };
-
-        int[][] tabLabMoyen = new int[][] {
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 4 },
-            new int[] { 4, 2, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 2, 4 },
-            new int[] { 4, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };
-
-        int[][] tabLabGrand = new int[][] {
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 0, 0, 1, 0, 5, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 5, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 2, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 4 },
-            new int[] { 4, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 1, 1, 1, 1, 0, 5, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };
+        };  //Matrice du labyrinthe
 
         public frmMain()
         {
             InitializeComponent();
             DoubleBuffered = true;
+
+            thEcoute = new Thread(new ThreadStart(Ecouter));
+            udpClient = new UdpClient(GameConstant.PORT_HOTE);
+            positionDepartpersonnage = new Point();
+            personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
+            arriveeDemandee = new Arrivee();
+            lstLabyrinthe = new List<Bloc>();
+            lstInstruction = new List<string>();
+            enJeu = false;
+            compteurInstructionsEffectuees = 0;
+            numero = 0;
+            recommencer = false;
         }
-		
-        public void deleteLabel()
+
+        /// <summary>
+        /// Supprime tous les labels de la forme
+        /// </summary>
+        public void DeleteLabel()
         {
             foreach (Control lbl in Controls)
             {
@@ -112,244 +79,220 @@ namespace WFLostNFurious
             }
         }
 
-        public void CreateLabFromGrid(int[][] tabLab)
+        /// <summary>
+        /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
+        /// </summary>
+        /// <param name="matriceLabyrinthe">Schema du labyrinthe</param>
+        public void CreateLabFromGrid(int[][] matriceLabyrinthe)
         {
-            deleteLabel();
+            DeleteLabel();
+            int compteurSortie = 0;
 
-            int compteur = 0;
-            int tailleCarre = 30;
-            Point positionLaby = new Point(10, 10);
+            Point positionLaby = new Point(GameConstant.POSITION_LABYRINTHE_X, GameConstant.POSITION_LABYRINTHE_Y);
 
-            for (int i = 0; i < tabLab.Length; i++)
+            for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
-                int y = (i + 1) * tailleCarre + positionLaby.Y;
-                for (int j = 0; j < tabLab[i].Length; j++)
+                int y = (i + 1) * GameConstant.TAILLE_BLOC_Y + positionLaby.Y;
+                for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
-                    int x = (j + 1) * tailleCarre + positionLaby.X;
-                    if (tabLab[i][j] == 1)
+                    int x = (j + 1) * GameConstant.TAILLE_BLOC_X + positionLaby.X;
+                    if (matriceLabyrinthe[i][j] == GameConstant.NUM_MUR)
                     {
-                        creationMur(x, y);
+                        CreationMur(x, y);
                     }
-                    else if (tabLab[i][j] == 2)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_ARRIVEE)
                     {
-                        
-                        string[] lettre = { "A", "B", "C" };
+                        string[] lettresSorties = { "A", "B", "C" };
 
-                        creationArrivee(x, y);
-                        Label lbl = new Label();
-                        lbl.Location = new Point(x, y);
-                        lbl.Text = lettre[compteur];
-                        lbl.AutoSize = false;
-                        lbl.Size = new Size(tailleCarre, tailleCarre);
-                        lbl.Font = new Font("Arial", 15);
-                        lbl.TextAlign = ContentAlignment.MiddleCenter;
-                        lbl.BackColor = Color.Transparent;
-                        compteur++;
-                        
+                        CreationArrivee(x, y);
+                        Label lbl = new Label()
+                        {
+                            Location = new Point(x, y),
+                            Text = lettresSorties[compteurSortie],
+                            AutoSize = false,
+                            Size = new Size(GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y),
+                            Font = new Font("Arial", 15),
+                            TextAlign = ContentAlignment.MiddleCenter,
+                            BackColor = Color.Transparent,
+                            ForeColor = Color.Black,
+                            Tag = GameConstant.TAG_ARRIVEE
+                        };
+                        compteurSortie++;
+
                         Controls.Add(lbl);
                     }
-                    else if (tabLab[i][j] == 3)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_PERSONNAGE)
                     {
-                        p.Position = new PointF(Convert.ToSingle(x) + 5f, Convert.ToSingle(y) + 5f);
-                        positionDepartpersonnage = p.Position;
+                        personnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
+                        positionDepartpersonnage = personnageRaichu.Position;
                     }
-                    else if (tabLab[i][j] == 4)
+                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_BORDURE)
                     {
-                        creationBordure(x, y);
-                    }
-                    else if (tabLab[i][j] == 5)
-                    {
-                        creationMurInvisible(x, y);
+                        CreationBordure(x, y);
                     }
                 }
             }
-
-            //Change la taille de la forme et de la listebox en fonction de la taille du laby
-            this.Width = (tabLab[0].Length * 30) + pnlInstructions.Width + 60;
-
-            if (difficulteLaby == "Petit")
-            {
-                lbxInstruction.Height = 140;
-                this.Height = (tabLab.Length * 30) + 105;
-                
-            }
-            else if (difficulteLaby == "Moyen")
-            {
-                lbxInstruction.Height = 280;
-                this.Height = (tabLab.Length * 30) + 105;
-            }
-            else if (difficulteLaby == "Grand")
-            {
-                lbxInstruction.Height = 470;
-                this.Height = (tabLab.Length * 30) + 105;
-            }
-
-            btnViderListe.Location = new Point(28, lbxInstruction.Location.Y + lbxInstruction.Height + 15);
-            this.CenterToScreen();
         }
 
-        public void creationBordure(int x, int y)
+        /// <summary>
+        /// Creer une bordure
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
+        public void CreationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
-            labyrinthe.Add(bordure);
+            lstLabyrinthe.Add(bordure);
             //Ajoute l'affichage de l'objet dans une variable d'image
-            image += bordure.Paint;
+            dessinLabyrinthe += bordure.Paint;
         }
 
-        public void creationArrivee(int x, int y)
+        /// <summary>
+        /// Creer une Arrivee
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
+        public void CreationArrivee(int x, int y)
         {
             var arrivee = new Arrivee(x, y);
-            labyrinthe.Add(arrivee);
+            lstLabyrinthe.Add(arrivee);
             //Ajoute l'affichage de l'objet dans une variable d'image
-            image += arrivee.Paint;
+            dessinLabyrinthe += arrivee.Paint;
         }
 
-        public void creationMur(int x, int y)
+        /// <summary>
+        /// Creer un Mur
+        /// </summary>
+        /// <param name="x">Position X de la bordure</param>
+        /// <param name="y">Position Y de la bordure</param>
+        public void CreationMur(int x, int y)
         {
             var bloc = new Bloc(x, y);
-            labyrinthe.Add(bloc);
+            lstLabyrinthe.Add(bloc);
             //Ajoute l'affichage de l'objet dans une variable d'image
-            image += bloc.Paint;
+            dessinLabyrinthe += bloc.Paint;
         }
 
-        public void creationMurInvisible(int x, int y)
+        /// <summary>
+        /// Definis la nouvelle arrivee a ateindre
+        /// </summary>
+        public void NouvelleArrivee()
         {
-            var blocInvisible = new BlocInvisible(x, y);
-            labyrinthe.Add(blocInvisible);
-            //Ajoute l'affichage de l'objet dans une variable d'image
-            image += blocInvisible.Paint;
-        }
 
-        public void nouvelleArrivee()
-        {
-            Random rnd = new Random();
-            int valArrive = rnd.Next(3);
+            int valArrive = rnd.Next(GameConstant.NOMBRE_SORTIES);
             int tmp = 0;
 
-            foreach (Bloc m in labyrinthe)
+            //Regarde chaque bloc du labyrinthe
+            foreach (Bloc m in lstLabyrinthe)
             {
                 if (m is Arrivee)
                 {
-                    if (valArrive == tmp)
+                    if (valArrive == tmp) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
                     {
-                        modele = m;
+                        arriveeDemandee = m;
+                        (arriveeDemandee as Arrivee).Activate();
                     }
                     tmp++;
                 }
             }
-
-
-            //Met l'arrivee de facon que ce soit de droite a gauche lors du nommage de chacune
-            if (valArrive == 0)
-            {
-                lblArrivee.Text = "Arrivée: A";
-                arriveDemande = "A";
-            }
-            else if (valArrive == 1)
-            {
-                lblArrivee.Text = "Arrivée: B";
-                arriveDemande = "B";
-
-            }
-            else if (valArrive == 2)
-            {
-                lblArrivee.Text = "Arrivée: C";
-                arriveDemande = "C";
-            }
-
-            swTempsEcoule.Restart();
         }
 
-        private void btnDroite_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Vide l'interface et met le code de victoire au millieu de l'ecran
+        /// </summary>
+        private void Gagner()
+        {
+            //Cache l'interface
+            this.Paint -= dessinLabyrinthe;
+            this.Paint -= personnageRaichu.Paint;
+            Controls.Clear();
+
+            //Affiche le code
+            Label lblCode = new Label()
+            {
+                Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y),
+                Text = $"Le code est :{Environment.NewLine}{numero.ToString()}",
+                AutoSize = false,
+                Size = new Size(this.Width, this.Height),
+                Font = new Font("Arial", 75),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent
+            };
+            this.Controls.Add(lblCode);
+        }
+
+        /// <summary>
+        /// Fonction d'ecoute pour le signal qui demande de redemarer l'application
+        /// </summary>
+        private void Ecouter()
+        {
+            while (!recommencer)
+            {
+                IPEndPoint client = null;
+                byte[] data = udpClient.Receive(ref client);
+                recommencer = Convert.ToBoolean(Encoding.Default.GetString(data));
+
+                if (recommencer)
+                {
+                    Recommencer();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Lance une nouvelle instance de l'application et ferme l'ancienne
+        /// </summary>
+        private void Recommencer()
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate {
+                    System.Diagnostics.Process.Start(Application.ExecutablePath);
+                    Environment.Exit(0);
+                }));
+            }
+        }
+
+        private void BtnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à droite");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void btnGauche_Click(object sender, EventArgs e)
+        private void BtnGauche_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à gauche");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void btnAvancer_Click(object sender, EventArgs e)
+        private void BtnAvancer_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Avancer");
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            lblTempsEcoule.Text = Convert.ToString(swTempsEcoule.ElapsedMilliseconds / 1000);
         }
 
-        public virtual void frmMain_Load(object sender, EventArgs e)
+        private void FrmMain_Load(object sender, EventArgs e)
         {
-            //Affiche le labyrinthe
-            CreateLabFromGrid(tabLabMoyen);
-            this.Paint += image;
-            this.Paint += p.Paint;
-            nouvelleArrivee();
-
-
-            //Sortie C en Moyen
-           for (int i = 0; i < 5; i++)
-           {
-               btnAvancer_Click(sender, e);
-           }
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnGauche_Click(sender, e);
-           btnAvancer_Click(sender, e);
-           btnDroite_Click(sender, e);
-           btnAvancer_Click(sender, e);
-
+            //Commence a ecouter le signal du serveur
+            thEcoute.Start();
         }
 
-        private void btnPlay_Click(object sender, EventArgs e)
+        private void BtnPlay_Click(object sender, EventArgs e)
         {
             foreach (string s in lbxInstruction.Items)
             {
-                instruction.Add(s);
+                lstInstruction.Add(s);
             }
 
-            inPlay = true;
+            enJeu = true;
             lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
@@ -362,57 +305,39 @@ namespace WFLostNFurious
             btnReset.Enabled = true;
         }
 
-        private void tmrAvancer_Tick(object sender, EventArgs e)
+        private void TmrAvancer_Tick(object sender, EventArgs e)
         {
             bool arrive = false;
 
-            if (instruction.Count != 0)
+            if (lstInstruction.Count != 0)
             {
-                string instrucAcruelle = instruction.ElementAt(compteur).ToString();
+                string instructionActuelle = lstInstruction.ElementAt(compteurInstructionsEffectuees).ToString();
                 bool collision = false;
 
-                if (instrucAcruelle == "Avancer")
+                if (instructionActuelle == "Avancer")
                 {
-                    p.Avancer();
+                    personnageRaichu.Avancer();
 
-                    foreach (Bloc b in labyrinthe)
+                    foreach (Bloc b in lstLabyrinthe)
                     {
                         //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collisionne (empeche le clignottement)
                         if (!collision)
                         {
-                            if (new PointF(p.Position.X - 5, p.Position.Y - 5) == b.Position)
+                            if (personnageRaichu.Position == b.Position)    //Verifie s'il y a une collision
                             {
-                                string arriveePrecedente = lblArrivee.Text;
-                                if(!(b is BlocInvisible))
+                                collision = true;
+                                tmrAvancer.Enabled = false;
+
+                                if (b.Position == arriveeDemandee.Position) //Verifie qui le personnage est sur une arrivee
                                 {
-                                    collision = true;
-                                }
+                                    //Action apres avoir gagne
+                                    Gagner();
 
-                                if (b.Position == modele.Position)
-                                {
-                                    tmrAvancer.Enabled = false;
-                                    swTempsEcoule.Stop();
-
-                                    MessageBox.Show("Bravo tu as réussi! Tu est beau.");
-
-                                    frmScores frmScore = new frmScores();
-                                    frmScore.Text = "Bravo vous avez gagné!";
-                                    frmScore.SetPnlNewScoreVisible(true);
-                                    frmScore.SetSortieDemande(arriveDemande);
-                                    frmScore.SetDifficulte(lblDifficulteTaille.Text);
-                                    frmScore.SetTempsEcoule(swTempsEcoule.ElapsedMilliseconds);
-
-                                    frmScore.ShowDialog();
-
-                                    btnReset_Click(sender, e);
+                                    BtnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
-                                    inPlay = false;
+                                    enJeu = false;
                                     arrive = true;
 
-                                    while (lblArrivee.Text == arriveePrecedente)
-                                    {
-                                        nouvelleArrivee();
-                                    }
                                     break;
                                 }
                             }
@@ -425,38 +350,12 @@ namespace WFLostNFurious
 
                     if (collision && !arrive)
                     {
-
-                        switch (p.Orientation)
-                        {
-                            case "gauche":
-                                p.Orientation = "droite";
-                                p.Avancer();
-                                p.Orientation = "gauche";
-                                break;
-                            case "droite":
-                                p.Orientation = "gauche";
-                                p.Avancer();
-                                p.Orientation = "droite";
-                                break;
-                            case "bas":
-                                p.Orientation = "haut";
-                                p.Avancer();
-                                p.Orientation = "bas";
-                                break;
-                            case "haut":
-                                p.Orientation = "bas";
-                                p.Avancer();
-                                p.Orientation = "haut";
-                                break;
-                        }
-                        tmrAvancer.Enabled = false;
-
                         DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                        inPlay = false;
+                        enJeu = false;
 
                         if (dr == DialogResult.Yes)
                         {
-                            btnReset_Click(sender, e);
+                            BtnReset_Click(sender, e);
                             lbxInstruction.Enabled = true;
                         }
                         else
@@ -466,32 +365,26 @@ namespace WFLostNFurious
                     }
 
                 }
-                else
+                else if (instructionActuelle == "Tourner à droite")
                 {
-                    if (instrucAcruelle == "Tourner à droite")
-                    {
-                        p.PivoterDroite();
-                    }
-                    else
-                    {
-                        if (instrucAcruelle == "Tourner à gauche")
-                        {
-                            p.PivoterGauche();
-                        }
-                    }
+                    personnageRaichu.PivoterDroite();
+                }
+                else if (instructionActuelle == "Tourner à gauche")
+                {
+                    personnageRaichu.PivoterGauche();
                 }
 
-                if (compteur == lbxInstruction.Items.Count - 1)
+                if (compteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
                 }
 
-                if (!arrive) 
+                if (!arrive)
                 {
-                   if (tmrAvancer.Enabled)
-                   {
-                        compteur++;
-                   }
+                    if (tmrAvancer.Enabled)
+                    {
+                        compteurInstructionsEffectuees++;
+                    }
                 }
 
                 if (lbxInstruction.SelectedIndex < lbxInstruction.Items.Count - 1)
@@ -501,32 +394,32 @@ namespace WFLostNFurious
             }
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void BtnReset_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Clear();
-            instruction.Clear();
-            inPlay = false;
+            lstInstruction.Clear();
+            enJeu = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            p.Position = positionDepartpersonnage;
-            p.Orientation = "haut";
-            compteur = 0;
+            personnageRaichu.Position = positionDepartpersonnage;
+            personnageRaichu.Orientation = (int)Direction.Haut;
+            compteurInstructionsEffectuees = 0;
             tmrAvancer.Enabled = false;
         }
 
-        private void lbxInstruction_DoubleClick(object sender, EventArgs e)
+        private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
-            if (!inPlay)
+            if (!enJeu)
             {
                 lbxInstruction.Items.RemoveAt(lbxInstruction.SelectedIndex);
             }
         }
 
-        private void lbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbxInstruction_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbxInstruction.Items.Count == 0)
             {
@@ -539,106 +432,48 @@ namespace WFLostNFurious
             }
         }
 
-        private void menuFichierAdmin_Click(object sender, EventArgs e)
-        {
-            frmLogin frmLog = new frmLogin();
-			
-            if (DialogResult.OK == frmLog.ShowDialog())
-            {
-                difficulteLaby = frmLog.GetDifficulte();
-
-                this.Paint -= image;
-                image = null;
-
-                btnReset_Click(sender, e);
-                labyrinthe.Clear();
-
-                if (difficulteLaby == "Grand")
-                {
-                    //appeler creation labyrinthe grand
-                    CreateLabFromGrid(tabLabGrand);
-                    nouvelleArrivee();
-                    lblDifficulteTaille.Text = "Grand";
-                    btnReset_Click(sender, e);
-                }
-                else if (difficulteLaby == "Moyen")
-                {
-                    //appeler creation labyrinthe moyen
-                    CreateLabFromGrid(tabLabMoyen);
-                    nouvelleArrivee();
-                    lblDifficulteTaille.Text = "Moyen";
-                    btnReset_Click(sender, e);
-                }
-                else if (difficulteLaby == "Petit")
-                {
-                    //appeler creation labyrinthe petit
-                    CreateLabFromGrid(tabLabPetit);
-                    nouvelleArrivee();
-                    lblDifficulteTaille.Text = "Petit";
-                    btnReset_Click(sender, e);
-                }
-
-                nouvelleArrivee();
-                this.Paint += image;
-            }
-        }
-
-        private void frmMain_Paint(object sender, PaintEventArgs e)
+        private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void menuFichierQuitter_Click(object sender, EventArgs e)
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Close();
+            //e.Cancel = true;
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (DialogResult.No == MessageBox.Show("Voulez-vous vraiment quitter l'application?", "Quitter", MessageBoxButtons.YesNo))
-            {
-                e.Cancel = true;
-            }
-        }
-		
-        private void menuAideAbout_Click(object sender, EventArgs e)
-        {
-            frmAbout frm = new frmAbout();
-            frm.ShowDialog();
-        }
-
-        private void menuAideAide_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Double clic sur une instruction pour l'enlever" + Environment.NewLine + "Pour changer de difficulté il faut ouvrir le menu qui se trouve dans: Fichier => Mode Admin.");
-        }
-
-        private void btnViderListe_Click(object sender, EventArgs e)
+        private void BtnViderListe_Click(object sender, EventArgs e)
         {
             btnPlay.Enabled = false;
             lbxInstruction.Items.Clear();
-            instruction.Clear();
+            lstInstruction.Clear();
             btnViderListe.Enabled = false;
         }
 
-        private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void BtnStartGame_Click(object sender, EventArgs e)
         {
+            btnStartGame.Visible = false;
 
-		}
-        private void menuFichierScores_Click(object sender, EventArgs e)
+            //Affiche les controles
+            pnlCommandes.Visible = true;
+            pnlInstructions.Visible = true;
+            //Affiche le labyrinthe
+            CreateLabFromGrid(matriceLabyrinthe);
+            this.Paint += dessinLabyrinthe;
+            this.Paint += personnageRaichu.Paint;
+            NouvelleArrivee();
+
+            //Envois le message
+            numero = rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1);
+            byte[] message;
+            message = Encoding.Default.GetBytes(numero.ToString());
+            udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
+        }
+
+        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (!tmrAvancer.Enabled)
-            {
-                frmScores frmScore = new frmScores();
-
-                frmScore.Text = "Tableaux des scores";
-                frmScore.SetPnlNewScoreVisible(false);
-
-                frmScore.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Veuillez attendre que le personnage ai fini de se déplacer");
-            }
+            Environment.Exit(0);
         }
     }
+
 }

@@ -11,128 +11,111 @@ namespace WFLostNFurious
 {
     class Personnage
     {
+        enum Direction { Haut, Bas, Gauche, Droite};
+
         private PointF position;
-        private string orientation;
+        private int orientation;
 
-        public PointF Position
-        {
-            get
-            {
-                return position;
-            }
-            set
-            {
-                position = value;
-            }
-        }
+        public PointF Position { get => position; set => position = value; }
+        public int Orientation { get => orientation; set => orientation = value; }
 
-        public string Orientation
-        {
-            get
-            {
-                return orientation;
-            }
-            set
-            {
-                orientation = value;
-            }
-        }
-
-        public Personnage(PointF pos , string orient)
+        public Personnage(PointF position , int orientation)
         {
             // Initialisation des variables d'instances
-            this.position = pos;
-            this.orientation = orient;
+            this.Position = position;
+            this.Orientation = orientation;
 
-            this.position = new PointF(pos.X, pos.Y);
+            this.Position = new PointF(position.X, position.Y);
         }
 
         public void Paint(object sender, PaintEventArgs e)
         {
-            //e.Graphics.DrawEllipse(Pens.Black, position.X, position.Y, 20, 20);
             Image droite = Properties.Resources.raichuDroite;
             Image gauche = Properties.Resources.raichuGauche;
             Image haut = Properties.Resources.raichuHaut;
             Image bas = Properties.Resources.raichuBas;
-           
 
-            switch (orientation)
+            switch (Orientation)
             {
-                case "gauche":
-                    e.Graphics.DrawImage(gauche, position.X - 10, position.Y - 10);
-                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X - 5, position.Y + 10);
+                case (int)Direction.Gauche:
+                    e.Graphics.DrawImage(gauche, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
                     break;
-                case "droite":
-                    e.Graphics.DrawImage(droite, position.X - 10, position.Y - 10);
-                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 25, position.Y + 10);
+                case (int)Direction.Droite:
+                    e.Graphics.DrawImage(droite, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
                     break;
-                case "bas":
-                    e.Graphics.DrawImage(bas, position.X - 10, position.Y - 10);
-                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y + 25);
+                case (int)Direction.Bas:
+                    e.Graphics.DrawImage(bas, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
                     break;
-                case "haut":
-                    e.Graphics.DrawImage(haut, position.X - 10, position.Y - 10);
-                    //e.Graphics.DrawLine(Pens.Black, position.X + 10, position.Y + 10, position.X + 10, position.Y - 5);
+                case (int)Direction.Haut:
+                    e.Graphics.DrawImage(haut, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
                     break;
             }
-
         }
 
+        /// <summary>
+        /// Tourne le personnage vers la droite
+        /// </summary>
         public void PivoterDroite()
         {
-            switch (orientation)
+            switch (Orientation)
             {
-                case "gauche":
-                    orientation = "haut";
+                case (int)Direction.Gauche:
+                    Orientation = (int)Direction.Haut;
                     break;
-                case "droite":
-                    orientation = "bas";
+                case (int)Direction.Droite:
+                    Orientation = (int)Direction.Bas;
                     break;
-                case "bas":
-                    orientation = "gauche";
+                case (int)Direction.Bas:
+                    Orientation = (int)Direction.Gauche;
                     break;
-                case "haut":
-                    orientation = "droite";
+                case (int)Direction.Haut:
+                    Orientation = (int)Direction.Droite;
                     break;
             }
         }
+
+        /// <summary>
+        /// Tourne le personnage vers la gauche
+        /// </summary>
         public void PivoterGauche()
         {
-            switch (orientation)
+            switch (Orientation)
             {
-                case "gauche":
-                    orientation = "bas";
+                case (int)Direction.Gauche:
+                    Orientation = (int)Direction.Bas;
                     break;
-                case "droite":
-                    orientation = "haut";
+                case (int)Direction.Droite:
+                    Orientation = (int)Direction.Haut;
                     break;
-                case "bas":
-                    orientation = "droite";
+                case (int)Direction.Bas:
+                    Orientation = (int)Direction.Droite;
                     break;
-                case "haut":
-                    orientation = "gauche";
+                case (int)Direction.Haut:
+                    Orientation = (int)Direction.Gauche;
                     break;
             }
         }
 
+        /// <summary>
+        /// Fait avance le personnage
+        /// </summary>
         public void Avancer()
         {
-            switch (orientation)
+            switch (Orientation)
             {
-                case "gauche":
-                    this.position = new PointF(position.X - 30, position.Y);
+                case (int)Direction.Gauche:
+                    this.Position = new PointF(Position.X - GameConstant.TAILLE_BLOC_X, Position.Y);
                     break;
-                case "droite":
-                    this.position = new PointF(position.X + 30, position.Y);
+                case (int)Direction.Droite:
+                    this.Position = new PointF(Position.X + GameConstant.TAILLE_BLOC_X, Position.Y);
                     break;
-                case "bas":
-                    this.position = new PointF(position.X, position.Y + 30);
+                case (int)Direction.Bas:
+                    this.Position = new PointF(Position.X, Position.Y + GameConstant.TAILLE_BLOC_Y);
                     break;
-                case "haut":
-                    this.position = new PointF(position.X, position.Y - 30);
+                case (int)Direction.Haut:
+                    this.Position = new PointF(Position.X, Position.Y - GameConstant.TAILLE_BLOC_Y);
                     break;
             }
         }
-
     }
 }

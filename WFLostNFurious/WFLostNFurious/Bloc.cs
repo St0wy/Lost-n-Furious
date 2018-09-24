@@ -8,9 +8,11 @@ using System.Windows.Forms;
 
 namespace WFLostNFurious
 {
+    
     class Bloc
     {
-        int x, y;
+        int x;
+        int y;
 
         public Bloc() :this(10, 10)
         {
@@ -25,7 +27,7 @@ namespace WFLostNFurious
 
         public virtual void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Black, x, y, 30, 30);
+            e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
         }
 
         public PointF Position
@@ -49,18 +51,20 @@ namespace WFLostNFurious
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, 30, 30);
+            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
         }
     }
 
     class Arrivee : Bloc
     {
         int x, y;
+        bool isActive;
 
         public Arrivee(int x, int y) : base(x, y)
         {
             this.x = x;
             this.y = y;
+            isActive = false;
         }
 
         public Arrivee()
@@ -68,16 +72,26 @@ namespace WFLostNFurious
 
         }
 
+        public void Activate()
+        {
+            isActive = true;
+        }
+
+        public void Desactivate()
+        {
+            isActive = false;
+        }
+
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Red, x, y, 30, 30);
-        }
-    }
-
-    class BlocInvisible : Bloc
-    {
-        public BlocInvisible(int x, int y) : base(x, y)
-        {
+            if (isActive)
+            {
+                e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            }
         }
     }
 }
