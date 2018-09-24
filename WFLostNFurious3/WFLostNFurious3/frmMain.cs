@@ -114,6 +114,7 @@ namespace WFLostNFurious3
                             Font = new Font("Arial", 15),
                             TextAlign = ContentAlignment.MiddleCenter,
                             BackColor = Color.Transparent,
+                            ForeColor = Color.Black,
                             Tag = GameConstant.TAG_ARRIVEE
                         };
                         compteurSortie++;
