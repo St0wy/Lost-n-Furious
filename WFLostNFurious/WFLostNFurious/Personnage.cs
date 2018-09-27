@@ -97,7 +97,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Fait avance le personnage
+        /// Fait avancer le personnage
         /// </summary>
         public void Avancer()
         {

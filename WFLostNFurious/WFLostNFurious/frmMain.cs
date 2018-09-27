@@ -61,7 +61,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Supprime tous les labels de la forme
+        /// Supprime tous les labels de la form
         /// </summary>
         public void DeleteLabel()
         {
@@ -130,7 +130,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Creer une bordure
+        /// Cree une bordure
         /// </summary>
         /// <param name="x">Position X de la bordure</param>
         /// <param name="y">Position Y de la bordure</param>
@@ -143,7 +143,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Creer une Arrivee
+        /// Cree une arrivee
         /// </summary>
         /// <param name="x">Position X de la bordure</param>
         /// <param name="y">Position Y de la bordure</param>
@@ -156,7 +156,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Creer un Mur
+        /// Cree un mur
         /// </summary>
         /// <param name="x">Position X de la bordure</param>
         /// <param name="y">Position Y de la bordure</param>
@@ -169,7 +169,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Definis la nouvelle arrivee a ateindre
+        /// Definit la nouvelle arrivee a atteindre
         /// </summary>
         public void NouvelleArrivee()
         {
@@ -193,7 +193,7 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Vide l'interface et met le code de victoire au millieu de l'ecran
+        /// Vide l'interface et met le code de victoire au milieu de l'ecran
         /// </summary>
         private void Gagner()
         {
@@ -291,7 +291,7 @@ namespace WFLostNFurious
 
                     foreach (Bloc b in lstLabyrinthe)
                     {
-                        //si il n'y a pas deja eu une collision, analise chaque bloc pour voir si on collisionne (empeche le clignottement)
+                        //si il n'y a pas deja eu une collision, analyse chaque bloc pour voir si on collisionne (empeche le clignottement)
                         if (!collision)
                         {
                             if (personnageRaichu.Position == b.Position)    //Verifie s'il y a une collision
@@ -299,7 +299,7 @@ namespace WFLostNFurious
                                 collision = true;
                                 tmrAvancer.Enabled = false;
 
-                                if (b.Position == arriveeDemandee.Position) //Verifie qui le personnage est sur une arrivee
+                                if (b.Position == arriveeDemandee.Position) //Verifie que le personnage est sur une arrivee
                                 {
                                     //Action apres avoir gagne
                                     Gagner();
@@ -408,6 +408,7 @@ namespace WFLostNFurious
 
         }
 
+        //Si on veut empecher la fermeture de l'application
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //e.Cancel = true;
