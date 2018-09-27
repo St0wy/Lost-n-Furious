@@ -25,7 +25,7 @@ namespace WFLostNFurious
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
-        int numero;
+        int codeAAfficher;
         bool recommencer;
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
@@ -47,13 +47,14 @@ namespace WFLostNFurious
         {
             InitializeComponent();
             DoubleBuffered = true;
+
             positionDepartPersonnage = new Point();
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             arriveeDemandee = new Arrivee();
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
-            numero = 0;
+            codeAAfficher = 0;
             recommencer = false;
         }
 
@@ -169,7 +170,6 @@ namespace WFLostNFurious
         /// </summary>
         public void NouvelleArrivee()
         {
-
             int valArrive = rnd.Next(Jeu.NOMBRE_SORTIES);
             int tmp = 0;
 
@@ -202,7 +202,7 @@ namespace WFLostNFurious
             Label lblCode = new Label()
             {
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est :{Environment.NewLine}{numero.ToString()}",
+                Text = $"Le code est :{Environment.NewLine}{codeAAfficher.ToString()}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
                 Font = new Font("Arial", 75),

@@ -17,9 +17,7 @@ namespace WFLostNFurious
         public const int POSITION_LABYRINTHE_X = 300;
         public const int POSITION_LABYRINTHE_Y = 10;
         public const int NOMBRE_SORTIES = 3;
-
         public const int DUREE_UNE_SECONDE_EN_MS = 1000;
-
         public const int POSITION_CODE_VICTOIRE_X = 0;
         public const int POSITION_CODE_VICTOIRE_Y = -10;
 
