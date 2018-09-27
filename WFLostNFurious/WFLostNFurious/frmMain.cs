@@ -301,20 +301,10 @@ namespace WFLostNFurious
                         }
                     }
 
+                    //TODO: faire quand on bouge pas perdu : quand il arrive a derniere instruction et que il bouge plus : perdu
                     if (collision && !arrive)
                     {
-                        DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                        Jeu.EstEnJeu = false;
-
-                        if (dr == DialogResult.Yes)
-                        {
-                            BtnReset_Click(sender, e);
-                            lbxInstruction.Enabled = true;
-                        }
-                        else
-                        {
-                            btnPlay.Enabled = false;
-                        }
+                        Defaite();
                     }
 
                 }
@@ -347,8 +337,34 @@ namespace WFLostNFurious
             }
         }
 
+        private void Defaite()
+        {
+            //changer le dialog car raspberry
+            DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
+            Jeu.EstEnJeu = false;
+
+            if (dr == DialogResult.Yes)
+            {
+                Restart();
+                lbxInstruction.Enabled = true;
+            }
+            else
+            {
+                btnPlay.Enabled = false;
+            }
+        }
+
         private void BtnReset_Click(object sender, EventArgs e)
         {
+            Restart();
+        }
+
+        /// <summary>
+        /// Recommence la partie, la liste se vide et le personnage se remet au debut
+        /// </summary>
+        private void Restart()
+        {
+            //Ergonomie des boutons
             lbxInstruction.Items.Clear();
             lstInstruction.Clear();
             Jeu.EstEnJeu = false;
@@ -358,12 +374,12 @@ namespace WFLostNFurious
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            personnageRaichu.Position = positionDepartPersonnage;
-            personnageRaichu.Orientation = (int)Direction.Haut;
             compteurInstructionsEffectuees = 0;
             tmrAvancer.Enabled = false;
-        }
 
+            //Raichu se remet au départ
+            //personnageRaichu.Respawn(positionDepartpersonnage);
+        }
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
             if (!Jeu.EstEnJeu)

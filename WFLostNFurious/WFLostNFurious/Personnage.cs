@@ -117,5 +117,10 @@ namespace WFLostNFurious
                     break;
             }
         }
+
+        public void Respawn()
+        {
+
+        }
     }
 }
