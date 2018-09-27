@@ -13,7 +13,11 @@ namespace WFLostNFurious
         public const int NUM_PERSONNAGE = 3;
         public const int NUM_BORDURE = 4;
         
+<<<<<<< HEAD:OldProjectFolder/WFLostNFurious2/WFLostNFurious/GameConstant.cs
         public const int POSITION_LABYRINTHE_X = 10;
+=======
+        public const int POSITION_LABYRINTHE_X = 400;
+>>>>>>> instruction pour l'utilisateur:WFLostNFurious/WFLostNFurious/GameConstant.cs
         public const int POSITION_LABYRINTHE_Y = 10;
         public const int NOMBRE_SORTIES = 3;
         
