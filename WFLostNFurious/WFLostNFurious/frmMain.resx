@@ -128,4 +128,7 @@
 Une fois que vous êtes sûr de votre chemin, cliquez play et Raichu les exécutera.
 Vous pouvez supprimer une instruction en double-cliquant dessus et vous pouvez vider la liste avec le bouton dedié.</value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>51</value>
+  </metadata>
 </root>

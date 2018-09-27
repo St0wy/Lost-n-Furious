@@ -13,7 +13,7 @@ namespace WFLostNFurious
         public const int NUM_PERSONNAGE = 3;
         public const int NUM_BORDURE = 4;
         
-        public const int POSITION_LABYRINTHE_X = 10;
+        public const int POSITION_LABYRINTHE_X = 300;
         public const int POSITION_LABYRINTHE_Y = 10;
         public const int NOMBRE_SORTIES = 3;
         
