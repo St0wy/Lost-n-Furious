@@ -17,9 +17,6 @@ namespace WFLostNFurious
     {
         enum Direction { Haut, Bas, Gauche, Droite };
 
-        static UdpClient udpClient;
-        private static Thread thEcoute;
-
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
         PointF positionDepartpersonnage;
         Random rnd = new Random();
@@ -52,8 +49,6 @@ namespace WFLostNFurious
             InitializeComponent();
             DoubleBuffered = true;
 
-            thEcoute = new Thread(new ThreadStart(Ecouter));
-            udpClient = new UdpClient(GameConstant.PORT_HOTE);
             positionDepartpersonnage = new Point();
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             arriveeDemandee = new Arrivee();
@@ -222,24 +217,6 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Fonction d'ecoute pour le signal qui demande de redemarer l'application
-        /// </summary>
-        private void Ecouter()
-        {
-            while (!recommencer)
-            {
-                IPEndPoint client = null;
-                byte[] data = udpClient.Receive(ref client);
-                recommencer = Convert.ToBoolean(Encoding.Default.GetString(data));
-
-                if (recommencer)
-                {
-                    Recommencer();
-                }
-            }
-        }
-
-        /// <summary>
         /// Lance une nouvelle instance de l'application et ferme l'ancienne
         /// </summary>
         private void Recommencer()
@@ -277,12 +254,6 @@ namespace WFLostNFurious
         private void Timer1_Tick(object sender, EventArgs e)
         {
             Invalidate();
-        }
-
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-            //Commence a ecouter le signal du serveur
-            thEcoute.Start();
         }
 
         private void BtnPlay_Click(object sender, EventArgs e)
@@ -462,12 +433,6 @@ namespace WFLostNFurious
             this.Paint += dessinLabyrinthe;
             this.Paint += personnageRaichu.Paint;
             NouvelleArrivee();
-
-            //Envois le message
-            numero = rnd.Next(GameConstant.CODE_MIN, GameConstant.CODE_MAX + 1);
-            byte[] message;
-            message = Encoding.Default.GetBytes(numero.ToString());
-            udpClient.Send(message, message.Length, GameConstant.IP_CIBLE, GameConstant.PORT_CIBLE);
         }
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
