@@ -27,7 +27,7 @@ namespace WFLostNFurious
 
         public virtual void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.Black, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
         }
 
         public PointF Position
@@ -51,7 +51,7 @@ namespace WFLostNFurious
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
         }
     }
 
@@ -86,11 +86,11 @@ namespace WFLostNFurious
         {
             if (isActive)
             {
-                e.Graphics.FillRectangle(Brushes.Red, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                e.Graphics.FillRectangle(Brushes.Red, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
             }
             else
             {
-                e.Graphics.FillRectangle(Brushes.Black, x, y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                e.Graphics.FillRectangle(Brushes.Black, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
             }
         }
     }

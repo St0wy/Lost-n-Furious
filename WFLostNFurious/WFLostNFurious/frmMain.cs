@@ -18,13 +18,12 @@ namespace WFLostNFurious
         enum Direction { Haut, Bas, Gauche, Droite };
 
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
-        PointF positionDepartpersonnage;
-        Random rnd = new Random();
+        PointF positionDepartPersonnage;
+        static Random rnd = new Random();
         Personnage personnageRaichu;
         Bloc arriveeDemandee;
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
-        bool enJeu;
         int compteurInstructionsEffectuees;
         int numero;
         bool recommencer;
@@ -48,13 +47,11 @@ namespace WFLostNFurious
         {
             InitializeComponent();
             DoubleBuffered = true;
-
-            positionDepartpersonnage = new Point();
+            positionDepartPersonnage = new Point();
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             arriveeDemandee = new Arrivee();
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
-            enJeu = false;
             compteurInstructionsEffectuees = 0;
             numero = 0;
             recommencer = false;
@@ -83,19 +80,19 @@ namespace WFLostNFurious
             DeleteLabel();
             int compteurSortie = 0;
 
-            Point positionLaby = new Point(GameConstant.POSITION_LABYRINTHE_X, GameConstant.POSITION_LABYRINTHE_Y);
+            Point positionLaby = new Point(Jeu.POSITION_LABYRINTHE_X, Jeu.POSITION_LABYRINTHE_Y);
 
             for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
-                int y = (i + 1) * GameConstant.TAILLE_BLOC_Y + positionLaby.Y;
+                int y = (i + 1) * Jeu.TAILLE_BLOC_Y + positionLaby.Y;
                 for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
-                    int x = (j + 1) * GameConstant.TAILLE_BLOC_X + positionLaby.X;
-                    if (matriceLabyrinthe[i][j] == GameConstant.NUM_MUR)
+                    int x = (j + 1) * Jeu.TAILLE_BLOC_X + positionLaby.X;
+                    if (matriceLabyrinthe[i][j] == Jeu.NUM_MUR)
                     {
                         CreationMur(x, y);
                     }
-                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_ARRIVEE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_ARRIVEE)
                     {
                         string[] lettresSorties = { "A", "B", "C" };
 
@@ -105,23 +102,22 @@ namespace WFLostNFurious
                             Location = new Point(x, y),
                             Text = lettresSorties[compteurSortie],
                             AutoSize = false,
-                            Size = new Size(GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y),
+                            Size = new Size(Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y),
                             Font = new Font("Arial", 15),
                             TextAlign = ContentAlignment.MiddleCenter,
                             BackColor = Color.Transparent,
                             ForeColor = Color.Black,
-                            Tag = GameConstant.TAG_ARRIVEE
                         };
                         compteurSortie++;
 
                         Controls.Add(lbl);
                     }
-                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_PERSONNAGE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_PERSONNAGE)
                     {
                         personnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
-                        positionDepartpersonnage = personnageRaichu.Position;
+                        positionDepartPersonnage = personnageRaichu.Position;
                     }
-                    else if (matriceLabyrinthe[i][j] == GameConstant.NUM_BORDURE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_BORDURE)
                     {
                         CreationBordure(x, y);
                     }
@@ -174,7 +170,7 @@ namespace WFLostNFurious
         public void NouvelleArrivee()
         {
 
-            int valArrive = rnd.Next(GameConstant.NOMBRE_SORTIES);
+            int valArrive = rnd.Next(Jeu.NOMBRE_SORTIES);
             int tmp = 0;
 
             //Regarde chaque bloc du labyrinthe
@@ -205,7 +201,7 @@ namespace WFLostNFurious
             //Affiche le code
             Label lblCode = new Label()
             {
-                Location = new Point(GameConstant.POSITION_CODE_VICTOIRE_X, GameConstant.POSITION_CODE_VICTOIRE_Y),
+                Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
                 Text = $"Le code est :{Environment.NewLine}{numero.ToString()}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
@@ -215,21 +211,7 @@ namespace WFLostNFurious
             };
             this.Controls.Add(lblCode);
         }
-
-        /// <summary>
-        /// Lance une nouvelle instance de l'application et ferme l'ancienne
-        /// </summary>
-        private void Recommencer()
-        {
-            if (InvokeRequired)
-            {
-                this.Invoke(new MethodInvoker(delegate {
-                    System.Diagnostics.Process.Start(Application.ExecutablePath);
-                    Environment.Exit(0);
-                }));
-            }
-        }
-
+        
         private void BtnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add("Tourner à droite");
@@ -263,7 +245,7 @@ namespace WFLostNFurious
                 lstInstruction.Add(s);
             }
 
-            enJeu = true;
+            Jeu.EstEnJeu = true;
             lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
@@ -306,7 +288,7 @@ namespace WFLostNFurious
 
                                     BtnReset_Click(sender, e);
                                     lbxInstruction.Enabled = true;
-                                    enJeu = false;
+                                    Jeu.EstEnJeu = false;
                                     arrive = true;
 
                                     break;
@@ -322,7 +304,7 @@ namespace WFLostNFurious
                     if (collision && !arrive)
                     {
                         DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
-                        enJeu = false;
+                        Jeu.EstEnJeu = false;
 
                         if (dr == DialogResult.Yes)
                         {
@@ -369,14 +351,14 @@ namespace WFLostNFurious
         {
             lbxInstruction.Items.Clear();
             lstInstruction.Clear();
-            enJeu = false;
+            Jeu.EstEnJeu = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
             btnDroite.Enabled = true;
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            personnageRaichu.Position = positionDepartpersonnage;
+            personnageRaichu.Position = positionDepartPersonnage;
             personnageRaichu.Orientation = (int)Direction.Haut;
             compteurInstructionsEffectuees = 0;
             tmrAvancer.Enabled = false;
@@ -384,7 +366,7 @@ namespace WFLostNFurious
 
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
-            if (!enJeu)
+            if (!Jeu.EstEnJeu)
             {
                 lbxInstruction.Items.RemoveAt(lbxInstruction.SelectedIndex);
             }

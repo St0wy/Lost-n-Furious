@@ -38,16 +38,16 @@ namespace WFLostNFurious
             switch (Orientation)
             {
                 case (int)Direction.Gauche:
-                    e.Graphics.DrawImage(gauche, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                    e.Graphics.DrawImage(gauche, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     break;
                 case (int)Direction.Droite:
-                    e.Graphics.DrawImage(droite, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                    e.Graphics.DrawImage(droite, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     break;
                 case (int)Direction.Bas:
-                    e.Graphics.DrawImage(bas, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                    e.Graphics.DrawImage(bas, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     break;
                 case (int)Direction.Haut:
-                    e.Graphics.DrawImage(haut, Position.X, Position.Y, GameConstant.TAILLE_BLOC_X, GameConstant.TAILLE_BLOC_Y);
+                    e.Graphics.DrawImage(haut, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     break;
             }
         }
@@ -104,16 +104,16 @@ namespace WFLostNFurious
             switch (Orientation)
             {
                 case (int)Direction.Gauche:
-                    this.Position = new PointF(Position.X - GameConstant.TAILLE_BLOC_X, Position.Y);
+                    this.Position = new PointF(Position.X - Jeu.TAILLE_BLOC_X, Position.Y);
                     break;
                 case (int)Direction.Droite:
-                    this.Position = new PointF(Position.X + GameConstant.TAILLE_BLOC_X, Position.Y);
+                    this.Position = new PointF(Position.X + Jeu.TAILLE_BLOC_X, Position.Y);
                     break;
                 case (int)Direction.Bas:
-                    this.Position = new PointF(Position.X, Position.Y + GameConstant.TAILLE_BLOC_Y);
+                    this.Position = new PointF(Position.X, Position.Y + Jeu.TAILLE_BLOC_Y);
                     break;
                 case (int)Direction.Haut:
-                    this.Position = new PointF(Position.X, Position.Y - GameConstant.TAILLE_BLOC_Y);
+                    this.Position = new PointF(Position.X, Position.Y - Jeu.TAILLE_BLOC_Y);
                     break;
             }
         }
