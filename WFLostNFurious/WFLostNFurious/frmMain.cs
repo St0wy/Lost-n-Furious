@@ -305,6 +305,10 @@ namespace WFLostNFurious
                 if (compteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
+                    if (!arrive)
+                    {
+                        Defaite();
+                    }
                 }
 
                 if (!arrive)
@@ -325,10 +329,10 @@ namespace WFLostNFurious
         private void Defaite()
         {
             //changer le dialog car raspberry
-            DialogResult dr = MessageBox.Show("Réessayer ?", "Vous avez perdu", MessageBoxButtons.YesNo);
+            DialogResult dr = MessageBox.Show("", "Perdu", MessageBoxButtons.OK);
             Jeu.EstEnJeu = false;
 
-            if (dr == DialogResult.Yes)
+            if (dr == DialogResult.OK)
             {
                 Restart();
                 lbxInstruction.Enabled = true;
@@ -363,7 +367,8 @@ namespace WFLostNFurious
             tmrAvancer.Enabled = false;
 
             //Raichu se remet au départ
-            //personnageRaichu.Respawn(positionDepartpersonnage);
+            personnageRaichu.Respawn(positionDepartPersonnage);
+            
         }
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {

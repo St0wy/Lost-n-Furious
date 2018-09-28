@@ -118,9 +118,10 @@ namespace WFLostNFurious
             }
         }
 
-        public void Respawn()
+        public void Respawn(PointF positionDepart)
         {
-
+            position = positionDepart;
+            orientation = (int)Direction.Haut;
         }
     }
 }
