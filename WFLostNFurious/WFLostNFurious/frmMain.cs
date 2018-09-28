@@ -59,26 +59,11 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Supprime tous les labels de la form
-        /// </summary>
-        public void DeleteLabel()
-        {
-            foreach (Control lbl in Controls)
-            {
-                if (lbl is Label)
-                {
-                    Controls.Remove(lbl);
-                }
-            }
-        }
-
-        /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
         /// </summary>
         /// <param name="matriceLabyrinthe">Schema du labyrinthe</param>
         public void CreateLabFromGrid(int[][] matriceLabyrinthe)
         {
-            DeleteLabel();
             int compteurSortie = 0;
 
             Point positionLaby = new Point(Jeu.POSITION_LABYRINTHE_X, Jeu.POSITION_LABYRINTHE_Y);
