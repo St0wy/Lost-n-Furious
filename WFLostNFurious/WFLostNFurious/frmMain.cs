@@ -26,8 +26,6 @@ namespace WFLostNFurious
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
         int codeAAfficher;
-        bool recommencer;
-
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
@@ -56,7 +54,6 @@ namespace WFLostNFurious
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
             codeAAfficher = 0;
-            recommencer = false;
         }
 
         /// <summary>
@@ -290,11 +287,11 @@ namespace WFLostNFurious
                     }
 
                 }
-                else if (instructionActuelle == "Tourner à droite")
+                else if (instructionActuelle == "Pivoter à droite")
                 {
                     personnageRaichu.PivoterDroite();
                 }
-                else if (instructionActuelle == "Tourner à gauche")
+                else if (instructionActuelle == "Pivoter à gauche")
                 {
                     personnageRaichu.PivoterGauche();
                 }
