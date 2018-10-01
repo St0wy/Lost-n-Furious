@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -89,6 +90,28 @@ namespace WFLostNFurious
                     }
                     tmp++;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Recoit le code à afficher à la fin depuis le serveur
+        /// </summary>
+        /// <param name="url">Url du serveur</param>
+        /// <returns>Le code si connexion reussie, F sinon</returns>
+        static public string RecevoirCode(string url)
+        {
+            string code = "";  // For debugging only
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    code = client.DownloadString(new Uri(url));
+                    return code;
+                }
+            }
+            catch (WebException e)
+            {
+                return Jeu.CODE_DE_BASE;
             }
         }
     }

@@ -15,14 +15,16 @@ namespace WFLostNFurious
 {
     public partial class frmMain : Form
     {
+        //Propriete
         enum Direction { Haut, Bas, Gauche, Droite };
 
-        string codeAAfficher = RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
+        string codeAAfficher;
         Personnage personnageRaichu;
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
 
+        //Constructeur
         public frmMain()
         {
             InitializeComponent();
@@ -32,29 +34,10 @@ namespace WFLostNFurious
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
+            codeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php")
         }
 
-        /// <summary>
-        /// Recoit le code à afficher à la fin depuis le serveur
-        /// </summary>
-        /// <param name="url">Url du serveur</param>
-        /// <returns>Le code si connexion reussie, F sinon</returns>
-        static String RecevoirCode(String url)
-        {
-            string code = "";  // For debugging only
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    code = client.DownloadString(new Uri(url));
-                    return code;
-                }
-            }
-            catch (WebException e)
-            {
-                return Jeu.CODE_DE_BASE;
-            }
-        }
+        
 
         /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
