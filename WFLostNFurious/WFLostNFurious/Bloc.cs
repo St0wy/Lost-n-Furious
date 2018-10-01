@@ -14,6 +14,9 @@ namespace WFLostNFurious
         int x;
         int y;
 
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
+
         public Bloc() :this(10, 10)
         {
 
@@ -21,50 +24,46 @@ namespace WFLostNFurious
 
         public Bloc(int x, int y)
         {
-            this.x = x;
-            this.y = y;
-        }
-
-        public virtual void Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.FillRectangle(Brushes.Black, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+            this.X = x;
+            this.Y = y;
         }
 
         public PointF Position
         {
             get
             {
-                return new PointF((float)x, (float)y);
+                return new PointF((float)X, (float)Y);
             }
         }
+
+        
     }
 
     class Bordure : Bloc
     {
-        int x, y;
+        int x;
+        int y;
 
         public Bordure(int x, int y) : base(x, y)
         {
             this.x = x;
             this.y = y;
         }
-
-        public override void Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.FillRectangle(Brushes.LightBlue, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-        }
     }
 
     class Arrivee : Bloc
     {
-        int x, y;
+        int x;
+        int y;
         bool isActive;
+
+        public bool IsActive { get => isActive; set => isActive = value; }
 
         public Arrivee(int x, int y) : base(x, y)
         {
             this.x = x;
             this.y = y;
-            isActive = false;
+            IsActive = false;
         }
 
         public Arrivee()
@@ -74,24 +73,12 @@ namespace WFLostNFurious
 
         public void Activate()
         {
-            isActive = true;
+            IsActive = true;
         }
 
         public void Desactivate()
         {
-            isActive = false;
-        }
-
-        public override void Paint(object sender, PaintEventArgs e)
-        {
-            if (isActive)
-            {
-                e.Graphics.FillRectangle(Brushes.Red, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(Brushes.Black, x, y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-            }
+            IsActive = false;
         }
     }
 }

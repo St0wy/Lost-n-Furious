@@ -17,13 +17,11 @@ namespace WFLostNFurious
     {
         enum Direction { Haut, Bas, Gauche, Droite };
 
-        string Code_A_Afficher = RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
+        string codeAAfficher = RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
 
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
         PointF positionDepartPersonnage;
-        static Random rnd = new Random();
         Personnage personnageRaichu;
-        Bloc arriveeDemandee;
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
@@ -50,7 +48,7 @@ namespace WFLostNFurious
 
             positionDepartPersonnage = new Point();
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
-            arriveeDemandee = new Arrivee();
+            
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
@@ -141,8 +139,6 @@ namespace WFLostNFurious
         {
             var bordure = new Bordure(x, y);
             lstLabyrinthe.Add(bordure);
-            //Ajoute l'affichage de l'objet dans une variable d'image
-            dessinLabyrinthe += bordure.Paint;
         }
 
         /// <summary>
@@ -154,8 +150,6 @@ namespace WFLostNFurious
         {
             var arrivee = new Arrivee(x, y);
             lstLabyrinthe.Add(arrivee);
-            //Ajoute l'affichage de l'objet dans une variable d'image
-            dessinLabyrinthe += arrivee.Paint;
         }
 
         /// <summary>
@@ -167,32 +161,9 @@ namespace WFLostNFurious
         {
             var bloc = new Bloc(x, y);
             lstLabyrinthe.Add(bloc);
-            //Ajoute l'affichage de l'objet dans une variable d'image
-            dessinLabyrinthe += bloc.Paint;
         }
 
-        /// <summary>
-        /// Definit la nouvelle arrivee a atteindre
-        /// </summary>
-        public void NouvelleArrivee()
-        {
-            int valArrive = rnd.Next(Jeu.NOMBRE_SORTIES);
-            int tmp = 0;
-
-            //Regarde chaque bloc du labyrinthe
-            foreach (Bloc m in lstLabyrinthe)
-            {
-                if (m is Arrivee)
-                {
-                    if (valArrive == tmp) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
-                    {
-                        arriveeDemandee = m;
-                        (arriveeDemandee as Arrivee).Activate();
-                    }
-                    tmp++;
-                }
-            }
-        }
+        
 
         /// <summary>
         /// Vide l'interface et met le code de victoire au milieu de l'ecran
@@ -208,7 +179,7 @@ namespace WFLostNFurious
             Label lblCode = new Label()
             {
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est :{Environment.NewLine}{Code_A_Afficher}",
+                Text = $"Le code est :{Environment.NewLine}{codeAAfficher}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
                 Font = new Font("Arial", 75),
@@ -268,7 +239,7 @@ namespace WFLostNFurious
                 string instructionActuelle = lstInstruction.ElementAt(compteurInstructionsEffectuees).ToString();
                 bool collision = false;
 
-                if (instructionActuelle == "Avancer")
+                if (instructionActuelle == Jeu.AVANCER)
                 {
                     personnageRaichu.Avancer();
 
@@ -282,7 +253,7 @@ namespace WFLostNFurious
                                 collision = true;
                                 tmrAvancer.Enabled = false;
 
-                                if (b.Position == arriveeDemandee.Position) //Verifie que le personnage est sur une arrivee
+                                if (b.Position == Jeu.ArriveeDemandee.Position) //Verifie que le personnage est sur une arrivee
                                 {
                                     //Action apres avoir gagne
                                     Gagner();
@@ -309,11 +280,11 @@ namespace WFLostNFurious
                     }
 
                 }
-                else if (instructionActuelle == "Pivoter à droite")
+                else if (instructionActuelle == Jeu.PIVOTER_DROITE)
                 {
                     personnageRaichu.PivoterDroite();
                 }
-                else if (instructionActuelle == "Pivoter à gauche")
+                else if (instructionActuelle == Jeu.PIVOTER_GAUCHE)
                 {
                     personnageRaichu.PivoterGauche();
                 }
@@ -387,6 +358,7 @@ namespace WFLostNFurious
             personnageRaichu.Respawn(positionDepartPersonnage);
             
         }
+
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
             if (!Jeu.EstEnJeu)
@@ -409,7 +381,11 @@ namespace WFLostNFurious
         }
 
 
-        //Si on veut empecher la fermeture de l'application
+        /// <summary>
+        /// Si on veut empecher la fermeture de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //e.Cancel = true;
@@ -434,12 +410,38 @@ namespace WFLostNFurious
             CreateLabFromGrid(matriceLabyrinthe);
             this.Paint += dessinLabyrinthe;
             this.Paint += personnageRaichu.Paint;
-            NouvelleArrivee();
+            Jeu.NouvelleArrivee(lstLabyrinthe);
         }
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void FrmMain_Paint(object sender, PaintEventArgs e)
+        {
+            foreach (Bloc bloc in lstLabyrinthe)
+            {
+                if(bloc is Arrivee)
+                {
+                    if((bloc as Arrivee).IsActive)
+                    {
+                        e.Graphics.FillRectangle(Brushes.Red, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    }
+                    else
+                    {
+                        e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    }
+                }
+                else if(bloc is Bordure)
+                {
+                    e.Graphics.FillRectangle(Brushes.LightBlue, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                }
+            }
         }
     }
 
