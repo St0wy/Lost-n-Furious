@@ -27,6 +27,7 @@ namespace WFLostNFurious
         int compteurInstructionsEffectuees;
         int codeAAfficher;
         bool recommencer;
+
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
@@ -109,6 +110,7 @@ namespace WFLostNFurious
                     }
                 }
             }
+            Invalidate();
         }
 
         /// <summary>
@@ -199,28 +201,23 @@ namespace WFLostNFurious
         
         private void BtnDroite_Click(object sender, EventArgs e)
         {
-            lbxInstruction.Items.Add("Tourner à droite");
+            lbxInstruction.Items.Add(Jeu.PIVOTER_DROITE);
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
         private void BtnGauche_Click(object sender, EventArgs e)
         {
-            lbxInstruction.Items.Add("Tourner à gauche");
+            lbxInstruction.Items.Add(Jeu.PIVOTER_GAUCHE);
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
         }
 
         private void BtnAvancer_Click(object sender, EventArgs e)
         {
-            lbxInstruction.Items.Add("Avancer");
+            lbxInstruction.Items.Add(Jeu.AVANCER);
             lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
             btnPlay.Enabled = true;
-        }
-
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-            Invalidate();
         }
 
         private void BtnPlay_Click(object sender, EventArgs e)
@@ -392,10 +389,6 @@ namespace WFLostNFurious
             }
         }
 
-        private void FrmMain_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         //Si on veut empecher la fermeture de l'application
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)

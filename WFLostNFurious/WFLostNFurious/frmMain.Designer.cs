@@ -30,7 +30,6 @@
             this.components = new System.ComponentModel.Container();
             this.btnDroite = new System.Windows.Forms.Button();
             this.btnGauche = new System.Windows.Forms.Button();
-            this.tmrInvalidate = new System.Windows.Forms.Timer(this.components);
             this.btnAvancer = new System.Windows.Forms.Button();
             this.lbxInstruction = new System.Windows.Forms.ListBox();
             this.btnPlay = new System.Windows.Forms.Button();
@@ -42,11 +41,11 @@
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnStartGame = new System.Windows.Forms.Button();
             this.pnlInstructions = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlCommandes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlInstructions.SuspendLayout();
@@ -73,12 +72,6 @@
             this.btnGauche.Text = "Pivoter à gauche";
             this.btnGauche.UseVisualStyleBackColor = true;
             this.btnGauche.Click += new System.EventHandler(this.BtnGauche_Click);
-            // 
-            // tmrInvalidate
-            // 
-            this.tmrInvalidate.Enabled = true;
-            this.tmrInvalidate.Interval = 16;
-            this.tmrInvalidate.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // btnAvancer
             // 
@@ -199,34 +192,14 @@
             this.pnlInstructions.TabIndex = 11;
             this.pnlInstructions.Visible = false;
             // 
-            // label1
+            // label5
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.label1.Location = new System.Drawing.Point(67, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(236, 46);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Instructions";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label2.Location = new System.Drawing.Point(3, 84);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(371, 31);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "- Guider Raichu vers la sortie ";
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label3.Location = new System.Drawing.Point(3, 120);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(390, 100);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "- Utiliser les boutons pour envoyer des instructions dans la liste ";
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label5.Location = new System.Drawing.Point(3, 313);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(390, 104);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "- Vous pouvez supprimer une instruction en double-cliquant dessus";
             // 
             // label4
             // 
@@ -238,14 +211,34 @@
             this.label4.Text = "- Une fois sur du chemin appuyer sur play et Raichu fera les instructions dans la" +
     " liste ";
             // 
-            // label5
+            // label3
             // 
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.label5.Location = new System.Drawing.Point(3, 313);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(390, 104);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "- Vous pouvez supprimer une instruction en double-cliquant dessus";
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label3.Location = new System.Drawing.Point(3, 120);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(390, 100);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "- Utiliser les boutons pour envoyer des instructions dans la liste ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label2.Location = new System.Drawing.Point(3, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(371, 31);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "- Guider Raichu vers la sortie ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
+            this.label1.Location = new System.Drawing.Point(67, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(236, 46);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Instructions";
             // 
             // frmMain
             // 
@@ -277,7 +270,6 @@
 
         private System.Windows.Forms.Button btnDroite;
         private System.Windows.Forms.Button btnGauche;
-        private System.Windows.Forms.Timer tmrInvalidate;
         private System.Windows.Forms.Button btnAvancer;
         private System.Windows.Forms.ListBox lbxInstruction;
         private System.Windows.Forms.Button btnPlay;
