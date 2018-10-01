@@ -18,37 +18,17 @@ namespace WFLostNFurious
         enum Direction { Haut, Bas, Gauche, Droite };
 
         string codeAAfficher = RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
-
-        PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
-        PointF positionDepartPersonnage;
         Personnage personnageRaichu;
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
-        int[][] matriceLabyrinthe = new int[][] {
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };  //Matrice du labyrinthe
 
         public frmMain()
         {
             InitializeComponent();
             DoubleBuffered = true;
 
-            positionDepartPersonnage = new Point();
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
-            
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
@@ -119,7 +99,7 @@ namespace WFLostNFurious
                     else if (matriceLabyrinthe[i][j] == Jeu.NUM_PERSONNAGE)
                     {
                         personnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
-                        positionDepartPersonnage = personnageRaichu.Position;
+                        personnageRaichu.PositionDepart = personnageRaichu.Position;
                     }
                     else if (matriceLabyrinthe[i][j] == Jeu.NUM_BORDURE)
                     {
@@ -171,8 +151,6 @@ namespace WFLostNFurious
         private void Gagner()
         {
             //Cache l'interface
-            this.Paint -= dessinLabyrinthe;
-            this.Paint -= personnageRaichu.Paint;
             Controls.Clear();
 
             //Affiche le code
@@ -355,7 +333,7 @@ namespace WFLostNFurious
             tmrAvancer.Enabled = false;
 
             //Raichu se remet au départ
-            personnageRaichu.Respawn(positionDepartPersonnage);
+            personnageRaichu.Respawn();
             
         }
 
@@ -407,9 +385,7 @@ namespace WFLostNFurious
             pnlCommandes.Visible = true;
             pnlInstructions.Visible = true;
             //Affiche le labyrinthe
-            CreateLabFromGrid(matriceLabyrinthe);
-            this.Paint += dessinLabyrinthe;
-            this.Paint += personnageRaichu.Paint;
+            CreateLabFromGrid(Jeu.MatriceLabyrinthe);
             Jeu.NouvelleArrivee(lstLabyrinthe);
         }
 
@@ -441,6 +417,27 @@ namespace WFLostNFurious
                 {
                     e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                 }
+            }
+
+            Image droite = Properties.Resources.raichuDroite;
+            Image gauche = Properties.Resources.raichuGauche;
+            Image haut = Properties.Resources.raichuHaut;
+            Image bas = Properties.Resources.raichuBas;
+
+            switch (personnageRaichu.Orientation)
+            {
+                case (int)Direction.Gauche:
+                    e.Graphics.DrawImage(gauche, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    break;
+                case (int)Direction.Droite:
+                    e.Graphics.DrawImage(droite, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    break;
+                case (int)Direction.Bas:
+                    e.Graphics.DrawImage(bas, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    break;
+                case (int)Direction.Haut:
+                    e.Graphics.DrawImage(haut, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                    break;
             }
         }
     }

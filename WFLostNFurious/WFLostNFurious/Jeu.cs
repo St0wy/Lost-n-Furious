@@ -34,14 +34,31 @@ namespace WFLostNFurious
 
         public const string CODE_DE_BASE = "F";
         #endregion
+
         static bool estEnJeu;
         static Bloc arriveeDemandee;
         static Random rnd;
+        static readonly int[][] matriceLabyrinthe = new int[][] {
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
+            new int[] { 4, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 4 },
+            new int[] { 4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
+            new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
+            new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
+            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
+        };  //Matrice du labyrinthe
 
         //Champs
         static public bool EstEnJeu { get => estEnJeu; set => estEnJeu = value; }
         static public Bloc ArriveeDemandee { get => arriveeDemandee; set => arriveeDemandee = value; }
         public static Random Rnd { get => rnd; set => rnd = value; }
+        public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
 
         //Constructeur
         static Jeu()

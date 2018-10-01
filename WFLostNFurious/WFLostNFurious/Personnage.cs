@@ -13,11 +13,15 @@ namespace WFLostNFurious
     {
         enum Direction { Haut, Bas, Gauche, Droite};
 
-        private PointF position;
-        private int orientation;
+        PointF position;
+        PointF positionDepart;
+        int orientation;
+
+
 
         public PointF Position { get => position; set => position = value; }
         public int Orientation { get => orientation; set => orientation = value; }
+        public PointF PositionDepart { get => positionDepart; set => positionDepart = value; }
 
         public Personnage(PointF position , int orientation)
         {
@@ -26,30 +30,6 @@ namespace WFLostNFurious
             this.Orientation = orientation;
 
             this.Position = new PointF(position.X, position.Y);
-        }
-
-        public void Paint(object sender, PaintEventArgs e)
-        {
-            Image droite = Properties.Resources.raichuDroite;
-            Image gauche = Properties.Resources.raichuGauche;
-            Image haut = Properties.Resources.raichuHaut;
-            Image bas = Properties.Resources.raichuBas;
-
-            switch (Orientation)
-            {
-                case (int)Direction.Gauche:
-                    e.Graphics.DrawImage(gauche, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Droite:
-                    e.Graphics.DrawImage(droite, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Bas:
-                    e.Graphics.DrawImage(bas, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Haut:
-                    e.Graphics.DrawImage(haut, Position.X, Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-            }
         }
 
         /// <summary>
@@ -118,9 +98,9 @@ namespace WFLostNFurious
             }
         }
 
-        public void Respawn(PointF positionDepart)
+        public void Respawn()
         {
-            position = positionDepart;
+            position = PositionDepart;
             orientation = (int)Direction.Haut;
         }
     }
