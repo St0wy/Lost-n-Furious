@@ -325,6 +325,7 @@ namespace WFLostNFurious
                     lbxInstruction.SelectedIndex += 1;
                 }
             }
+            Invalidate();
         }
 
         /// <summary>
