@@ -30,6 +30,8 @@ namespace WFLostNFurious
 
         public const int TAILLE_BLOC_X = 70;
         public const int TAILLE_BLOC_Y = 70;
+
+        public const string CODE_DE_BASE = "F";
         #endregion
         //Propriete
         static bool estEnJeu;

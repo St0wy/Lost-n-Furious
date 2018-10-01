@@ -17,6 +17,8 @@ namespace WFLostNFurious
     {
         enum Direction { Haut, Bas, Gauche, Droite };
 
+        string Code_A_Afficher = RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
+
         PaintEventHandler dessinLabyrinthe;    //Variable d'affichage du labyrinthe
         PointF positionDepartPersonnage;
         static Random rnd = new Random();
@@ -25,7 +27,6 @@ namespace WFLostNFurious
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
         int compteurInstructionsEffectuees;
-        int codeAAfficher;
         int[][] matriceLabyrinthe = new int[][] {
             new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
             new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
@@ -53,7 +54,28 @@ namespace WFLostNFurious
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
             compteurInstructionsEffectuees = 0;
-            codeAAfficher = 0;
+        }
+
+        /// <summary>
+        /// Recoit le code à afficher à la fin depuis le serveur
+        /// </summary>
+        /// <param name="url">Url du serveur</param>
+        /// <returns>Le code si connexion reussie, F sinon</returns>
+        static String RecevoirCode(String url)
+        {
+            string code = "";  // For debugging only
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    code = client.DownloadString(new Uri(url));
+                    return code;
+                }
+            }
+            catch (WebException e)
+            {
+                return Jeu.CODE_DE_BASE;
+            }
         }
 
         /// <summary>
@@ -186,7 +208,7 @@ namespace WFLostNFurious
             Label lblCode = new Label()
             {
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est :{Environment.NewLine}{codeAAfficher.ToString()}",
+                Text = $"Le code est :{Environment.NewLine}{Code_A_Afficher}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
                 Font = new Font("Arial", 75),
