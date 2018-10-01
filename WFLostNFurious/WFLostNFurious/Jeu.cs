@@ -18,7 +18,7 @@ namespace WFLostNFurious
         public const string PIVOTER_GAUCHE = "Pivoter à gauche";
         public const string PIVOTER_DROITE = "Pivoter à droite";
 
-        public const int POSITION_LABYRINTHE_X = 300;
+        public const int POSITION_LABYRINTHE_X = 400;
         public const int POSITION_LABYRINTHE_Y = 10;
         public const int NOMBRE_SORTIES = 3;
         public const int DUREE_UNE_SECONDE_EN_MS = 1000;
