@@ -271,7 +271,7 @@ namespace WFLostNFurious
                                     //Action apres avoir gagne
                                     Gagner();
 
-                                    BtnReset_Click(sender, e);
+                                    Restart();
                                     lbxInstruction.Enabled = true;
                                     Jeu.EstEnJeu = false;
                                     arrive = true;
@@ -305,6 +305,7 @@ namespace WFLostNFurious
                 if (compteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
+                    //si une fois arrivé à la fin des instructions, le personnage n'est pas arrivé
                     if (!arrive)
                     {
                         Defaite();
@@ -326,6 +327,9 @@ namespace WFLostNFurious
             }
         }
 
+        /// <summary>
+        /// Dit eu jeu que la partie est finie et affiche une fenêtre pour prévenir l'utilisateur
+        /// </summary>
         private void Defaite()
         {
             //changer le dialog car raspberry
@@ -336,10 +340,6 @@ namespace WFLostNFurious
             {
                 Restart();
                 lbxInstruction.Enabled = true;
-            }
-            else
-            {
-                btnPlay.Enabled = false;
             }
         }
 
