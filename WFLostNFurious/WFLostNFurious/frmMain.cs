@@ -22,7 +22,6 @@ namespace WFLostNFurious
         Personnage personnageRaichu;
         List<Bloc> lstLabyrinthe;
         List<string> lstInstruction;
-        int compteurInstructionsEffectuees;
 
         //Constructeur
         public frmMain()
@@ -33,8 +32,7 @@ namespace WFLostNFurious
             personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             lstLabyrinthe = new List<Bloc>();
             lstInstruction = new List<string>();
-            compteurInstructionsEffectuees = 0;
-            codeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php")
+            codeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
         }
 
         
@@ -197,7 +195,7 @@ namespace WFLostNFurious
 
             if (lstInstruction.Count != 0)
             {
-                string instructionActuelle = lstInstruction.ElementAt(compteurInstructionsEffectuees).ToString();
+                string instructionActuelle = lstInstruction.ElementAt(Jeu.CompteurInstructionsEffectuees).ToString();
                 bool collision = false;
 
                 if (instructionActuelle == Jeu.AVANCER)
@@ -250,7 +248,7 @@ namespace WFLostNFurious
                     personnageRaichu.PivoterGauche();
                 }
 
-                if (compteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
+                if (Jeu.CompteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
                     //si une fois arrivé à la fin des instructions, le personnage n'est pas arrivé
@@ -264,7 +262,7 @@ namespace WFLostNFurious
                 {
                     if (tmrAvancer.Enabled)
                     {
-                        compteurInstructionsEffectuees++;
+                        Jeu.CompteurInstructionsEffectuees++;
                     }
                 }
 
@@ -312,7 +310,7 @@ namespace WFLostNFurious
             btnGauche.Enabled = true;
             btnAvancer.Enabled = true;
             btnReset.Enabled = false;
-            compteurInstructionsEffectuees = 0;
+            Jeu.CompteurInstructionsEffectuees = 0;
             tmrAvancer.Enabled = false;
 
             //Raichu se remet au départ

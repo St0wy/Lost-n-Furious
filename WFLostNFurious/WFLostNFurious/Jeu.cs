@@ -39,27 +39,15 @@ namespace WFLostNFurious
         static bool estEnJeu;
         static Bloc arriveeDemandee;
         static Random rnd;
-        static readonly int[][] matriceLabyrinthe = new int[][] {
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
-            new int[] { 4, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 4 },
-            new int[] { 4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
-            new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
-            new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
-            new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
-        };  //Matrice du labyrinthe
+        static readonly int[][] matriceLabyrinthe;  //Matrice du labyrinthe
+        static int compteurInstructionsEffectuees;
 
         //Champs
         static public bool EstEnJeu { get => estEnJeu; set => estEnJeu = value; }
         static public Bloc ArriveeDemandee { get => arriveeDemandee; set => arriveeDemandee = value; }
         public static Random Rnd { get => rnd; set => rnd = value; }
         public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
+        public static int CompteurInstructionsEffectuees { get => compteurInstructionsEffectuees; set => compteurInstructionsEffectuees = value; }
 
         //Constructeur
         static Jeu()
@@ -67,6 +55,22 @@ namespace WFLostNFurious
             EstEnJeu = false;
             ArriveeDemandee = new Arrivee();
             Rnd = new Random();
+            matriceLabyrinthe = new int[][] {
+                new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
+                new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
+                new int[] { 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+                new int[] { 4, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 4 },
+                new int[] { 4, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 4 },
+                new int[] { 4, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 4 },
+                new int[] { 4, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 4 },
+                new int[] { 4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 4 },
+                new int[] { 4, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4 },
+                new int[] { 4, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 4 },
+                new int[] { 4, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 4 },
+                new int[] { 4, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 4 },
+                new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }
+            };
+            CompteurInstructionsEffectuees = 0;
         }
 
         //Methodes
