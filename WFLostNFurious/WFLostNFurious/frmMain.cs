@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WFLostNFurious
 {
@@ -275,16 +276,18 @@ namespace WFLostNFurious
         }
 
         /// <summary>
-        /// Dit eu jeu que la partie est finie et affiche une fenêtre pour prévenir l'utilisateur
+        /// Dit eu jeu que la partie est finie et affiche une fenêtre + change le fond en rouge pour prévenir l'utilisateur
         /// </summary>
         private void Defaite()
         {
-            //changer le dialog car raspberry
-            DialogResult dr = MessageBox.Show("", "Perdu", MessageBoxButtons.OK);
+            this.BackColor = Color.Red;
+
+            DialogResult dr = MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK);
             Jeu.EstEnJeu = false;
 
             if (dr == DialogResult.OK)
             {
+                this.BackColor = SystemColors.Control;
                 Restart();
                 lbxInstruction.Enabled = true;
             }
