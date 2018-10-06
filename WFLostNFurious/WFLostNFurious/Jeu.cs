@@ -36,23 +36,26 @@ namespace WFLostNFurious
         public const string CODE_DE_BASE = "F";
         #endregion
 
-        static bool estEnJeu;
+        static bool estEnJeu;   //S'occupe de dire a la form si la partie est en cours et donc savoir s'il faut dessiner le labyrinthe
+        static bool estEnMouvement; //True si le personnage est entrain de faire les actions
         static Bloc arriveeDemandee;
         static Random rnd;
         static readonly int[][] matriceLabyrinthe;  //Matrice du labyrinthe
         static int compteurInstructionsEffectuees;
 
         //Champs
-        static public bool EstEnJeu { get => estEnJeu; set => estEnJeu = value; }
+        static public bool EstEnMouvement { get => estEnMouvement; set => estEnMouvement = value; }
         static public Bloc ArriveeDemandee { get => arriveeDemandee; set => arriveeDemandee = value; }
         public static Random Rnd { get => rnd; set => rnd = value; }
         public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
         public static int CompteurInstructionsEffectuees { get => compteurInstructionsEffectuees; set => compteurInstructionsEffectuees = value; }
+        public static bool EstEnJeu { get => estEnJeu; set => estEnJeu = value; }
 
         //Constructeur
         static Jeu()
         {
             EstEnJeu = false;
+            EstEnMouvement = false;
             ArriveeDemandee = new Arrivee();
             Rnd = new Random();
             matriceLabyrinthe = new int[][] {

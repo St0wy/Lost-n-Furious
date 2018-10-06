@@ -36,7 +36,7 @@ namespace WFLostNFurious
             codeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
         }
 
-        
+
 
         /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
@@ -125,13 +125,15 @@ namespace WFLostNFurious
             lstLabyrinthe.Add(bloc);
         }
 
-        
+
 
         /// <summary>
         /// Vide l'interface et met le code de victoire au milieu de l'ecran
         /// </summary>
         private void Gagner()
         {
+            Jeu.EstEnJeu = false;
+
             //Cache l'interface
             Controls.Clear();
 
@@ -148,7 +150,7 @@ namespace WFLostNFurious
             };
             this.Controls.Add(lblCode);
         }
-        
+
         private void BtnDroite_Click(object sender, EventArgs e)
         {
             lbxInstruction.Items.Add(Jeu.PIVOTER_DROITE);
@@ -177,7 +179,7 @@ namespace WFLostNFurious
                 lstInstruction.Add(s);
             }
 
-            Jeu.EstEnJeu = true;
+            Jeu.EstEnMouvement = true;
             lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
@@ -220,7 +222,7 @@ namespace WFLostNFurious
 
                                     Restart();
                                     lbxInstruction.Enabled = true;
-                                    Jeu.EstEnJeu = false;
+                                    Jeu.EstEnMouvement = false;
                                     arrive = true;
 
                                     break;
@@ -280,10 +282,11 @@ namespace WFLostNFurious
         /// </summary>
         private void Defaite()
         {
+            Jeu.EstEnJeu = false;
             this.BackColor = Color.Red;
 
             DialogResult dr = MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK);
-            Jeu.EstEnJeu = false;
+            Jeu.EstEnMouvement = false;
 
             if (dr == DialogResult.OK)
             {
@@ -306,7 +309,7 @@ namespace WFLostNFurious
             //Ergonomie des boutons
             lbxInstruction.Items.Clear();
             lstInstruction.Clear();
-            Jeu.EstEnJeu = false;
+            Jeu.EstEnMouvement = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
             btnDroite.Enabled = true;
@@ -318,12 +321,12 @@ namespace WFLostNFurious
 
             //Raichu se remet au départ
             personnageRaichu.Respawn();
-            
+
         }
 
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
-            if (!Jeu.EstEnJeu)
+            if (!Jeu.EstEnMouvement)
             {
                 lbxInstruction.Items.RemoveAt(lbxInstruction.SelectedIndex);
             }
@@ -364,6 +367,7 @@ namespace WFLostNFurious
         private void BtnStartGame_Click(object sender, EventArgs e)
         {
             btnStartGame.Visible = false;
+            Jeu.EstEnJeu = true;
 
             //Affiche les controles
             pnlCommandes.Visible = true;
@@ -375,55 +379,57 @@ namespace WFLostNFurious
 
         private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Environment.Exit(0);
+
         }
 
         private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
-            foreach (Bloc bloc in lstLabyrinthe)
+            if (Jeu.EstEnJeu)
             {
-                if(bloc is Arrivee)
+                foreach (Bloc bloc in lstLabyrinthe)
                 {
-                    if((bloc as Arrivee).IsActive)
+                    if (bloc is Arrivee)
                     {
-                        e.Graphics.FillRectangle(Brushes.Red, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        if ((bloc as Arrivee).IsActive)
+                        {
+                            e.Graphics.FillRectangle(Brushes.Red, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        }
+                        else
+                        {
+                            e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        }
+                    }
+                    else if (bloc is Bordure)
+                    {
+                        e.Graphics.FillRectangle(Brushes.LightBlue, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     }
                     else
                     {
                         e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                     }
                 }
-                else if(bloc is Bordure)
-                {
-                    e.Graphics.FillRectangle(Brushes.LightBlue, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(Brushes.Black, bloc.X, bloc.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                }
-            }
 
-            Image droite = Properties.Resources.raichuDroite;
-            Image gauche = Properties.Resources.raichuGauche;
-            Image haut = Properties.Resources.raichuHaut;
-            Image bas = Properties.Resources.raichuBas;
+                Image droite = Properties.Resources.raichuDroite;
+                Image gauche = Properties.Resources.raichuGauche;
+                Image haut = Properties.Resources.raichuHaut;
+                Image bas = Properties.Resources.raichuBas;
 
-            switch (personnageRaichu.Orientation)
-            {
-                case (int)Direction.Gauche:
-                    e.Graphics.DrawImage(gauche, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Droite:
-                    e.Graphics.DrawImage(droite, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Bas:
-                    e.Graphics.DrawImage(bas, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
-                case (int)Direction.Haut:
-                    e.Graphics.DrawImage(haut, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
-                    break;
+                switch (personnageRaichu.Orientation)
+                {
+                    case (int)Direction.Gauche:
+                        e.Graphics.DrawImage(gauche, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        break;
+                    case (int)Direction.Droite:
+                        e.Graphics.DrawImage(droite, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        break;
+                    case (int)Direction.Bas:
+                        e.Graphics.DrawImage(bas, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        break;
+                    case (int)Direction.Haut:
+                        e.Graphics.DrawImage(haut, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        break;
+                }
             }
         }
     }
-
 }
