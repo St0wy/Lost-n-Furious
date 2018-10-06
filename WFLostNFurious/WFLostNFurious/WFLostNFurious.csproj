@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arrivee.cs" />
     <Compile Include="Bloc.cs" />
+    <Compile Include="Bordure.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
