@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -142,6 +143,7 @@ namespace WFLostNFurious
             }
             catch (WebException e)
             {
+                Debug.WriteLine(e.ToString());
                 return Jeu.CODE_DE_BASE;
             }
         } 

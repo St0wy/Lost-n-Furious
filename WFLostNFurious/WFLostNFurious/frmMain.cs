@@ -43,6 +43,7 @@ namespace WFLostNFurious
         }
 
         //Methodes
+        //Methodes fait main
         /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
         /// </summary>
@@ -137,6 +138,48 @@ namespace WFLostNFurious
             this.Controls.Add(lblCode);
         }
 
+        /// <summary>
+        /// Dit eu jeu que la partie est finie et affiche une fenêtre + change le fond en rouge pour prévenir l'utilisateur
+        /// </summary>
+        private void Defaite()
+        {
+            Jeu.EstEnMouvement = false;
+
+            //Met le fond en rouge
+            this.BackColor = Color.Red;
+
+            if (MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK) == DialogResult.OK)
+            {
+                this.BackColor = SystemColors.Control;
+                Restart();
+            }
+        }
+
+        /// <summary>
+        /// Recommence la partie, la liste se vide et le personnage se remet au debut
+        /// </summary>
+        private void Restart()
+        {
+            //Ergonomie des boutons
+            lbxInstruction.Enabled = true;
+            lbxInstruction.Items.Clear();
+            LstInstruction.Clear();
+            Jeu.EstEnMouvement = false;
+            btnPlay.Enabled = false;
+            lbxInstruction.Enabled = true;
+            btnDroite.Enabled = true;
+            btnGauche.Enabled = true;
+            btnAvancer.Enabled = true;
+            btnReset.Enabled = false;
+            Jeu.CompteurInstructionsEffectuees = 0;
+            tmrAvancer.Enabled = false;
+
+            //Raichu se remet au départ
+            PersonnageRaichu.Respawn();
+
+        }
+
+        //Methodes de la form
         /// <summary>
         /// Gestion des bouttons de deplacement
         /// </summary>
@@ -249,50 +292,9 @@ namespace WFLostNFurious
             Invalidate();
         }
 
-        /// <summary>
-        /// Dit eu jeu que la partie est finie et affiche une fenêtre + change le fond en rouge pour prévenir l'utilisateur
-        /// </summary>
-        private void Defaite()
-        {
-            Jeu.EstEnMouvement = false;
-
-            //Met le fond en rouge
-            this.BackColor = Color.Red;
-
-            if (MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK) == DialogResult.OK)
-            {
-                this.BackColor = SystemColors.Control;
-                Restart();
-            }
-        }
-
         private void BtnReset_Click(object sender, EventArgs e)
         {
             Restart();
-        }
-
-        /// <summary>
-        /// Recommence la partie, la liste se vide et le personnage se remet au debut
-        /// </summary>
-        private void Restart()
-        {
-            //Ergonomie des boutons
-            lbxInstruction.Enabled = true;
-            lbxInstruction.Items.Clear();
-            LstInstruction.Clear();
-            Jeu.EstEnMouvement = false;
-            btnPlay.Enabled = false;
-            lbxInstruction.Enabled = true;
-            btnDroite.Enabled = true;
-            btnGauche.Enabled = true;
-            btnAvancer.Enabled = true;
-            btnReset.Enabled = false;
-            Jeu.CompteurInstructionsEffectuees = 0;
-            tmrAvancer.Enabled = false;
-
-            //Raichu se remet au départ
-            PersonnageRaichu.Respawn();
-
         }
 
         /// <summary>
@@ -320,18 +322,6 @@ namespace WFLostNFurious
                 btnViderListe.Enabled = true;
             }
         }
-
-        /*
-        /// <summary>
-        /// Empêche la fermeture de l'application
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-        }
-        */
 
         /// <summary>
         /// Vide la liste
@@ -418,5 +408,17 @@ namespace WFLostNFurious
                 }
             }
         }
+
+        /*
+        /// <summary>
+        /// Empêche la fermeture de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+        }
+        */
     }
 }
