@@ -11,10 +11,10 @@ namespace WFLostNFurious
     {
         //Propriete
         #region const
-        public const int NUM_MUR = 1;
-        public const int NUM_ARRIVEE = 2;
-        public const int NUM_PERSONNAGE = 3;
-        public const int NUM_BORDURE = 4;
+        public const int ID_MUR = 1;
+        public const int ID_ARRIVEE = 2;
+        public const int ID_PERSONNAGE = 3;
+        public const int ID_BORDURE = 4;
 
         public const string AVANCER = "Avancer";
         public const string PIVOTER_GAUCHE = "Pivoter à gauche";
@@ -36,20 +36,42 @@ namespace WFLostNFurious
         public const string CODE_DE_BASE = "F";
         #endregion
 
-        static bool estEnJeu;   //S'occupe de dire a la form si la partie est en cours et donc savoir s'il faut dessiner le labyrinthe
-        static bool estEnMouvement; //True si le personnage est entrain de faire les actions
+        #region Propriete
+        static bool estEnJeu;
+        static bool estEnMouvement;
         static Bloc arriveeDemandee;
         static Random rnd;
         static readonly int[][] matriceLabyrinthe;  //Matrice du labyrinthe
         static int compteurInstructionsEffectuees;
+        #endregion
 
         //Champs
-        static public bool EstEnMouvement { get => estEnMouvement; set => estEnMouvement = value; }
-        static public Bloc ArriveeDemandee { get => arriveeDemandee; set => arriveeDemandee = value; }
-        public static Random Rnd { get => rnd; set => rnd = value; }
-        public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
-        public static int CompteurInstructionsEffectuees { get => compteurInstructionsEffectuees; set => compteurInstructionsEffectuees = value; }
+        #region Champs
+        /// <summary>
+        /// True si la partie est en cours
+        /// </summary>
         public static bool EstEnJeu { get => estEnJeu; set => estEnJeu = value; }
+        /// <summary>
+        /// True si le personnage est entrain de faire les actions
+        /// </summary>
+        static public bool EstEnMouvement { get => estEnMouvement; set => estEnMouvement = value; }
+        /// <summary>
+        /// Arrivee a laquelle le joueur doit se rendre
+        /// </summary>
+        static public Bloc ArriveeDemandee { get => arriveeDemandee; set => arriveeDemandee = value; }
+        /// <summary>
+        /// Random du programme
+        /// </summary>
+        public static Random Rnd { get => rnd; set => rnd = value; }
+        /// <summary>
+        /// Tableau qui contient le schema du labyrithe
+        /// </summary>
+        public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
+        /// <summary>
+        /// Nombre d'instructions effectuee par le personnage
+        /// </summary>
+        public static int CompteurInstructionsEffectuees { get => compteurInstructionsEffectuees; set => compteurInstructionsEffectuees = value; } 
+        #endregion
 
         //Constructeur
         static Jeu()
@@ -77,25 +99,27 @@ namespace WFLostNFurious
         }
 
         //Methodes
+        #region Methodes
         /// <summary>
         /// Definit la nouvelle arrivee a atteindre
         /// </summary>
+        /// <param name="lstLabyrinthe">Tableau du labyrithe</param>
         static public void NouvelleArrivee(List<Bloc> lstLabyrinthe)
         {
-            int valArrive = Rnd.Next(Jeu.NOMBRE_SORTIES);
-            int tmp = 0;
+            int valArrive = Rnd.Next(Jeu.NOMBRE_SORTIES);   //Numero de l'arrivee choisie
+            int compteurSortie = 0;   //Compteur qui sert a savoir sur quelle arrivee on est
 
             //Regarde chaque bloc du labyrinthe
             foreach (Bloc m in lstLabyrinthe)
             {
                 if (m is Arrivee)
                 {
-                    if (valArrive == tmp) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
+                    if (valArrive == compteurSortie) //Prend une arrivee aleatoirement et la met dans une variable pour s'en souvenir
                     {
                         arriveeDemandee = m;
-                        (arriveeDemandee as Arrivee).Activate();
+                        (arriveeDemandee as Arrivee).IsActive = true;
                     }
-                    tmp++;
+                    compteurSortie++;
                 }
             }
         }
@@ -107,7 +131,7 @@ namespace WFLostNFurious
         /// <returns>Le code si connexion reussie, F sinon</returns>
         static public string RecevoirCode(string url)
         {
-            string code = "";  // For debugging only
+            string code = "";  //La pour le debuggage
             try
             {
                 using (WebClient client = new WebClient())
@@ -120,6 +144,7 @@ namespace WFLostNFurious
             {
                 return Jeu.CODE_DE_BASE;
             }
-        }
+        } 
+        #endregion
     }
 }

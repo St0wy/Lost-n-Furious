@@ -60,7 +60,7 @@
             this.btnDroite.TabIndex = 4;
             this.btnDroite.Text = "Pivoter à droite";
             this.btnDroite.UseVisualStyleBackColor = true;
-            this.btnDroite.Click += new System.EventHandler(this.BtnDroite_Click);
+            this.btnDroite.Click += new System.EventHandler(this.BtnMouvement_Click);
             // 
             // btnGauche
             // 
@@ -71,7 +71,7 @@
             this.btnGauche.TabIndex = 3;
             this.btnGauche.Text = "Pivoter à gauche";
             this.btnGauche.UseVisualStyleBackColor = true;
-            this.btnGauche.Click += new System.EventHandler(this.BtnGauche_Click);
+            this.btnGauche.Click += new System.EventHandler(this.BtnMouvement_Click);
             // 
             // btnAvancer
             // 
@@ -82,7 +82,7 @@
             this.btnAvancer.TabIndex = 2;
             this.btnAvancer.Text = "Avancer";
             this.btnAvancer.UseVisualStyleBackColor = true;
-            this.btnAvancer.Click += new System.EventHandler(this.BtnAvancer_Click);
+            this.btnAvancer.Click += new System.EventHandler(this.BtnMouvement_Click);
             // 
             // lbxInstruction
             // 
@@ -255,8 +255,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cité des métiers du 20 au 26 novembre";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMain_FormClosed);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmMain_Paint);
             this.pnlCommandes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

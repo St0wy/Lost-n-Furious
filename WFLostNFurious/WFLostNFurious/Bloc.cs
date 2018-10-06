@@ -11,13 +11,17 @@ namespace WFLostNFurious
     
     class Bloc
     {
+        //Propriete
         int x;
         int y;
 
+        //Champs
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
+        public PointF Position { get => new PointF((float)X, (float)Y); }
 
-        public Bloc() :this(10, 10)
+        //Constructeurs
+        public Bloc() : this(10, 10)
         {
 
         }
@@ -28,57 +32,10 @@ namespace WFLostNFurious
             this.Y = y;
         }
 
-        public PointF Position
-        {
-            get
-            {
-                return new PointF((float)X, (float)Y);
-            }
-        }
-
-        
+        //Methodes
     }
 
-    class Bordure : Bloc
-    {
-        int x;
-        int y;
+    
 
-        public Bordure(int x, int y) : base(x, y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    class Arrivee : Bloc
-    {
-        int x;
-        int y;
-        bool isActive;
-
-        public bool IsActive { get => isActive; set => isActive = value; }
-
-        public Arrivee(int x, int y) : base(x, y)
-        {
-            this.x = x;
-            this.y = y;
-            IsActive = false;
-        }
-
-        public Arrivee()
-        {
-
-        }
-
-        public void Activate()
-        {
-            IsActive = true;
-        }
-
-        public void Desactivate()
-        {
-            IsActive = false;
-        }
-    }
+    
 }

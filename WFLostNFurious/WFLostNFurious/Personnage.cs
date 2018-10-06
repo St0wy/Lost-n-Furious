@@ -11,18 +11,19 @@ namespace WFLostNFurious
 {
     class Personnage
     {
+        //Propriete
         enum Direction { Haut, Bas, Gauche, Droite};
 
         PointF position;
         PointF positionDepart;
         int orientation;
 
-
-
+        //Champs
         public PointF Position { get => position; set => position = value; }
         public int Orientation { get => orientation; set => orientation = value; }
         public PointF PositionDepart { get => positionDepart; set => positionDepart = value; }
 
+        //Contructeur
         public Personnage(PointF position , int orientation)
         {
             // Initialisation des variables d'instances
@@ -32,6 +33,7 @@ namespace WFLostNFurious
             this.Position = new PointF(position.X, position.Y);
         }
 
+        //Methodes
         /// <summary>
         /// Tourne le personnage vers la droite
         /// </summary>

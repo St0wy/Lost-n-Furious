@@ -19,10 +19,16 @@ namespace WFLostNFurious
         //Propriete
         enum Direction { Haut, Bas, Gauche, Droite };
 
-        string codeAAfficher;
-        Personnage personnageRaichu;
-        List<Bloc> lstLabyrinthe;
-        List<string> lstInstruction;
+        string codeAAfficher;           //Code a afficher a la fin de la partie
+        Personnage personnageRaichu;    //Personnage du jeu
+        List<Bloc> lstLabyrinthe;       //Liste de tous les blocs du labyrithe
+        List<string> lstInstruction;    //Liste de toutes les instructions
+
+        //Champs
+        public string CodeAAfficher { get => codeAAfficher; set => codeAAfficher = value; }
+        internal Personnage PersonnageRaichu { get => personnageRaichu; set => personnageRaichu = value; }
+        internal List<Bloc> LstLabyrinthe { get => lstLabyrinthe; set => lstLabyrinthe = value; }
+        public List<string> LstInstruction { get => lstInstruction; set => lstInstruction = value; }
 
         //Constructeur
         public frmMain()
@@ -30,66 +36,45 @@ namespace WFLostNFurious
             InitializeComponent();
             DoubleBuffered = true;
 
-            personnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
-            lstLabyrinthe = new List<Bloc>();
-            lstInstruction = new List<string>();
-            codeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
+            PersonnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
+            LstLabyrinthe = new List<Bloc>();
+            LstInstruction = new List<string>();
+            CodeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
         }
 
-
-
+        //Methodes
         /// <summary>
         /// Dessine un labyrinthe en fonction d'un tableau mutli-dimentionnel
         /// </summary>
         /// <param name="matriceLabyrinthe">Schema du labyrinthe</param>
         public void CreateLabFromGrid(int[][] matriceLabyrinthe)
         {
-            int compteurSortie = 0;
-
-            Point positionLaby = new Point(Jeu.POSITION_LABYRINTHE_X, Jeu.POSITION_LABYRINTHE_Y);
-
             for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
-                int y = (i + 1) * Jeu.TAILLE_BLOC_Y + positionLaby.Y;
+                int y = (i + 1) * Jeu.TAILLE_BLOC_Y + Jeu.POSITION_LABYRINTHE_Y;
                 for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
-                    int x = (j + 1) * Jeu.TAILLE_BLOC_X + positionLaby.X;
-                    if (matriceLabyrinthe[i][j] == Jeu.NUM_MUR)
+                    int x = (j + 1) * Jeu.TAILLE_BLOC_X + Jeu.POSITION_LABYRINTHE_X;
+                    if (matriceLabyrinthe[i][j] == Jeu.ID_MUR)  //Si c'est un mur
                     {
                         CreationMur(x, y);
                     }
-                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_ARRIVEE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.ID_ARRIVEE) //Si c'est une arrivee
                     {
-                        string[] lettresSorties = { "A", "B", "C" };
-
                         CreationArrivee(x, y);
-                        Label lbl = new Label()
-                        {
-                            Location = new Point(x, y),
-                            Text = lettresSorties[compteurSortie],
-                            AutoSize = false,
-                            Size = new Size(Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y),
-                            Font = new Font("Arial", 15),
-                            TextAlign = ContentAlignment.MiddleCenter,
-                            BackColor = Color.Transparent,
-                            ForeColor = Color.Black,
-                        };
-                        compteurSortie++;
-
-                        Controls.Add(lbl);
                     }
-                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_PERSONNAGE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.ID_PERSONNAGE)  //Si c'est le personnage
                     {
-                        personnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
-                        personnageRaichu.PositionDepart = personnageRaichu.Position;
+                        PersonnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
+                        PersonnageRaichu.PositionDepart = PersonnageRaichu.Position;
                     }
-                    else if (matriceLabyrinthe[i][j] == Jeu.NUM_BORDURE)
+                    else if (matriceLabyrinthe[i][j] == Jeu.ID_BORDURE) //Si c'est une brodure
                     {
                         CreationBordure(x, y);
                     }
                 }
             }
-            Invalidate();
+            Invalidate();   //Actualise l'affichage
         }
 
         /// <summary>
@@ -100,7 +85,7 @@ namespace WFLostNFurious
         public void CreationBordure(int x, int y)
         {
             var bordure = new Bordure(x, y);
-            lstLabyrinthe.Add(bordure);
+            LstLabyrinthe.Add(bordure);
         }
 
         /// <summary>
@@ -111,7 +96,7 @@ namespace WFLostNFurious
         public void CreationArrivee(int x, int y)
         {
             var arrivee = new Arrivee(x, y);
-            lstLabyrinthe.Add(arrivee);
+            LstLabyrinthe.Add(arrivee);
         }
 
         /// <summary>
@@ -122,26 +107,27 @@ namespace WFLostNFurious
         public void CreationMur(int x, int y)
         {
             var bloc = new Bloc(x, y);
-            lstLabyrinthe.Add(bloc);
+            LstLabyrinthe.Add(bloc);
         }
-
-
 
         /// <summary>
         /// Vide l'interface et met le code de victoire au milieu de l'ecran
         /// </summary>
         private void Gagner()
         {
+            //Fini la partie
             Jeu.EstEnJeu = false;
-
-            //Cache l'interface
+            //Le perso n'est plus en mouvement
+            Jeu.EstEnMouvement = false;
+            //Vide l'interface
             Controls.Clear();
+            Restart();
 
             //Affiche le code
             Label lblCode = new Label()
             {
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est :{Environment.NewLine}{codeAAfficher}",
+                Text = $"Le code est :{Environment.NewLine}{CodeAAfficher}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
                 Font = new Font("Arial", 75),
@@ -151,35 +137,39 @@ namespace WFLostNFurious
             this.Controls.Add(lblCode);
         }
 
-        private void BtnDroite_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Gestion des bouttons de deplacement
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnMouvement_Click(object sender, EventArgs e)
         {
-            lbxInstruction.Items.Add(Jeu.PIVOTER_DROITE);
-            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
-            btnPlay.Enabled = true;
+
+            lbxInstruction.Items.Add((sender as Button).Text);   //Ajoute l'instruction
+            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;  //Selectionne l'instuctions qu'on vient d'ajouter
+            if (lbxInstruction.Items.Count > 0)
+            {
+                //Afficher le boutton play si il y a au moins une instruction
+                btnPlay.Enabled = true;
+            }
         }
 
-        private void BtnGauche_Click(object sender, EventArgs e)
-        {
-            lbxInstruction.Items.Add(Jeu.PIVOTER_GAUCHE);
-            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
-            btnPlay.Enabled = true;
-        }
-
-        private void BtnAvancer_Click(object sender, EventArgs e)
-        {
-            lbxInstruction.Items.Add(Jeu.AVANCER);
-            lbxInstruction.SelectedIndex = lbxInstruction.Items.Count - 1;
-            btnPlay.Enabled = true;
-        }
-
+        /// <summary>
+        /// Lance la partie
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnPlay_Click(object sender, EventArgs e)
         {
             foreach (string s in lbxInstruction.Items)
             {
-                lstInstruction.Add(s);
+                //Ajoute chaque instructions dans une liste
+                LstInstruction.Add(s);
             }
 
             Jeu.EstEnMouvement = true;
+
+            //Gestion des controls
             lbxInstruction.Enabled = false;
             lbxInstruction.Focus();
             lbxInstruction.SelectedIndex = 0;
@@ -192,85 +182,67 @@ namespace WFLostNFurious
             btnReset.Enabled = true;
         }
 
+        /// <summary>
+        /// Timer qui s'occupe du deplacement du personnage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TmrAvancer_Tick(object sender, EventArgs e)
         {
-            bool arrive = false;
-
-            if (lstInstruction.Count != 0)
+            if (LstInstruction.Count != 0)
             {
-                string instructionActuelle = lstInstruction.ElementAt(Jeu.CompteurInstructionsEffectuees).ToString();
-                bool collision = false;
+                string instructionActuelle = LstInstruction.ElementAt(Jeu.CompteurInstructionsEffectuees);
 
-                if (instructionActuelle == Jeu.AVANCER)
+                switch (instructionActuelle)
                 {
-                    personnageRaichu.Avancer();
+                    case Jeu.AVANCER:
+                        PersonnageRaichu.Avancer();
+                        break;
+                    case Jeu.PIVOTER_DROITE:
+                        PersonnageRaichu.PivoterDroite();
+                        break;
+                    case Jeu.PIVOTER_GAUCHE:
+                        PersonnageRaichu.PivoterGauche();
+                        break;
+                    default:
+                        break;
+                }
 
-                    foreach (Bloc b in lstLabyrinthe)
+                foreach (Bloc b in LstLabyrinthe)
+                {
+                    if (PersonnageRaichu.Position == b.Position)
                     {
-                        //si il n'y a pas deja eu une collision, analyse chaque bloc pour voir si on collisionne (empeche le clignottement)
-                        if (!collision)
+                        //A touche un bloc
+                        tmrAvancer.Enabled = false;
+
+                        if (b.Position == Jeu.ArriveeDemandee.Position)
                         {
-                            if (personnageRaichu.Position == b.Position)    //Verifie s'il y a une collision
-                            {
-                                collision = true;
-                                tmrAvancer.Enabled = false;
-
-                                if (b.Position == Jeu.ArriveeDemandee.Position) //Verifie que le personnage est sur une arrivee
-                                {
-                                    //Action apres avoir gagne
-                                    Gagner();
-
-                                    Restart();
-                                    lbxInstruction.Enabled = true;
-                                    Jeu.EstEnMouvement = false;
-                                    arrive = true;
-
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                collision = false;
-                            }
+                            //Est sur une arrivee
+                            Gagner();
+                        }
+                        else
+                        {
+                            //A perdu
+                            Defaite();
                         }
                     }
-
-                    //TODO: faire quand on bouge pas perdu : quand il arrive a derniere instruction et que il bouge plus : perdu
-                    if (collision && !arrive)
-                    {
-                        Defaite();
-                    }
-
-                }
-                else if (instructionActuelle == Jeu.PIVOTER_DROITE)
-                {
-                    personnageRaichu.PivoterDroite();
-                }
-                else if (instructionActuelle == Jeu.PIVOTER_GAUCHE)
-                {
-                    personnageRaichu.PivoterGauche();
                 }
 
                 if (Jeu.CompteurInstructionsEffectuees == lbxInstruction.Items.Count - 1)
                 {
                     tmrAvancer.Enabled = false;
                     //si une fois arrivé à la fin des instructions, le personnage n'est pas arrivé
-                    if (!arrive)
-                    {
-                        Defaite();
-                    }
+                    Defaite();
                 }
 
-                if (!arrive)
+                if (tmrAvancer.Enabled)
                 {
-                    if (tmrAvancer.Enabled)
-                    {
-                        Jeu.CompteurInstructionsEffectuees++;
-                    }
+                    Jeu.CompteurInstructionsEffectuees++;
                 }
 
                 if (lbxInstruction.SelectedIndex < lbxInstruction.Items.Count - 1)
                 {
+                    //Selectionne la bonne instructions
                     lbxInstruction.SelectedIndex += 1;
                 }
             }
@@ -282,17 +254,15 @@ namespace WFLostNFurious
         /// </summary>
         private void Defaite()
         {
-            Jeu.EstEnJeu = false;
-            this.BackColor = Color.Red;
-
-            DialogResult dr = MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK);
             Jeu.EstEnMouvement = false;
 
-            if (dr == DialogResult.OK)
+            //Met le fond en rouge
+            this.BackColor = Color.Red;
+
+            if (MessageBox.Show("Vous avez perdu", "Réessayez", MessageBoxButtons.OK) == DialogResult.OK)
             {
                 this.BackColor = SystemColors.Control;
                 Restart();
-                lbxInstruction.Enabled = true;
             }
         }
 
@@ -307,8 +277,9 @@ namespace WFLostNFurious
         private void Restart()
         {
             //Ergonomie des boutons
+            lbxInstruction.Enabled = true;
             lbxInstruction.Items.Clear();
-            lstInstruction.Clear();
+            LstInstruction.Clear();
             Jeu.EstEnMouvement = false;
             btnPlay.Enabled = false;
             lbxInstruction.Enabled = true;
@@ -320,10 +291,15 @@ namespace WFLostNFurious
             tmrAvancer.Enabled = false;
 
             //Raichu se remet au départ
-            personnageRaichu.Respawn();
+            PersonnageRaichu.Respawn();
 
         }
 
+        /// <summary>
+        /// Supprime l'instruction qu'on double clique
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LbxInstruction_DoubleClick(object sender, EventArgs e)
         {
             if (!Jeu.EstEnMouvement)
@@ -345,25 +321,36 @@ namespace WFLostNFurious
             }
         }
 
-
+        /*
         /// <summary>
-        /// Si on veut empecher la fermeture de l'application
+        /// Empêche la fermeture de l'application
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //e.Cancel = true;
+            e.Cancel = true;
         }
+        */
 
+        /// <summary>
+        /// Vide la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnViderListe_Click(object sender, EventArgs e)
         {
             btnPlay.Enabled = false;
             lbxInstruction.Items.Clear();
-            lstInstruction.Clear();
+            LstInstruction.Clear();
             btnViderListe.Enabled = false;
         }
 
+        /// <summary>
+        /// Commence la partie
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnStartGame_Click(object sender, EventArgs e)
         {
             btnStartGame.Visible = false;
@@ -374,19 +361,19 @@ namespace WFLostNFurious
             pnlInstructions.Visible = true;
             //Affiche le labyrinthe
             CreateLabFromGrid(Jeu.MatriceLabyrinthe);
-            Jeu.NouvelleArrivee(lstLabyrinthe);
+            Jeu.NouvelleArrivee(LstLabyrinthe);
         }
 
-        private void FrmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Affiche les ellements de la form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
             if (Jeu.EstEnJeu)
             {
-                foreach (Bloc bloc in lstLabyrinthe)
+                foreach (Bloc bloc in LstLabyrinthe)
                 {
                     if (bloc is Arrivee)
                     {
@@ -414,19 +401,19 @@ namespace WFLostNFurious
                 Image haut = Properties.Resources.raichuHaut;
                 Image bas = Properties.Resources.raichuBas;
 
-                switch (personnageRaichu.Orientation)
+                switch (PersonnageRaichu.Orientation)
                 {
                     case (int)Direction.Gauche:
-                        e.Graphics.DrawImage(gauche, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        e.Graphics.DrawImage(gauche, PersonnageRaichu.Position.X, PersonnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                         break;
                     case (int)Direction.Droite:
-                        e.Graphics.DrawImage(droite, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        e.Graphics.DrawImage(droite, PersonnageRaichu.Position.X, PersonnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                         break;
                     case (int)Direction.Bas:
-                        e.Graphics.DrawImage(bas, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        e.Graphics.DrawImage(bas, PersonnageRaichu.Position.X, PersonnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                         break;
                     case (int)Direction.Haut:
-                        e.Graphics.DrawImage(haut, personnageRaichu.Position.X, personnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
+                        e.Graphics.DrawImage(haut, PersonnageRaichu.Position.X, PersonnageRaichu.Position.Y, Jeu.TAILLE_BLOC_X, Jeu.TAILLE_BLOC_Y);
                         break;
                 }
             }
