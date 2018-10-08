@@ -130,6 +130,8 @@ namespace WFLostNFurious
         /// </summary>
         private void Gagner()
         {
+            //Appele page php pour fin partie
+            Jeu.RecevoirCode("http://127.0.0.1/CiteMetier/step2.php");
             //Fini la partie
             Jeu.EstEnJeu = false;
             //Le perso n'est plus en mouvement
@@ -150,6 +152,7 @@ namespace WFLostNFurious
                 BackColor = Color.Transparent
             };
             this.Controls.Add(lblCode);
+
         }
 
         /// <summary>
