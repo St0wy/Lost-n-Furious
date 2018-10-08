@@ -11,6 +11,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace WFLostNFurious
 {
@@ -39,7 +41,19 @@ namespace WFLostNFurious
             PersonnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             LstLabyrinthe = new List<Bloc>();
             LstInstruction = new List<string>();
-            CodeAAfficher = Jeu.RecevoirCode("http://127.0.0.1/testCSharp/testcSharp.php");
+            SeparerCode();
+        }
+
+        /// <summary>
+        /// Sépare le code recu pour ne garder que le code de fin
+        /// </summary>
+        public void SeparerCode()
+        {
+            string recu = Jeu.RecevoirInfos("http://127.0.0.1/serveurCM/webdispatcher/soluce.php");
+            dynamic infos = JObject.Parse(recu);
+
+            codeAAfficher = infos.soluce2;
+
         }
 
         //Methodes

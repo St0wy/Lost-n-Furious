@@ -130,7 +130,7 @@ namespace WFLostNFurious
         /// </summary>
         /// <param name="url">Url du serveur</param>
         /// <returns>Le code si connexion reussie, F sinon</returns>
-        static public string RecevoirCode(string url)
+        static public string RecevoirInfos(string url)
         {
             string code = "";  //La pour le debuggage
             try
