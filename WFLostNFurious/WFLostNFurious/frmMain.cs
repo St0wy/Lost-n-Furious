@@ -49,10 +49,18 @@ namespace WFLostNFurious
         /// </summary>
         public void SeparerCode()
         {
-            string recu = Jeu.RecevoirInfos("http://127.0.0.1/serveurCM/webdispatcher/soluce.php");
-            dynamic infos = JObject.Parse(recu);
+            try
+            {
+                string recu = Jeu.RecevoirInfos("http://127.0.0.1/serveurCM/webdispatcher/soluce.php");
+                dynamic infos = JObject.Parse(recu);
 
-            codeAAfficher = infos.soluce2;
+                codeAAfficher = infos.soluce2;
+            }
+            catch (Exception)
+            {
+                codeAAfficher = "F";
+            }
+
 
         }
 
@@ -131,7 +139,7 @@ namespace WFLostNFurious
         private void Gagner()
         {
             //Appele page php pour fin partie
-            Jeu.RecevoirCode("http://127.0.0.1/CiteMetier/step2.php");
+            Jeu.RecevoirInfos("http://127.0.0.1/serveurCM/webdispatcher/step2.php");
             //Fini la partie
             Jeu.EstEnJeu = false;
             //Le perso n'est plus en mouvement
@@ -144,7 +152,7 @@ namespace WFLostNFurious
             Label lblCode = new Label()
             {
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est :{Environment.NewLine}{CodeAAfficher}",
+                Text = $"Le code est : {CodeAAfficher}",
                 AutoSize = false,
                 Size = new Size(this.Width, this.Height),
                 Font = new Font("Arial", 75),
