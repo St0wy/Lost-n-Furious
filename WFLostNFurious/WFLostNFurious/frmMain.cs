@@ -51,10 +51,12 @@ namespace WFLostNFurious
         {
             try
             {
-                string recu = Jeu.RecevoirInfos("http://127.0.0.1/serveurCM/webdispatcher/soluce.php");
-                dynamic infos = JObject.Parse(recu);
+                string recu = Jeu.RecevoirInfos("http://127.0.0.1:8080/edsa-cm/webdispatcher/soluce.php");
+                string[] infos = recu.Split(',');
 
-                codeAAfficher = infos.soluce2;
+                string[] tmp = infos[8].Split(':');
+
+                codeAAfficher = tmp[1].Replace('}', ' ');
             }
             catch (Exception)
             {
